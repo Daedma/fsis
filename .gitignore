@@ -1,0 +1,28 @@
+# Exlude all ...
+*
+
+# ... Except folders
+!actors/
+!client/
+!components/
+!controllers/
+!core/
+!gui/
+!network/
+!render/
+!server/
+
+# md files  
+!**.md
+
+# .gitignore
+!.gitignore
+
+# sources
+!**.cpp
+!**.cc
+!**.cxx
+
+# headers
+!**.hpp
+!**.h
