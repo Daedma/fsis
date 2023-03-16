@@ -5,7 +5,7 @@ class World;
 
 /**
  * @brief
- * Base class for all objects, that contains in the world
+ * Base class for all objects, that contains in the game `world
  */
 class GameObject
 {
