@@ -17,6 +17,8 @@ public:
 	 */
 	GameObject(World* world);
 
+	virtual ~GameObject();
+
 	/**
 	 * @brief Called every frame
 	 *
@@ -50,6 +52,13 @@ public:
 	 */
 	TickGroups getTickGroup() const { return m_tickgroup; }
 
+	/**
+	 * @brief Force to remove this actor from owner world
+	 * on the next tick
+	 *
+	 */
+	virtual void destroy();
+
 private:
 	TickGroups m_tickgroup = TickGroups::POSTPHYSIC;
 
@@ -62,4 +71,10 @@ protected:
 	 * @param tickGroup
 	 */
 	void setTickGroup(TickGroups tickGroup);
+
+	/**
+	 * @brief
+	 *
+	 */
+	void onDestroyed();
 };

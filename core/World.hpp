@@ -1,7 +1,9 @@
 #pragma once
 #include "EASTL/vector_set.h"
+#include "EASTL/queue.h"
 
 class GameObject;
+class Actor;
 
 class World
 {
@@ -11,6 +13,7 @@ private:
 	eastl::vector_set<GameObject*> m_phys;
 	eastl::vector_set<GameObject*> m_postphys;
 
+	eastl::queue<Actor*> m_actorsToDestroy;
 public:
 	/**
 	 * @brief Add GameObject to tickgroup
@@ -28,5 +31,5 @@ public:
 	 */
 	void unregistry(GameObject* obj);
 
-
+	void destroyActor(Actor* actor) { m_actorsToDestroy.emplace(actor); }
 };

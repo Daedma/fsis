@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ActorComponent.hpp"
-#include "TransformTypes.hpp"
+#include "core/TransformTypes.hpp"
 #include "EASTL/vector.h"
 #include "EASTL/unique_ptr.h"
 #include "Mathter/Matrix.hpp"

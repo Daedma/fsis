@@ -31,18 +31,6 @@ public:
 	void attachToActor(Actor* newOwner);
 
 	/**
-	 * @brief Enable ticks
-	 *
-	 */
-	void activate();
-
-	/**
-	 * @brief Disable ticks
-	 *
-	 */
-	void deactivate();
-
-	/**
 	 * @brief Called every frame
 	 *
 	 * @param deltaSeconds Time in seconds since last frame
