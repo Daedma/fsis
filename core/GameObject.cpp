@@ -12,10 +12,7 @@ GameObject::~GameObject()
 	m_world->unregistry(this);
 }
 
-void GameObject::tick(float deltaSeconds)
-{
-
-}
+void GameObject::tick(float deltaSeconds) {}
 
 void GameObject::deactivate()
 {
@@ -33,6 +30,8 @@ void GameObject::setTickGroup(TickGroups tickGroup)
 	m_tickgroup = tickGroup;
 	m_world->registry(this);
 }
+
+void GameObject::onDestroyed() {}
 
 void GameObject::destroy()
 {

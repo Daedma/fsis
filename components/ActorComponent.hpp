@@ -37,6 +37,13 @@ public:
 	 */
 	virtual void tick(float deltaSeconds) override;
 
+	/**
+	 * @brief Force to remove this actor from owner world
+	 * on the next tick
+	 *
+	 */
+	virtual void destroy() override;
+
 protected:
 	/**
 	 * @brief Called after attach

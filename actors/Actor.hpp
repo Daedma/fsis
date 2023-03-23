@@ -3,6 +3,7 @@
 #include "core/GameObject.hpp"
 #include "EASTL/unique_ptr.h"
 #include "EASTL/unordered_set.h"
+#include "EASTL/queue.h"
 
 class World;
 
@@ -29,6 +30,20 @@ public:
 	 * @param deltaSeconds Time in seconds since last frame
 	 */
 	virtual void tick(float deltaSeconds) override;
+
+	/**
+	 * @brief Force to remove this actor from owner world
+	 * on the next tick
+	 *
+	 */
+	virtual void destroy() override;
+
+	/**
+	 * @brief Destroy component at the next tick
+	 *
+	 * @param component component to destroy
+	 */
+	void destroyComponent(ActorComponent* component);
 
 	/**
 	 * @brief Get the root component
@@ -88,7 +103,29 @@ public:
 	 */
 	const Rotator& getRotation() const { return m_rootComponent->getRotation(); }
 
+	/**
+	 * @brief Move actor to given direction
+	 *
+	 * @param direction new position relative to current
+	 */
+	void move(const Vector3f& direction);
+
+	/**
+	 * @brief Get the last movement vector
+	 *
+	 * @return last movement vector
+	 */
+	const Vector3f& getLastMovement() const;
+
 private:
+	Vector3f m_lastMovement;
+
 	eastl::unordered_set<eastl::unique_ptr<ActorComponent>> m_components;
 
+	eastl::queue<ActorComponent*> m_toDestroyOnNextTick;
+
+	eastl::queue<ActorComponent*> m_toDestroyOnThisTick;
+
+private:
+	void destroyComponents();
 };

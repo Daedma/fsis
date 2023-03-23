@@ -73,8 +73,8 @@ protected:
 	void setTickGroup(TickGroups tickGroup);
 
 	/**
-	 * @brief
+	 * @brief Called on destroy
 	 *
 	 */
-	void onDestroyed();
+	virtual void onDestroyed();
 };
