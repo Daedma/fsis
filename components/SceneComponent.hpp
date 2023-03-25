@@ -73,6 +73,24 @@ public:
 	void attachComponent(SceneComponent* child);
 
 	/**
+	 * @brief Destroy child immediately
+	 *
+	 * @param child child to destroy
+	 * @note Not recommended to use. Use SceneComponent::destroy instead.
+	 */
+	void destroyChild(SceneComponent* child);
+
+	virtual void forceDestroy() override;
+
+	/**
+	 * @brief Get the Depth of the object
+	 *
+	 * @return depth of this component in hierarchy
+	 * @note Root component always return 0
+	 */
+	virtual size_t getDepth() const;
+
+	/**
 	 * @brief Get the World Transform of the object
 	 *
 	 * @return World transform matrix

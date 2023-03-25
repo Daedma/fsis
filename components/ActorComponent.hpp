@@ -1,5 +1,6 @@
 #pragma once 
 #include "core/GameObject.hpp"
+#include "actors/Actor.hpp"
 
 class Actor;
 
@@ -14,7 +15,7 @@ private:
 	Actor* m_owner = nullptr;
 
 public:
-	ActorComponent(Actor* owner);
+	ActorComponent(Actor* owner): GameObject(owner->getWorld()), m_owner(owner) {}
 
 	/**
 	 * @brief Get the Owner object
@@ -43,6 +44,20 @@ public:
 	 *
 	 */
 	virtual void destroy() override;
+
+	/**
+	 * @brief Destroy this component immediately
+	 * @note Not recomended to use. Use ActorComponent::destroy instead
+	 */
+	virtual void forceDestroy();
+
+	/**
+	 * @brief Get the Depth of the object
+	 *
+	 * @return depth of this component in hierarchy
+	 * @note Root component and actor components always return 0
+	 */
+	virtual size_t getDepth();
 
 protected:
 	/**

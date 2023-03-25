@@ -9,3 +9,13 @@ void ActorComponent::destroy()
 		m_owner->destroyComponent(this);
 	}
 }
+
+void ActorComponent::forceDestroy()
+{
+	m_owner->destroyComponent(this);
+}
+
+size_t ActorComponent::getDepth()
+{
+	return 0;
+}

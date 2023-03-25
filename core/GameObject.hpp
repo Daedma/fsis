@@ -77,4 +77,5 @@ protected:
 	 *
 	 */
 	virtual void onDestroyed();
+
 };

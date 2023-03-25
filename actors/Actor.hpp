@@ -2,8 +2,7 @@
 #include "components/SceneComponent.hpp"
 #include "core/GameObject.hpp"
 #include "EASTL/unique_ptr.h"
-#include "EASTL/unordered_set.h"
-#include "EASTL/queue.h"
+#include "EASTL/vector.h"
 
 class World;
 
@@ -59,6 +58,12 @@ public:
 	 */
 	const SceneComponent* getRootComponent() const { return m_rootComponent.get(); }
 
+	/**
+	 * @brief Destroy own actor component immediately
+	 *
+	 * @param comp component to destroy
+	 * @note Not recomended to use. Use ActorComponent::destroy instead
+	 */
 	void destroyComponent(ActorComponent* comp);
 
 	/**
@@ -120,12 +125,6 @@ public:
 private:
 	Vector3f m_lastMovement;
 
-	eastl::unordered_set<eastl::unique_ptr<ActorComponent>> m_components;
+	eastl::vector<eastl::unique_ptr<ActorComponent>> m_components;
 
-	eastl::queue<ActorComponent*> m_toDestroyOnNextTick;
-
-	eastl::queue<ActorComponent*> m_toDestroyOnThisTick;
-
-private:
-	void destroyComponents();
 };
