@@ -17,6 +17,8 @@ private:
 public:
 	ActorComponent(Actor* owner): GameObject(owner->getWorld()), m_owner(owner) {}
 
+	ActorComponent() = default;
+
 	/**
 	 * @brief Get the Owner object
 	 *
@@ -29,7 +31,7 @@ public:
 	 *
 	 * @param newOwner
 	 */
-	void attachToActor(Actor* newOwner);
+	virtual void attachToActor(Actor* newOwner);
 
 	/**
 	 * @brief Called every frame
@@ -57,7 +59,7 @@ public:
 	 * @return depth of this component in hierarchy
 	 * @note Root component and actor components always return 0
 	 */
-	virtual size_t getDepth();
+	virtual size_t getDepth() const;
 
 protected:
 	/**

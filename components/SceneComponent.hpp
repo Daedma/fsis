@@ -28,25 +28,25 @@ private:
 	 * @brief Relative transform matrix
 	 *
 	 */
-	Transform m_transform;
+	Transform m_transform = mathter::Identity();
 
 	/**
 	 * @brief Relative position
 	 *
 	 */
-	Vector3f m_position;
+	Vector3f m_position = { 0.f, 0.f, 0.f };
 
 	/**
 	 * @brief Relative scale
 	 *
 	 */
-	Vector3f m_scale;
+	Vector3f m_scale = { 1.f, 1.f, 1.f };
 
 	/**
 	 * @brief Relative rotation
 	 *
 	 */
-	Rotator m_rotation;
+	Rotator m_rotation = mathter::Identity();
 
 public:
 	/**
@@ -54,7 +54,12 @@ public:
 	 *
 	 * @param parent
 	 */
-	SceneComponent(SceneComponent* parent);
+	SceneComponent(SceneComponent* parent): ActorComponent(parent->getOwner()), m_parent(parent)
+	{
+		parent->attachComponent(this);
+	}
+
+	SceneComponent() = default;
 
 	/**
 	 * @brief Construct a new Scene Component object
@@ -63,14 +68,9 @@ public:
 	 *
 	 * @note For rootComponent
 	 */
-	SceneComponent(Actor* owner);
+	SceneComponent(Actor* owner): ActorComponent(owner) {}
 
-	/**
-	 * @brief Attach @p child component to this component
-	 *
-	 * @param child
-	 */
-	void attachComponent(SceneComponent* child);
+	virtual void attachToActor(Actor* actor) override;
 
 	/**
 	 * @brief Destroy child immediately
@@ -88,20 +88,23 @@ public:
 	 * @return depth of this component in hierarchy
 	 * @note Root component always return 0
 	 */
-	virtual size_t getDepth() const;
+	virtual size_t getDepth() const override;
 
 	/**
 	 * @brief Get the World Transform of the object
 	 *
 	 * @return World transform matrix
 	 */
-	Transform getWorldTransform() const { return m_parent->getWorldTransform() * m_transform; }
+	Transform getWorldTransform() const
+	{
+		return m_parent ? m_parent->getWorldTransform() * m_transform : m_transform;
+	}
 
-	/**
-	 * @brief Get the relative transform of the object
-	 *
-	 * @return Relative transform matrix
-	 */
+/**
+ * @brief Get the relative transform of the object
+ *
+ * @return Relative transform matrix
+ */
 	const Transform& getRelativeTransform() const { return m_transform; }
 
 	/**
@@ -145,4 +148,12 @@ public:
 	 * @return relative rotation rotator
 	 */
 	const Rotator& getRotation() const { return m_rotation; }
+
+private:
+	/**
+	 * @brief Attach @p child component to this component
+	 *
+	 * @param child
+	 */
+	void attachComponent(SceneComponent* child);
 };

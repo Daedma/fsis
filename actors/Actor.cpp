@@ -3,7 +3,9 @@
 #include "EASTL/algorithm.h"
 
 void Actor::tick(float deltaSeconds)
-{}
+{
+	m_lastMovement.Set(0.f, 0.f, 0.f);
+}
 
 void Actor::destroy()
 {
@@ -19,3 +21,13 @@ void Actor::destroyComponent(ActorComponent* component)
 		}));
 }
 
+void Actor::move(const Vector3f& direction)
+{
+	setPosition(direction + getPosition());
+	m_lastMovement += direction;
+}
+
+void Actor::attachComponent(ActorComponent* component)
+{
+	m_components.emplace_back(component);
+}

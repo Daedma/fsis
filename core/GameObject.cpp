@@ -37,3 +37,12 @@ void GameObject::destroy()
 {
 	onDestroyed();
 }
+
+void GameObject::initWorld(World* world)
+{
+	if (!m_world)
+	{
+		m_world = world;
+		m_world->registry(this);
+	}
+}

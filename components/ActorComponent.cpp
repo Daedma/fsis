@@ -15,7 +15,23 @@ void ActorComponent::forceDestroy()
 	m_owner->destroyComponent(this);
 }
 
-size_t ActorComponent::getDepth()
+size_t ActorComponent::getDepth() const
 {
 	return 0;
 }
+
+void ActorComponent::attachToActor(Actor* newOwner)
+{
+	assert(newOwner != nullptr);
+	newOwner->attachComponent(this);
+	m_owner = newOwner;
+	initWorld(m_owner->getWorld());
+	onAttached();
+}
+
+void ActorComponent::tick(float deltaSeconds)
+{
+
+}
+
+void ActorComponent::onAttached() {}

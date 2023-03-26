@@ -17,6 +17,8 @@ public:
 	 */
 	GameObject(World* world);
 
+	GameObject() = default;
+
 	virtual ~GameObject();
 
 	/**
@@ -45,6 +47,8 @@ public:
 	 */
 	World* getWorld() const { return m_world; }
 
+	void initWorld(World* world);
+
 	/**
 	 * @brief Get the Tick Group object
 	 *
@@ -62,7 +66,7 @@ public:
 private:
 	TickGroups m_tickgroup = TickGroups::POSTPHYSIC;
 
-	class World* m_world;
+	class World* m_world = nullptr;
 
 protected:
 	/**

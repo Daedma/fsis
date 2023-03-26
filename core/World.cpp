@@ -1,5 +1,6 @@
 #include "core/World.hpp"
 #include "core/GameObject.hpp"
+#include "World.hpp"
 
 void World::registry(GameObject* obj)
 {
@@ -34,5 +35,45 @@ void World::unregistry(GameObject* obj)
 		break;
 	default:
 		return;
+
 	}
+}
+
+void World::execDestroy()
+{
+	while (!m_componentsToDestroy.empty())
+	{
+		m_componentsToDestroy.top()->forceDestroy();
+		m_componentsToDestroy.pop();
+	}
+	while (!m_actorsToDestroy.empty())
+	{
+		Actor* actorToDestroy = m_actorsToDestroy.front();
+		m_actors.erase(eastl::find_if(m_actors.begin(), m_actors.end(),
+			[actorToDestroy](const eastl::unique_ptr<Actor>& rhs) {return rhs.get() == actorToDestroy;
+			}));
+		m_actorsToDestroy.pop();
+	}
+}
+
+void World::spawnActor(Actor* actor)
+{
+	m_actors.emplace_back(actor);
+}
+
+void World::tick(float deltaSeconds)
+{
+	for (GameObject* i : m_prephys)
+	{
+		i->tick(deltaSeconds);
+	}
+	for (GameObject* i : m_phys)
+	{
+		i->tick(deltaSeconds);
+	}
+	for (GameObject* i : m_postphys)
+	{
+		i->tick(deltaSeconds);
+	}
+	execDestroy();
 }

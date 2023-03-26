@@ -6,6 +6,14 @@
 
 class World;
 
+/**
+ * @brief Base class for all objects placing in the world.
+ * All world transormation is defined by root component.
+ * Root component has no parent, so root component must have only
+ * world (absolute) transform (no relative).
+ * World is owner of all actors.
+ *
+ */
 class Actor: public GameObject
 {
 protected:
@@ -38,13 +46,6 @@ public:
 	virtual void destroy() override;
 
 	/**
-	 * @brief Destroy component at the next tick
-	 *
-	 * @param component component to destroy
-	 */
-	void destroyComponent(ActorComponent* component);
-
-	/**
 	 * @brief Get the root component
 	 *
 	 * @return root component
@@ -57,6 +58,13 @@ public:
 	 * @return root  component
 	 */
 	const SceneComponent* getRootComponent() const { return m_rootComponent.get(); }
+
+	/**
+	 * @brief Attach actor component to this actor
+	 *
+	 * @param component component to attached
+	 */
+	void attachComponent(ActorComponent* component);
 
 	/**
 	 * @brief Destroy own actor component immediately
@@ -120,11 +128,19 @@ public:
 	 *
 	 * @return last movement vector
 	 */
-	const Vector3f& getLastMovement() const;
+	const Vector3f& getLastMovement() const { return m_lastMovement; }
 
 private:
+	/**
+	 * @brief Accumulate all moves at this tick
+	 *
+	 */
 	Vector3f m_lastMovement;
 
+	/**
+	 * @brief Components are owning by this actor
+	 *
+	 */
 	eastl::vector<eastl::unique_ptr<ActorComponent>> m_components;
 
 };
