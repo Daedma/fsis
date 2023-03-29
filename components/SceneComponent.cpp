@@ -18,6 +18,7 @@ void SceneComponent::forceDestroy()
 void SceneComponent::attachComponent(SceneComponent* child)
 {
 	m_childs.emplace_back(child);
+	child->initWorld(getWorld());
 	child->m_parent = this;
 	child->onAttached();
 }
@@ -30,7 +31,6 @@ size_t SceneComponent::getDepth() const
 void SceneComponent::attachToActor(Actor* actor)
 {
 	assert(actor != nullptr);
-	initWorld(actor->getWorld());
 	actor->getRootComponent()->attachComponent(this);
 }
 

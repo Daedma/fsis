@@ -149,11 +149,15 @@ public:
 	 */
 	const Rotator& getRotation() const { return m_rotation; }
 
-private:
 	/**
 	 * @brief Attach @p child component to this component
 	 *
 	 * @param child
 	 */
 	void attachComponent(SceneComponent* child);
+
+	void attachToComponent(SceneComponent* parent)
+	{
+		parent->attachComponent(this);
+	}
 };

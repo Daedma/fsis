@@ -29,5 +29,12 @@ void Actor::move(const Vector3f& direction)
 
 void Actor::attachComponent(ActorComponent* component)
 {
-	m_components.emplace_back(component);
+	if (component->getOwner())
+	{
+		m_components.emplace_back(component);
+	}
+	else
+	{
+		component->attachToActor(this);
+	}
 }

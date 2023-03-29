@@ -23,8 +23,8 @@ size_t ActorComponent::getDepth() const
 void ActorComponent::attachToActor(Actor* newOwner)
 {
 	assert(newOwner != nullptr);
-	newOwner->attachComponent(this);
 	m_owner = newOwner;
+	m_owner->attachComponent(this);
 	initWorld(m_owner->getWorld());
 	onAttached();
 }
