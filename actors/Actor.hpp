@@ -1,10 +1,13 @@
 #pragma once
-#include "components/SceneComponent.hpp"
+// #include "components/SceneComponent.hpp"
 #include "core/GameObject.hpp"
+#include "core/TransformTypes.hpp"
 #include "EASTL/unique_ptr.h"
 #include "EASTL/vector.h"
 
 class World;
+class SceneComponent;
+class ActorComponent;
 
 /**
  * @brief Base class for all objects placing in the world.
@@ -29,7 +32,9 @@ public:
 	 *
 	 * @param world owner world
 	 */
-	Actor(World* world): GameObject(world), m_rootComponent(new SceneComponent(this)) {}
+	Actor(World* world);
+
+	virtual ~Actor();
 
 	/**
 	 * @brief Called every frame
@@ -79,42 +84,42 @@ public:
 	 *
 	 * @param position
 	 */
-	void setPosition(const Vector3f& position) { m_rootComponent->setPosition(position); }
+	void setPosition(const Vector3f& position);
 
 	/**
 	 * @brief Set the scale
 	 *
 	 * @param scale
 	 */
-	void setScale(const Vector3f& scale) { m_rootComponent->setPosition(scale); }
+	void setScale(const Vector3f& scale);
 
 	/**
 	 * @brief Set the rotation
 	 *
 	 * @param rotation
 	 */
-	void setRotation(const Rotator& rotation) { m_rootComponent->setRotation(rotation); }
+	void setRotation(const Rotator& rotation);
 
 	/**
 	 * @brief Get the position
 	 *
 	 * @return position vector
 	 */
-	const Vector3f& getPosition() const { return m_rootComponent->getPosition(); }
+	const Vector3f& getPosition() const;
 
 	/**
 	 * @brief Get the scale
 	 *
 	 * @return scale vector
 	 */
-	const Vector3f& getScale() const { return m_rootComponent->getScale(); }
+	const Vector3f& getScale() const;
 
 	/**
 	 * @brief Get the rotation
 	 *
 	 * @return rotation rotator
 	 */
-	const Rotator& getRotation() const { return m_rootComponent->getRotation(); }
+	const Rotator& getRotation() const;
 
 	/**
 	 * @brief Move actor to given direction

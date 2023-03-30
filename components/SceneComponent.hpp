@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ActorComponent.hpp"
+#include "components/ActorComponent.hpp"
 #include "core/TransformTypes.hpp"
 #include "EASTL/vector.h"
 #include "EASTL/unique_ptr.h"
@@ -60,6 +60,8 @@ public:
 	}
 
 	SceneComponent() = default;
+
+	virtual ~SceneComponent();
 
 	/**
 	 * @brief Construct a new Scene Component object

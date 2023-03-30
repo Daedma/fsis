@@ -1,6 +1,15 @@
 #include "core/World.hpp"
+#include "components/ActorComponent.hpp"
+#include "actors/Actor.hpp"
 #include "core/GameObject.hpp"
 #include "World.hpp"
+
+World::~World() {}
+
+bool World::ActorComponentPriorityCompare::operator()(ActorComponent* lhs, ActorComponent* rhs)
+{
+	return lhs->getDepth() < rhs->getDepth();
+}
 
 void World::registry(GameObject* obj)
 {
@@ -54,6 +63,7 @@ void World::execDestroy()
 			}));
 		m_actorsToDestroy.pop();
 	}
+	if (m_actors.empty()) finish();
 }
 
 void World::spawnActor(Actor* actor)

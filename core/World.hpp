@@ -3,7 +3,7 @@
 #include "EASTL/queue.h"
 #include "EASTL/priority_queue.h"
 #include "EASTL/unique_ptr.h"
-#include "components/ActorComponent.hpp"
+// #include "components/ActorComponent.hpp"
 
 class GameObject;
 class Actor;
@@ -21,13 +21,20 @@ private:
 
 	bool m_isFinished = false;
 
-	static constexpr auto m_comp = [](ActorComponent* lhs, ActorComponent* rhs) {return lhs->getDepth() < rhs->getDepth();};
+	struct ActorComponentPriorityCompare
+	{
+		bool operator()(ActorComponent* lhs, ActorComponent* rhs);
+	};
+
+	// static constexpr auto m_comp = [](ActorComponent* lhs, ActorComponent* rhs) {return lhs->getDepth() < rhs->getDepth();};
 
 	eastl::queue<Actor*> m_actorsToDestroy;
-	eastl::priority_queue < ActorComponent*, eastl::vector<ActorComponent*>, decltype(m_comp)>
+	eastl::priority_queue<ActorComponent*, eastl::vector<ActorComponent*>, ActorComponentPriorityCompare>
 		m_componentsToDestroy;
 
 public:
+	~World();
+
 	void tick(float deltaSeconds);
 
 	bool isFinished() const { return m_isFinished; }

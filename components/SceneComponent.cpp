@@ -1,6 +1,8 @@
 #include "components/SceneComponent.hpp"
-#include "EASTL/algorithm.h"
 #include "actors/Actor.hpp"
+#include "EASTL/algorithm.h"
+
+SceneComponent::~SceneComponent() {}
 
 void SceneComponent::destroyChild(SceneComponent* child)
 {

@@ -1,6 +1,6 @@
 #pragma once 
 #include "core/GameObject.hpp"
-#include "actors/Actor.hpp"
+// #include "actors/Actor.hpp"
 
 class Actor;
 
@@ -15,9 +15,11 @@ private:
 	Actor* m_owner = nullptr;
 
 public:
-	ActorComponent(Actor* owner): GameObject(owner->getWorld()), m_owner(owner) {}
+	ActorComponent(Actor* owner);
 
 	ActorComponent() = default;
+
+	virtual ~ActorComponent();
 
 	/**
 	 * @brief Get the Owner object

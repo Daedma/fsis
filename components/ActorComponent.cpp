@@ -1,5 +1,8 @@
-#include "components/ActorComponent.hpp"
 #include "actors/Actor.hpp"
+#include "components/ActorComponent.hpp"
+#include <cassert>
+
+ActorComponent::ActorComponent(Actor* owner): GameObject(owner->getWorld()), m_owner(owner) {}
 
 void ActorComponent::destroy()
 {
@@ -35,3 +38,5 @@ void ActorComponent::tick(float deltaSeconds)
 }
 
 void ActorComponent::onAttached() {}
+
+ActorComponent::~ActorComponent() {}
