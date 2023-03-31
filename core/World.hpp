@@ -21,6 +21,8 @@ private:
 
 	bool m_isFinished = false;
 
+	float m_globalAcceleration = 9.8f;
+
 	struct ActorComponentPriorityCompare
 	{
 		bool operator()(ActorComponent* lhs, ActorComponent* rhs);
@@ -67,6 +69,13 @@ public:
 	 * @param actor actor to spawned
 	 */
 	void spawnActor(Actor* actor); //TODO allow user to specify spawn position
+
+	/**
+	 * @brief Get the gravitational acceleration of the world
+	 *
+	 * @return gravitational acceleration
+	 */
+	float getGravity() const { return m_globalAcceleration; }
 
 private:
 	void execDestroy();
