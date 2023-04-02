@@ -32,6 +32,17 @@ void Actor::move(const Vector3f& direction)
 	m_lastMovement += direction;
 }
 
+void Actor::rotate(const Rotator& rotation)
+{
+	setRotation(rotation * getRotation());
+}
+
+Vector3f Actor::getForwardVector() const
+{
+	Transform rotation = Transform(getRotation());
+	return Vector3f{ 1.f, 0.f, 0.f } *rotation;
+}
+
 void Actor::attachComponent(ActorComponent* component)
 {
 	if (component->getOwner())

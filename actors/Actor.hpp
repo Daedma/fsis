@@ -129,11 +129,26 @@ public:
 	void move(const Vector3f& direction);
 
 	/**
+	 * @brief Rotate actor
+	 *
+	 * @param rotation
+	 */
+	void rotate(const Rotator& rotation);
+
+	/**
 	 * @brief Get the last movement vector
 	 *
 	 * @return last movement vector
 	 */
 	const Vector3f& getLastMovement() const { return m_lastMovement; }
+
+	/**
+	 * @brief get the direction where the actor is "looking"
+	 *
+	 * @return Vector3f
+	 * @note "face" of actor is looking along x-axis
+	 */
+	Vector3f getForwardVector() const;
 
 private:
 	/**

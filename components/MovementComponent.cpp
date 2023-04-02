@@ -1,30 +1,32 @@
 #include "components/MovementComponent.hpp"
 #include "core/World.hpp"
 #include "actors/Actor.hpp"
+#include <cmath>
 
 MovementComponent::MovementComponent(Actor* owner): ActorComponent(owner)
 {
 	m_acceleration = { 0.f, 0.f, getWorld()->getGravity() };
 	m_lastPosition = owner->getPosition();
+	setTickGroup(TickGroups::PREPHYSIC);
 }
 
 
 void MovementComponent::enableGravity()
 {
-	if (!m_gravity)
+	if (!b_gravity)
 	{
 		m_acceleration += {0.f, 0.f, getWorld()->getGravity()};
 	}
-	m_gravity = true;
+	b_gravity = true;
 }
 
 void MovementComponent::disableGravity()
 {
-	if (m_gravity)
+	if (b_gravity)
 	{
 		m_acceleration -= {0.f, 0.f, getWorld()->getGravity()};
 	}
-	m_gravity = false;
+	b_gravity = false;
 }
 
 void MovementComponent::move(const Vector3f& direction)
@@ -34,7 +36,17 @@ void MovementComponent::move(const Vector3f& direction)
 
 void MovementComponent::tick(float deltaSeconds)
 {
-	m_speed += m_acceleration * deltaSeconds;
-	getOwner()->move((m_accumulatedMovement + m_speed) * deltaSeconds);
-	//TODO сбрасывать скорость по осям, если не было перемещенийё
+	getOwner()->move(m_accumulatedMovement * deltaSeconds); // Apply input
+	m_speed = (getOwner()->getPosition() - m_lastPosition) / deltaSeconds; // Correct speed
+	m_speed += m_acceleration * deltaSeconds; // Apply acceleration
+	getOwner()->move((m_speed - m_accumulatedMovement) * deltaSeconds); // Apply acceleration difference
+	if (b_orientRotationToMovement)
+	{
+		float length = mathter::Length(m_speed);
+		float pitch = std::asin(m_speed.z / length);
+		float yaw = std::asin(m_speed.x / length);
+		getOwner()->setRotation(mathter::RotationRPY(0.f, pitch, yaw));
+	}
+	m_lastPosition = getOwner()->getPosition();
+	m_accumulatedMovement = { 0.f, 0.f, 0.f };
 }
