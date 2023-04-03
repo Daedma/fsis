@@ -66,3 +66,5 @@ const Vector3f& Actor::getPosition() const { return m_rootComponent->getPosition
 const Vector3f& Actor::getScale() const { return m_rootComponent->getScale(); }
 
 const Rotator& Actor::getRotation() const { return m_rootComponent->getRotation(); }
+
+void Actor::orientByDirection(const Vector3f& direction) { m_rootComponent->orientByDirection(direction); }

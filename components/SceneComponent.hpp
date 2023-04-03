@@ -151,6 +151,14 @@ public:
 	 */
 	const Rotator& getRotation() const { return m_rotation; }
 
+
+	/**
+	 * @brief Orient this component by vector
+	 *
+	 * @param direction normalized vector of direction
+	 */
+	void orientByDirection(const Vector3f& direction);
+
 	/**
 	 * @brief Attach @p child component to this component
 	 *

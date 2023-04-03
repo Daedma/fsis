@@ -3,11 +3,13 @@
 #include "EASTL/queue.h"
 #include "EASTL/priority_queue.h"
 #include "EASTL/unique_ptr.h"
+#include "EASTL/vector.h"
 // #include "components/ActorComponent.hpp"
 
 class GameObject;
 class Actor;
 class ActorComponent;
+class Character;
 
 class World
 {
@@ -76,6 +78,8 @@ public:
 	 * @return gravitational acceleration
 	 */
 	float getGravity() const { return m_globalAcceleration; }
+
+	eastl::vector<Character*> getNearestCharacters(const Character* character);
 
 private:
 	void execDestroy();

@@ -62,3 +62,10 @@ void SceneComponent::setRotation(const Rotator& rotation)
 	m_transform = trans * sc * rot;
 	m_rotation = rotation;
 }
+
+void SceneComponent::orientByDirection(const Vector3f& direction)
+{
+	float pitch = std::asin(direction.z);
+	float yaw = std::asin(direction.y);
+	setRotation(mathter::RotationRPY(0.f, pitch, yaw));
+}

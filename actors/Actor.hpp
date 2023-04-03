@@ -136,6 +136,13 @@ public:
 	void rotate(const Rotator& rotation);
 
 	/**
+	 * @brief Orient this actor by vector
+	 *
+	 * @param direction normalized vector of direction
+	 */
+	void orientByDirection(const Vector3f& direction);
+
+	/**
 	 * @brief Get the last movement vector
 	 *
 	 * @return last movement vector
