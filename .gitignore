@@ -2,15 +2,16 @@
 *
 
 # ... Except folders
-!actors/
-!client/
-!components/
-!controllers/
-!core/
-!gui/
-!network/
-!render/
-!server/
+# !actors/
+# !client/
+# !components/
+# !controllers/
+# !core/
+# !gui/
+# !network/
+# !render/
+# !server/
+!src/
 
 # md files  
 !**.md
