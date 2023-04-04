@@ -12,6 +12,9 @@
 # !render/
 # !server/
 !src/
+!src/engine
+!src/fsis
+!"src/Data Files"
 
 # md files  
 !**.md
