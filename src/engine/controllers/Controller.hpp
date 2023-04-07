@@ -1,12 +1,14 @@
 #pragma once
 #include <EASTL/functional.h>
 #include <EASTL/hash_map.h>
-#include <EASTL/string_view.h>
-#include <EASTL/string.h>
 
 class Character;
 struct ActionBinding;
 
+/**
+ * @brief Base class for all controllers.
+ *
+ */
 class Controller
 {
 public:
@@ -16,11 +18,11 @@ public:
 	template<typename T>
 	using InputActionHandlerSignature = void(T::*)(void);
 
-	using  ActionIDType = uint64_t;
+	using  ActionID = uint64_t;
 
 	enum class InputEvent: uint8_t
 	{
-		PRESSED, RELEASED
+		NONE, PRESSED, RELEASED
 	};
 
 	struct ActionBinding
@@ -63,17 +65,19 @@ public:
 
 	Controller(Character* character);
 
+	virtual ~Controller();
+
 	void possess(Character* character);
 
 	template<typename UserObject>
-	inline void bindAxis(ActionIDType axisID, UserObject* executor, InputAxisHandlerSignature<UserObject> func);
+	inline void bindAxis(ActionID axisID, UserObject* executor, InputAxisHandlerSignature<UserObject> func);
 
 	template<typename UserObject>
-	inline void bindAction(ActionIDType actionID, InputEvent keyEvent, UserObject* executor, InputActionHandlerSignature<UserObject> func);
+	inline void bindAction(ActionID actionID, InputEvent keyEvent, UserObject* executor, InputActionHandlerSignature<UserObject> func);
 
-	void execute(ActionIDType actionID, InputEvent keyEvent);
+	void execute(ActionID actionID, InputEvent keyEvent);
 
-	void execute(ActionIDType actionID, float value);
+	void execute(ActionID actionID, float value);
 
 	Character* getMarionette() const { return m_marionette; }
 
@@ -82,9 +86,9 @@ public:
 private:
 	Character* m_marionette = nullptr;
 
-	eastl::hash_map<ActionIDType, AxisBinding> m_axisMapping;
+	eastl::hash_map<ActionID, AxisBinding> m_axisMapping;
 
-	eastl::hash_map<ActionIDType, ActionBinding> m_actionMapping;
+	eastl::hash_map<ActionID, ActionBinding> m_actionMapping;
 
 };
 
@@ -187,13 +191,13 @@ void Controller::AxisBinding::operator()(float val)
 }
 
 template<typename UserObject>
-void Controller::bindAxis(ActionIDType axisID, UserObject* executor, InputAxisHandlerSignature<UserObject> func)
+void Controller::bindAxis(ActionID axisID, UserObject* executor, InputAxisHandlerSignature<UserObject> func)
 {
 	m_axisMapping[axisID].setAction(executor, func);
 }
 
 template<typename UserObject>
-void Controller::bindAction(ActionIDType actionID, InputEvent keyEvent, UserObject* executor, InputActionHandlerSignature<UserObject> func)
+void Controller::bindAction(ActionID actionID, InputEvent keyEvent, UserObject* executor, InputActionHandlerSignature<UserObject> func)
 {
 	m_actionMapping[actionID].setAction(executor, func);
 }

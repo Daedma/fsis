@@ -13,6 +13,8 @@ Controller::Controller(Character* character):
 	}
 }
 
+Controller::~Controller() {}
+
 void Controller::possess(Character* character)
 {
 	if (character)
@@ -25,7 +27,7 @@ void Controller::possess(Character* character)
 	}
 }
 
-void Controller::execute(ActionIDType actionID, InputEvent keyEvent)
+void Controller::execute(ActionID actionID, InputEvent keyEvent)
 {
 	auto it = m_actionMapping.find(actionID);
 	if (it != m_actionMapping.end())
@@ -34,7 +36,7 @@ void Controller::execute(ActionIDType actionID, InputEvent keyEvent)
 	}
 }
 
-void Controller::execute(ActionIDType actionID, float value)
+void Controller::execute(ActionID actionID, float value)
 {
 	auto it = m_axisMapping.find(actionID);
 	if (it != m_axisMapping.end())
