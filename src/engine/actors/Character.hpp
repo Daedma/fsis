@@ -4,30 +4,22 @@
 #include "core/TransformTypes.hpp"
 
 class MovementComponent;
+class Controller;
 
 class Character: public Actor
 {
 	MovementComponent* m_movement = nullptr;
 
-	Character* m_target = nullptr;
+	bool b_possessed = false;
 
 public:
 	Character(World* world);
 
 	MovementComponent* getMovementComponent() const { return m_movement; }
 
-	virtual void attack();
+	virtual void setupController(Controller* controller) const;
 
-	Character* setTarget();
+	bool isPossessed() const { return b_possessed; }
 
-	Character* setTarget(Character* target);
-
-	void resetTarget();
-
-protected:
-	virtual void onTargeted(Character* instigator);
-
-	virtual void onUntargeted(Character* instigator);
-
-	virtual void onSetTarget(Character* target);
+	void setPossessed(bool possessed) { b_possessed = possessed; }
 };

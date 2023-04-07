@@ -2,19 +2,18 @@
 *
 
 # ... Except folders
-# !actors/
-# !client/
-# !components/
-# !controllers/
-# !core/
-# !gui/
-# !network/
-# !render/
-# !server/
-!src/
-!src/engine
-!src/fsis
-!"src/Data Files"
+!/src/
+!/src/engine/
+!/src/engine/actors/
+!/src/engine/components/
+!/src/engine/controllers/
+!/src/engine/core/
+!/src/engine/gui/
+!/src/engine/network/
+!/src/engine/render/
+!/src/fsis/client/
+!/src/fsis/server/
+!/src/Data Files
 
 # md files  
 !**.md
@@ -30,3 +29,7 @@
 # headers
 !**.hpp
 !**.h
+!**.hh
+
+# inlines
+!**.inl
