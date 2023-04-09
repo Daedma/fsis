@@ -138,6 +138,16 @@ public:
 	const Vector3f& getPosition() const { return m_position; }
 
 	/**
+	 * @brief Get the World Position
+	 *
+	 * @return world position vector
+	 */
+	const Vector3f& getWorldPosition() const
+	{
+		return m_position * getWorldTransform();
+	}
+
+	/**
 	 * @brief Get the relative scale
 	 *
 	 * @return relative scale vector
