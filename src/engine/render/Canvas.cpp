@@ -10,6 +10,11 @@ void Canvas::setWindow(sf::RenderWindow* window)
 	m_window.reset(window);
 }
 
+void Canvas::setHUD(HUD* hud)
+{
+	m_hud.reset(hud);
+}
+
 void Canvas::registry(PrimitiveComponent* primitive)
 {
 	if (eastl::find(m_primitives.cbegin(), m_primitives.cend(), primitive)

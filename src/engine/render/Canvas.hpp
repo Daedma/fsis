@@ -33,7 +33,9 @@ public:
 
 	void setWindow(sf::RenderWindow* window);
 
-	void setHUD(HUD* hud) { m_hud.reset(hud); }
+	void setHUD(HUD* hud);
+
+	HUD* getHUD() const { return m_hud.get(); }
 
 	sf::RenderWindow* getWindow() const { return m_window.get(); }
 
