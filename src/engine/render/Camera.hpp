@@ -10,7 +10,7 @@ class Camera
 
 	float m_distance = 0.f;
 
-	float m_scale = 1.f;
+	float m_scale = 480.f;
 
 public:
 	static const Transform ISOMETRIC;
@@ -18,6 +18,8 @@ public:
 	static const Transform TOPDOWN;
 
 	static const Transform SIDE;
+
+	virtual ~Camera();
 
 	void setScale(float scale) { m_scale = scale; }
 

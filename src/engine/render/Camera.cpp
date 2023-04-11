@@ -1,5 +1,7 @@
 #include "render/Camera.hpp"
 
+Camera::~Camera() {}
+
 static Transform getIsometricTransform()
 {
 	Transform rotm45y = mathter::RotationAxis(mathter::Deg2Rad(-45), 1);

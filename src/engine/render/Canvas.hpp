@@ -17,13 +17,13 @@ class HUD;
 
 class Canvas
 {
-	eastl::unique_ptr<sf::RenderWindow> m_window;
+	eastl::unique_ptr<sf::RenderWindow> m_window = nullptr;
 
-	eastl::unique_ptr<Camera> m_camera;
+	eastl::unique_ptr<Camera> m_camera = nullptr;
+
+	eastl::unique_ptr<HUD> m_hud = nullptr;
 
 	eastl::vector<PrimitiveComponent*> m_primitives;
-
-	eastl::unique_ptr<HUD> m_hud;
 
 	static eastl::unique_ptr<Canvas> m_instance;
 
@@ -33,11 +33,15 @@ public:
 
 	void setWindow(sf::RenderWindow* window);
 
+	sf::RenderWindow* getWindow() const { return m_window.get(); }
+
 	void setHUD(HUD* hud);
 
 	HUD* getHUD() const { return m_hud.get(); }
 
-	sf::RenderWindow* getWindow() const { return m_window.get(); }
+	void setCamera(Camera* camera);
+
+	Camera* getCamera() const { return m_camera.get(); }
 
 	void registry(PrimitiveComponent* primitive);
 
