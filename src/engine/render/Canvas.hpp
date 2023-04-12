@@ -29,6 +29,8 @@ class Canvas
 
 public:
 
+	~Canvas();
+
 	static Canvas* getInstance() { return m_instance.get(); }
 
 	void setWindow(sf::RenderWindow* window);

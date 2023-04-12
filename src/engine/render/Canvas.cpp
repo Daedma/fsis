@@ -10,6 +10,8 @@ eastl::unique_ptr<Canvas> Canvas::m_instance{new Canvas()};
 
 Canvas::Canvas() {}
 
+Canvas::~Canvas() {}
+
 void Canvas::setWindow(sf::RenderWindow* window)
 {
 	m_window.reset(window);
@@ -38,6 +40,10 @@ void Canvas::unregistry(PrimitiveComponent* primitive)
 
 void Canvas::draw()
 {
+	if (!m_window)
+	{
+		return;
+	}
 	if (m_camera && !m_primitives.empty())
 	{
 		Transform cameraTransform = m_camera->getProjectionMatrix();
