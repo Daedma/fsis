@@ -3,10 +3,10 @@
 #include "components/SceneComponent.hpp"
 #include <SFML/Graphics/Drawable.hpp>
 
-class PrimitiveComponent: public SceneComponent, public sf::Drawable
+class PrimitiveComponent : public SceneComponent, public sf::Drawable
 {
 public:
-	PrimitiveComponent() = default;
+	PrimitiveComponent();
 
 	PrimitiveComponent(Actor* owner);
 

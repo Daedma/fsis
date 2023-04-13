@@ -20,7 +20,7 @@ public:
 
 	using  ActionID = uint64_t;
 
-	enum class InputEvent: uint8_t
+	enum class InputEvent : uint8_t
 	{
 		NONE, PRESSED, RELEASED
 	};
@@ -133,10 +133,10 @@ void Controller::ActionBinding::setAction(T* instigator, InputActionHandlerSigna
 	switch (event)
 	{
 	case InputEvent::PRESSED:
-		pressed = [instigator, action]() {instigator->*action();};
+		pressed = [instigator, action]() {(instigator->*action)();};
 		break;
 	case InputEvent::RELEASED:
-		released = [instigator, action]() {instigator->*action();};
+		released = [instigator, action]() {(instigator->*action)();};
 		break;
 	default:
 		break;
@@ -166,7 +166,7 @@ void Controller::ActionBinding::operator()(InputEvent event)
 template<typename T>
 void Controller::AxisBinding::setAction(T* instigator, InputAxisHandlerSignature<T> action)
 {
-	this->action = [instigator, action](float val) {instigator->*action(val);};
+	this->action = [instigator, action](float val) {(instigator->*action)(val);};
 }
 
 void Controller::AxisBinding::setAction(eastl::function<void(float)> action)
@@ -199,5 +199,5 @@ void Controller::bindAxis(ActionID axisID, UserObject* executor, InputAxisHandle
 template<typename UserObject>
 void Controller::bindAction(ActionID actionID, InputEvent keyEvent, UserObject* executor, InputActionHandlerSignature<UserObject> func)
 {
-	m_actionMapping[actionID].setAction(executor, func);
+	m_actionMapping[actionID].setAction(executor, func, keyEvent);
 }

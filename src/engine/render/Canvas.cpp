@@ -8,7 +8,7 @@
 
 eastl::unique_ptr<Canvas> Canvas::m_instance{new Canvas()};
 
-Canvas::Canvas() : m_camera(new Camera())
+Canvas::Canvas() : m_window(nullptr), m_hud(nullptr), m_camera(new Camera())
 {
 	m_camera->setView(Camera::ISOMETRIC);
 }

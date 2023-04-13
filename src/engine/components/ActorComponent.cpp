@@ -1,8 +1,8 @@
 #include "actors/Actor.hpp"
 #include "components/ActorComponent.hpp"
-#include <cassert>
+// #include <cassert>
 
-ActorComponent::ActorComponent(Actor* owner): GameObject(owner->getWorld()), m_owner(owner) {}
+ActorComponent::ActorComponent(Actor* owner) : GameObject(owner->getWorld()), m_owner(owner) {}
 
 void ActorComponent::destroy()
 {
@@ -25,7 +25,7 @@ size_t ActorComponent::getDepth() const
 
 void ActorComponent::attachToActor(Actor* newOwner)
 {
-	assert(newOwner != nullptr);
+	EASTL_ASSERT(newOwner != nullptr);
 	m_owner = newOwner;
 	m_owner->attachComponent(this);
 	initWorld(m_owner->getWorld());

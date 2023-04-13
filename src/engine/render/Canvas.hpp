@@ -17,11 +17,11 @@ class HUD;
 
 class Canvas
 {
-	eastl::unique_ptr<sf::RenderWindow> m_window = nullptr;
+	eastl::unique_ptr<sf::RenderWindow> m_window;
 
-	eastl::unique_ptr<Camera> m_camera = nullptr;
+	eastl::unique_ptr<Camera> m_camera;
 
-	eastl::unique_ptr<HUD> m_hud = nullptr;
+	eastl::unique_ptr<HUD> m_hud;
 
 	eastl::vector<PrimitiveComponent*> m_primitives;
 
@@ -52,7 +52,7 @@ public:
 	void draw();
 
 private:
-	Canvas() = default;
+	Canvas();
 
 	sf::Transform getToScreenTransform(const Transform& transform) const;
 };

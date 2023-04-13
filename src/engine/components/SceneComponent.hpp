@@ -16,7 +16,7 @@
  * that is parent for any other SceneComponent and defines all actor tranforms.
  * Actor must use soft link to access to SceneComponents.
  */
-class SceneComponent: public ActorComponent
+class SceneComponent : public ActorComponent
 {
 private:
 	eastl::vector<eastl::unique_ptr<SceneComponent>> m_childs;
@@ -54,7 +54,7 @@ public:
 	 *
 	 * @param parent
 	 */
-	SceneComponent(SceneComponent* parent): ActorComponent(parent->getOwner()), m_parent(parent)
+	SceneComponent(SceneComponent* parent) : ActorComponent(parent->getOwner()), m_parent(parent)
 	{
 		parent->attachComponent(this);
 	}
@@ -70,7 +70,7 @@ public:
 	 *
 	 * @note For rootComponent
 	 */
-	SceneComponent(Actor* owner): ActorComponent(owner) {}
+	SceneComponent(Actor* owner) : ActorComponent(owner) {}
 
 	virtual void attachToActor(Actor* actor) override;
 
@@ -142,7 +142,7 @@ public:
 	 *
 	 * @return world position vector
 	 */
-	const Vector3f& getWorldPosition() const
+	Vector3f getWorldPosition() const
 	{
 		return m_position * getWorldTransform();
 	}
