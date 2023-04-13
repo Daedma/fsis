@@ -71,6 +71,7 @@ public:
 	 * @param actor actor to spawned
 	 */
 	void spawnActor(Actor* actor); //TODO allow user to specify spawn position
+	//TODO make template version with return value
 
 	/**
 	 * @brief Get the gravitational acceleration of the world
@@ -79,7 +80,7 @@ public:
 	 */
 	float getGravity() const { return m_globalAcceleration; }
 
-	eastl::vector<Character*> getNearestCharacters(const Character* character);
+	// eastl::vector<Character*> getNearestCharacters(const Character* character);
 
 private:
 	void execDestroy();

@@ -8,7 +8,10 @@
 
 eastl::unique_ptr<Canvas> Canvas::m_instance{new Canvas()};
 
-Canvas::Canvas() {}
+Canvas::Canvas() : m_camera(new Camera())
+{
+	m_camera->setView(Camera::ISOMETRIC);
+}
 
 Canvas::~Canvas() {}
 
@@ -62,6 +65,7 @@ void Canvas::draw()
 	{
 		m_hud->draw(*m_window, sf::RenderStates::Default);
 	}
+	m_window->display();
 }
 
 sf::Transform Canvas::getToScreenTransform(const Transform& transform) const

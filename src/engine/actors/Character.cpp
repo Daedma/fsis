@@ -1,13 +1,13 @@
 #include "actors/Character.hpp"
 #include "components/MovementComponent.hpp"
 
-Character::Character(World* world): Actor(world), m_movement(new MovementComponent(this))
+Character::Character(World* world) : Actor(world), m_movement(new MovementComponent(this))
 {
 	m_movement->attachToActor(this);
 	m_movement->setOrientRotationToMovement(true);
 }
 
-void Character::setupController(Controller* controller) const
+void Character::setupController(Controller* controller)
 {
 
 }

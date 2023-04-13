@@ -19,6 +19,8 @@ public:
 
 	static const Transform SIDE;
 
+	Camera() = default;
+
 	virtual ~Camera();
 
 	void setScale(float scale) { m_scale = scale; }

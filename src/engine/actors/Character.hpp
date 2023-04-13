@@ -6,7 +6,7 @@
 class MovementComponent;
 class Controller;
 
-class Character: public Actor
+class Character : public Actor
 {
 	MovementComponent* m_movement = nullptr;
 
@@ -17,7 +17,7 @@ public:
 
 	MovementComponent* getMovementComponent() const { return m_movement; }
 
-	virtual void setupController(Controller* controller) const;
+	virtual void setupController(Controller* controller);
 
 	bool isPossessed() const { return b_possessed; }
 
