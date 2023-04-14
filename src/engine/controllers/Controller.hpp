@@ -148,10 +148,12 @@ void Controller::ActionBinding::execute(InputEvent event)
 	switch (event)
 	{
 	case InputEvent::PRESSED:
-		pressed();
+		if (pressed)
+			pressed();
 		break;
 	case InputEvent::RELEASED:
-		released();
+		if (released)
+			released();
 		break;
 	default:
 		break;

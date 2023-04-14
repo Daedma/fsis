@@ -1,12 +1,13 @@
 #include "render/Camera.hpp"
+#include <cmath>
 
 Camera::~Camera() {}
 
 static Transform getIsometricTransform()
 {
-	Transform rotm45y = mathter::RotationAxis(mathter::Deg2Rad(-45), 1);
-	Transform rotm30x = mathter::RotationAxis(mathter::Deg2Rad(-30), 0);
-	return rotm30x * rotm45y;
+	Transform rotm45z = mathter::RotationAxis(mathter::Deg2Rad(45), 2);
+	Transform rotm35x = mathter::RotationAxis(std::asin(1.f / std::sqrt(3.f)), 0);
+	return rotm45z * rotm35x;
 }
 
 const Transform Camera::ISOMETRIC = getIsometricTransform();

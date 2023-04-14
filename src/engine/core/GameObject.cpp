@@ -1,7 +1,7 @@
 #include "core/GameObject.hpp"
 #include "core/World.hpp"
 
-GameObject::GameObject(World* world):
+GameObject::GameObject(World* world) :
 	m_world(world)
 {
 	m_world->registry(this);
@@ -26,9 +26,16 @@ void GameObject::activate()
 
 void GameObject::setTickGroup(TickGroups tickGroup)
 {
-	m_world->unregistry(this);
-	m_tickgroup = tickGroup;
-	m_world->registry(this);
+	if (m_world)
+	{
+		m_world->unregistry(this);
+		m_tickgroup = tickGroup;
+		m_world->registry(this);
+	}
+	else
+	{
+		m_tickgroup = tickGroup;
+	}
 }
 
 void GameObject::onDestroyed() {}

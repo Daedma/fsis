@@ -47,6 +47,7 @@ void Canvas::draw()
 	{
 		return;
 	}
+	m_window->clear();
 	if (m_camera && !m_primitives.empty())
 	{
 		Transform cameraTransform = m_camera->getProjectionMatrix();
@@ -73,9 +74,9 @@ sf::Transform Canvas::getToScreenTransform(const Transform& transform) const
 	float maxDimension = eastl::max_alt(m_window->getSize().x, m_window->getSize().y);
 	Transform projection = transform * Transform(mathter::Scale(maxDimension, maxDimension, 0.f));
 	sf::Transform trans2d(
-		projection(0, 0), projection(0, 1), projection(0, 3),
-		projection(1, 0), projection(1, 1), projection(1, 3),
-		projection(3, 0), projection(3, 1), projection(3, 3)
+		projection(0, 0), projection(0, 1), projection(3, 0),
+		projection(1, 0), projection(1, 1), projection(3, 1),
+		projection(0, 3), projection(1, 3), projection(3, 3)
 	);
 	return trans2d;
 }
