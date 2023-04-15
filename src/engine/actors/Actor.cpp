@@ -61,7 +61,7 @@ void Actor::attachComponent(ActorComponent* component)
 
 void Actor::setPosition(const Vector3f& position) { m_rootComponent->setPosition(position); }
 
-void Actor::setScale(const Vector3f& scale) { m_rootComponent->setPosition(scale); }
+void Actor::setScale(const Vector3f& scale) { m_rootComponent->setScale(scale); }
 
 void Actor::setRotation(const Rotator& rotation) { m_rootComponent->setRotation(rotation); }
 
