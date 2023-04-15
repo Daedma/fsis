@@ -5,10 +5,11 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <EASTL/hash_map.h>
+#include <EASTL/fixed_list.h>
 
 class Character;
 
-class PlayerController: public Controller, public InputEventListener
+class PlayerController : public Controller, public InputEventListener
 {
 public:
 
@@ -16,9 +17,11 @@ public:
 
 	PlayerController() = default;
 
-	PlayerController(Character* character): Controller(character) {}
+	PlayerController(Character* character) : Controller(character) {}
 
 	virtual void processInput(const sf::Event& event) override;
+
+	virtual void tick(float deltaSeconds) override;
 
 	static bool isKeyPressed(KeyCode key) { return sf::Keyboard::isKeyPressed(key); }
 
@@ -34,6 +37,8 @@ private:
 	eastl::hash_map<KeyCode, ActionID> m_keyMapping;
 
 	eastl::hash_map<KeyCode, float> m_keyAxisMapping;
+
+	eastl::fixed_list<KeyCode, KeyCode::KeyCount> m_pressedAxisKeys;
 
 	// Note: for more universality need to add a mouse's strutures,
 	// but now we don't need it

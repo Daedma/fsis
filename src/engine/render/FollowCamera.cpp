@@ -5,7 +5,8 @@ void FollowCamera::updatePosition()
 {
 	if (m_target)
 	{
-		Vector3f position = m_target->getPosition();
+		Vector3f position = m_target->getPosition() * getView();
+		setDistance(getDistance() + position.z);
 		setPosition(position.xy);
 	}
 }

@@ -67,6 +67,8 @@ public:
 
 	virtual ~Controller();
 
+	virtual void tick(float deltaSeconds);
+
 	void possess(Character* character);
 
 	template<typename UserObject>

@@ -10,6 +10,10 @@ class Camera
 
 	float m_distance = 0.f;
 
+	/**
+	 * @brief How much units placed in pixel
+	 *
+	 */
 	float m_scale = 480.f;
 
 public:
@@ -47,7 +51,7 @@ public:
 	Transform getProjectionMatrix()
 	{
 		updatePosition();
-		Vector3f position{ m_position, 0.f };
+		Vector3f position{ m_position.x, m_position.y, m_distance };
 		Transform projection = mathter::Orthographic(position - m_scale / 2, position + m_scale / 2, 1.f, -1.f);
 		return m_transform * projection;
 	}

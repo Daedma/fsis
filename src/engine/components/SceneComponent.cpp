@@ -38,34 +38,37 @@ void SceneComponent::attachToActor(Actor* actor)
 
 void SceneComponent::setPosition(const Vector3f& position)
 {
-	Transform trans = mathter::Translation(position);
-	Transform sc = mathter::Scale(m_scale);
-	Transform rot = Transform(m_rotation);
-	m_transform = sc * trans * rot;
+	Transform t = mathter::Translation(position);
+	Transform s = mathter::Scale(m_scale);
+	Transform r = Transform(m_rotation);
+	m_transform = t * s * r;
 	m_position = position;
 }
 
 void SceneComponent::setScale(const Vector3f& scale)
 {
-	Transform trans = mathter::Translation(m_position);
-	Transform sc = mathter::Scale(scale);
-	Transform rot = Transform(m_rotation);
-	m_transform = sc * trans * rot;
+	Transform t = mathter::Translation(m_position);
+	Transform s = mathter::Scale(scale);
+	Transform r = Transform(m_rotation);
+	m_transform = t * s * r;
 	m_scale = scale;
 }
 
 void SceneComponent::setRotation(const Rotator& rotation)
 {
-	Transform trans = mathter::Translation(m_position);
-	Transform sc = mathter::Scale(m_scale);
-	Transform rot = Transform(rotation);
-	m_transform = sc * trans * rot;
+	Transform t = mathter::Translation(m_position);
+	Transform s = mathter::Scale(m_scale);
+	Transform r = Transform(rotation);
+	m_transform = t * s * r;
 	m_rotation = rotation;
 }
 
 void SceneComponent::orientByDirection(const Vector3f& direction)
 {
-	float pitch = std::asin(direction.z);
-	float yaw = std::asin(direction.y);
-	setRotation(mathter::RotationRPY(0.f, pitch, yaw));
+	const static Vector3f xAxis(1, 0, 0);
+	Vector3f axis = mathter::Cross(xAxis, direction);
+	float angle = mathter::Dot(xAxis, direction);
+	Rotator rot = mathter::RotationAxisAngle(axis, angle);
+	Rotator normRot(mathter::Normalize(rot.vec));
+	setRotation(normRot);
 }

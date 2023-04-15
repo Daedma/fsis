@@ -5,7 +5,7 @@
  * @brief
  * Types of tickable objects
  */
-enum class TickGroups: uint8_t
+enum class TickGroups : uint8_t
 {
 	PREPHYSIC,
 	PHYSIC,

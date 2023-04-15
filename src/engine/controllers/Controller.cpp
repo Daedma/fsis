@@ -1,7 +1,7 @@
 #include "controllers/Controller.hpp"
 #include "actors/Character.hpp"
 
-Controller::Controller(Character* character):
+Controller::Controller(Character* character) :
 	m_marionette(character)
 {
 	if (character)
@@ -14,6 +14,8 @@ Controller::Controller(Character* character):
 }
 
 Controller::~Controller() {}
+
+void Controller::tick(float deltaSeconds) {}
 
 void Controller::possess(Character* character)
 {

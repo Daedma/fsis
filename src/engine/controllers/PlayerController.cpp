@@ -21,7 +21,7 @@ void PlayerController::processInput(const sf::Event& event)
 		bool isAxisEvent = value != m_keyAxisMapping.end() && keyEvent == InputEvent::PRESSED;
 		if (isAxisEvent)
 		{
-			execute(actionID->second, value->second);
+			m_pressedAxisKeys.push_back(event.key.code);
 		}
 		else
 		{
@@ -29,4 +29,25 @@ void PlayerController::processInput(const sf::Event& event)
 		}
 	}
 
+}
+
+void PlayerController::tick(float deltaSeconds)
+{
+	for (auto i = m_pressedAxisKeys.begin(); i != m_pressedAxisKeys.end(); ++i)
+	{
+		if (isKeyPressed(*i))
+		{
+			ActionID actionID = m_keyMapping.at(*i);
+			auto value = m_keyAxisMapping.find(*i);
+			execute(actionID, value->second);
+		}
+		else
+		{
+			i = m_pressedAxisKeys.erase(i);
+			if (i == m_pressedAxisKeys.end())
+			{
+				break;
+			}
+		}
+	}
 }

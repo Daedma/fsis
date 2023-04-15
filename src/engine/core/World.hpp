@@ -19,6 +19,8 @@ private:
 	eastl::vector_set<GameObject*> m_phys;
 	eastl::vector_set<GameObject*> m_postphys;
 
+	//TODO Add controllers group
+
 	eastl::vector<eastl::unique_ptr<Actor>> m_actors;
 
 	bool m_isFinished = false;

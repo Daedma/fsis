@@ -18,6 +18,7 @@ Canvas::~Canvas() {}
 void Canvas::setWindow(sf::RenderWindow* window)
 {
 	m_window.reset(window);
+	m_window->setKeyRepeatEnabled(false);
 }
 
 void Canvas::setHUD(HUD* hud)
@@ -54,7 +55,7 @@ void Canvas::draw()
 		eastl::sort(m_primitives.begin(), m_primitives.end(),
 			[&cameraTransform](PrimitiveComponent* lhs, PrimitiveComponent* rhs) {
 				Vector3f z(0.f, 0.f, 1.f);
-				return (z * lhs->getWorldTransform() * cameraTransform).z <
+				return (z * lhs->getWorldTransform() * cameraTransform).z >
 					(z * rhs->getWorldTransform() * cameraTransform).z;
 			});
 		for (PrimitiveComponent* i : m_primitives)
@@ -71,13 +72,15 @@ void Canvas::draw()
 
 sf::Transform Canvas::getToScreenTransform(const Transform& transform) const
 {
-	float maxDimension = eastl::max_alt(m_window->getSize().x, m_window->getSize().y);
-	Transform projection = transform * Transform(mathter::Scale(maxDimension, maxDimension, 0.f));
-	sf::Transform trans2d(
-		projection(0, 0), projection(0, 1), projection(3, 0),
-		projection(1, 0), projection(1, 1), projection(3, 1),
-		projection(0, 3), projection(1, 3), projection(3, 3)
-	);
+	float minDimension = eastl::min_alt(m_window->getSize().x, m_window->getSize().y);
+	Transform projection = transform * Transform(mathter::Scale(minDimension, minDimension, 1.f));
+	Vector3f translation = TSR::getTranslation(projection);
+	Vector3f scale = TSR::getScale(projection);
+	// We don't need rotation for 2d srites
+	sf::Transform trans2d;
+	// Center Camera
+	trans2d.translate(translation.x + m_window->getSize().x / 2, translation.y + m_window->getSize().y / 2);
+	trans2d.scale(scale.x, scale.y);
 	return trans2d;
 }
 

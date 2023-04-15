@@ -31,24 +31,23 @@ void MovementComponent::disableGravity()
 
 void MovementComponent::move(const Vector3f& direction)
 {
-	m_accumulatedMovement += direction * getSpeed();
+	m_accumulatedMovement += direction;
 }
 
 void MovementComponent::tick(float deltaSeconds)
 {
-	getOwner()->move(m_accumulatedMovement * deltaSeconds); // Apply input
+	if (float distance = mathter::Length(m_accumulatedMovement);distance)
+	{
+		Vector3f movement = m_accumulatedMovement * getSpeed() / distance;
+		getOwner()->move(movement * deltaSeconds); // Apply input
+	}
 	m_speed = (getOwner()->getPosition() - m_lastPosition) / deltaSeconds; // Correct speed
 	m_speed += m_acceleration; // Apply acceleration
+	// FIXME Acceleration doesn't work
 	getOwner()->move((m_speed - m_accumulatedMovement) * deltaSeconds); // Apply acceleration difference
-	if (b_orientRotationToMovement)
+	if (b_orientRotationToMovement && !mathter::IsNullvector(m_speed))
 	{
-		float length = mathter::Length(m_speed);
-		if (length)
-		{
-			float pitch = std::asin(m_speed.z / length);
-			float yaw = std::asin(m_speed.x / length);
-			getOwner()->setRotation(mathter::RotationRPY(0.f, pitch, yaw));
-		}
+		getOwner()->orientByDirection(mathter::Normalize(m_speed));
 	}
 	m_lastPosition = getOwner()->getPosition();
 	m_accumulatedMovement = { 0.f, 0.f, 0.f };
