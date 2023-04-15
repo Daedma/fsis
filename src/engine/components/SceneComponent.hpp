@@ -48,6 +48,8 @@ private:
 	 */
 	Rotator m_rotation = mathter::Identity();
 
+	Vector3f  m_forwardVector = { 1.f, 0.f, 0.f };
+
 public:
 	/**
 	 * @brief Construct a new Scene Component object
@@ -102,12 +104,30 @@ public:
 		return m_parent ? m_parent->getWorldTransform() * m_transform : m_transform;
 	}
 
-/**
- * @brief Get the relative transform of the object
- *
- * @return Relative transform matrix
- */
+	/**
+	 * @brief Get the relative transform of the object
+	 *
+	 * @return Relative transform matrix
+	 */
 	const Transform& getRelativeTransform() const { return m_transform; }
+
+	/**
+	 * @brief Set the Forward Vector object
+	 *
+	 * @param direction
+	 */
+	void setForwardVector(const Vector3f& direction)
+	{
+		EASTL_ASSERT(mathter::IsNormalized(direction));
+		m_forwardVector = direction;
+	}
+
+/**
+ * @brief Get the Forward Vector object
+ *
+ * @return const Vector3f&
+ */
+	const Vector3f& getForwardVector() const { return m_forwardVector; }
 
 	/**
 	 * @brief Set the relative position
@@ -166,6 +186,7 @@ public:
 	 * @brief Orient this component by vector
 	 *
 	 * @param direction normalized vector of direction
+	 * @note DONT USE IF YOU DONT WANT GRAPHIC BUGS
 	 */
 	void orientByDirection(const Vector3f& direction);
 

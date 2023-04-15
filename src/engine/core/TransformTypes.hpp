@@ -18,14 +18,23 @@ namespace TSR
 		return { transform(3, 0), transform(3, 1), transform(3, 2) };
 	}
 
+	// DONT WORK
 	inline Vector3f getScale(const  Transform& transform)
 	{
 		return {
 			mathter::Length(Vector3f{ transform(0, 0), transform(1, 0), transform(2, 0) }),
 			mathter::Length(Vector3f{ transform(0, 1), transform(1, 1), transform(2, 1) }),
 			mathter::Length(Vector3f{ transform(0, 2), transform(1, 2), transform(2, 2) }) };
+		// mathter::Matrix<float, 3, 3> m(transform(0, 0), transform(1, 0), transform(2, 0),
+		// 	transform(0, 1), transform(1, 1), transform(2, 1),
+		// 	transform(0, 2), transform(1, 2), transform(2, 2));
+		// auto [S, V, D] = mathter::DecomposeSVD(m);
+		// return { V(0, 0), V(1, 1), V(2, 2) };
+		// auto [Q, R] = mathter::DecomposeQR(transform);
+		// return { R(0, 0), R(1, 1), R(2, 2) };
 	}
 
+	// DONT WORK
 	inline Transform getRotation(const Transform& transform, const Vector3f& scale)
 	{
 		return Transform{

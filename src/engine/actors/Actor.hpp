@@ -17,7 +17,7 @@ class ActorComponent;
  * World is owner of all actors.
  *
  */
-class Actor: public GameObject
+class Actor : public GameObject
 {
 protected:
 	/**
@@ -78,6 +78,20 @@ public:
 	 * @note Not recomended to use. Use ActorComponent::destroy instead
 	 */
 	void destroyComponent(ActorComponent* comp);
+
+	/**
+	 * @brief Set the Forward Vector object
+	 *
+	 * @param direction new normalized forward vector
+	 */
+	void setForwardVector(const Vector3f& direction);
+
+	/**
+	 * @brief Get the Forward Vector object
+	 *
+	 * @return const Vector3f&
+	 */
+	const Vector3f& getForwardVector() const;
 
 	/**
 	 * @brief Set the position
@@ -148,14 +162,6 @@ public:
 	 * @return last movement vector
 	 */
 	const Vector3f& getLastMovement() const { return m_lastMovement; }
-
-	/**
-	 * @brief get the direction where the actor is "looking"
-	 *
-	 * @return Vector3f
-	 * @note "face" of actor is looking along x-axis
-	 */
-	Vector3f getForwardVector() const;
 
 private:
 	/**

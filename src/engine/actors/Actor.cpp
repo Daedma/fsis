@@ -3,7 +3,7 @@
 #include "core/World.hpp"
 #include "EASTL/algorithm.h"
 
-Actor::Actor(World* world): GameObject(world), m_rootComponent(new SceneComponent(this)) {}
+Actor::Actor(World* world) : GameObject(world), m_rootComponent(new SceneComponent(this)) {}
 
 Actor::~Actor() {}
 
@@ -37,10 +37,14 @@ void Actor::rotate(const Rotator& rotation)
 	setRotation(rotation * getRotation());
 }
 
-Vector3f Actor::getForwardVector() const
+void Actor::setForwardVector(const Vector3f& direction)
 {
-	Transform rotation = Transform(getRotation());
-	return Vector3f{ 1.f, 0.f, 0.f } *rotation;
+	m_rootComponent->setForwardVector(direction);
+}
+
+const Vector3f& Actor::getForwardVector() const
+{
+	return m_rootComponent->getForwardVector();
 }
 
 void Actor::attachComponent(ActorComponent* component)
