@@ -41,7 +41,7 @@ void SceneComponent::setPosition(const Vector3f& position)
 	Transform t = mathter::Translation(position);
 	Transform s = mathter::Scale(m_scale);
 	Transform r = Transform(m_rotation);
-	m_transform = t * s * r;
+	m_transform = s * t * r;
 	m_position = position;
 }
 
@@ -50,7 +50,7 @@ void SceneComponent::setScale(const Vector3f& scale)
 	Transform t = mathter::Translation(m_position);
 	Transform s = mathter::Scale(scale);
 	Transform r = Transform(m_rotation);
-	m_transform = t * s * r;
+	m_transform = s * t * r;
 	m_scale = scale;
 }
 
@@ -59,7 +59,7 @@ void SceneComponent::setRotation(const Rotator& rotation)
 	Transform t = mathter::Translation(m_position);
 	Transform s = mathter::Scale(m_scale);
 	Transform r = Transform(rotation);
-	m_transform = t * s * r;
+	m_transform = s * t * r;
 	m_rotation = rotation;
 }
 

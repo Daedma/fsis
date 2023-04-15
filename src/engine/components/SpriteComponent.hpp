@@ -70,6 +70,8 @@ public:
 
 	void setOrigin(uint8_t mask);
 
+	uint8_t getOrigin() const { return m_origin; }
+
 	//TODO make more fit texture usage interface
 
 	sf::Sprite* getSprite() const { return m_sprite.get(); }
