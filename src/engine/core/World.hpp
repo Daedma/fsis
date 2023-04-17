@@ -10,6 +10,7 @@ class GameObject;
 class Actor;
 class ActorComponent;
 class Character;
+class CollisionResolver;
 
 class World
 {
@@ -23,6 +24,8 @@ private:
 
 	eastl::vector<eastl::unique_ptr<Actor>> m_actors;
 
+	eastl::unique_ptr<CollisionResolver> m_collision;
+
 	bool m_isFinished = false;
 
 	float m_globalAcceleration = -9.8f;
@@ -32,14 +35,14 @@ private:
 		bool operator()(ActorComponent* lhs, ActorComponent* rhs);
 	};
 
-	// static constexpr auto m_comp = [](ActorComponent* lhs, ActorComponent* rhs) {return lhs->getDepth() < rhs->getDepth();};
-
 	eastl::queue<Actor*> m_actorsToDestroy;
 	eastl::priority_queue<ActorComponent*, eastl::vector<ActorComponent*>, ActorComponentPriorityCompare>
 		m_componentsToDestroy;
 
 public:
 	~World();
+
+	CollisionResolver* getCollisionResolver() const { return m_collision.get(); }
 
 	void tick(float deltaSeconds);
 
