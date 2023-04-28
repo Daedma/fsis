@@ -5,6 +5,8 @@
 
 using Transform = mathter::Matrix<float, 4, 4>;
 
+using Vector4f = mathter::Vector<float, 4>;
+
 using Vector3f = mathter::Vector<float, 3>;
 
 using Vector2f = mathter::Vector<float, 2>;

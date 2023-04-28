@@ -39,7 +39,7 @@ public:
 
 	virtual void tick(float deltaSeconds) override;
 
-	bool isMayIntersects(CollisionComponent* other)
+	bool isMayIntersects(CollisionComponent* other) const
 	{
 		return getAABB().isIntersects(other->getAABB());
 	}
@@ -69,7 +69,7 @@ protected:
 	{
 		Vector3f upperCorner, lowerCorner;
 
-		bool isIntersects(const AABB& other)
+		bool isIntersects(const AABB& other) const
 		{
 			float d1x = lowerCorner.x - other.upperCorner.x;
 			float d1y = lowerCorner.y - other.upperCorner.y;

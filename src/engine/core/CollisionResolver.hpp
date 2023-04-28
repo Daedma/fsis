@@ -1,6 +1,7 @@
 #pragma once
 
 #include <EASTL/vector.h>
+#include <EASTL/list.h>
 #include <EASTL/stack.h>
 #include <EASTL/utility.h>
 #include <EASTL/fixed_vector.h>
@@ -29,115 +30,48 @@ public:
 	void tick(float deltaSeconds);
 
 private:
-	using Simplex = eastl::fixed_vector<Vector3f, 5>;
+	using Simplex = eastl::fixed_vector<Vector3f, 4>;
 
-	eastl::vector<CollisionComponent*> getOverlapCandidates(CollisionComponent* component) const;
+	eastl::vector<CollisionComponent*> getOverlapCandidates(const CollisionComponent* component) const;
+
+	// GJK
+
+	static Vector3f getSupportPoint(const CollisionComponent* lhs, const CollisionComponent* rhs, const Vector3f& direction)
+	{
+		return lhs->supportMapping(direction) - rhs->supportMapping(-direction);
+	}
+
+	static bool isSameDirection(const Vector3f& direction, const Vector3f& ao)
+	{
+		return mathter::Dot(direction, ao) > 0;
+	}
 
 	/**
 	 * @brief Implements the Gilbert-Johnson-Keerthi distance algorithm.
 	 *
-	 * @param lhs - convex shape
-	 * @param rhs - convex shape
+	 * @param lhs convex shape
+	 * @param rhs convex shape
 	 * @return simplex, if shapes are intersects, else - nothing
 	 */
-	static eastl::optional<Vector3f> GJK(CollisionComponent* lhs, CollisionComponent* rhs);
+	static eastl::optional<Simplex> GJK(const CollisionComponent* lhs, const CollisionComponent* rhs);
 
-	static bool setNextSimplex(Simplex& currentSimplex, const Vector3f& newSupportPoint, Vector3f& outClosestPoint);
+	static bool nextSimplex(Simplex& points, Vector3f& direction);
 
-	/**
-	 * @brief Iterate vertexes in currentSimple to create new nearest point to origin.
-	 *
-	 * @tparam number of vertexes in @p currentSimplex
-	 * @param currentSimplex W
-	 * @param newSupportPoint w
-	 * @param outClosestPoint v
-	 * @return New "smallest" simplex
-	 */
-	template<uint32_t S>
-	static Simplex findNextSimplex(const Simplex& currentSimplex, const Vector3f& newSupportPoint, Vector3f& outClosestPoint);
+	static bool line(Simplex& points, Vector3f& direction);
 
-	struct MinkowskiDiff
-	{
-	private:
-		CollisionComponent* m_first;
-		CollisionComponent* m_second;
+	static bool triangle(Simplex& points, Vector3f& direction);
 
-	public:
-		MinkowskiDiff(CollisionComponent* first, CollisionComponent* second) :
-			m_first(first), m_second(second)
-		{}
+	static bool tetrahedron(Simplex& points, Vector3f& direction);
 
-		Simplex initSimplex() const;
+	// EPA
 
-		/**
-		* @brief get support point in Minkovski difference of two shapes
-		* (by Stephen Cameron)
-		* @param direction direction
-		* @return support point
-		*/
-		Vector3f getSupportPoint(const Vector3f& direction) const;
+	static Vector3f getPenetrationDepth(const Simplex& simplex, const CollisionComponent* lhs, const CollisionComponent* rhs);
 
-		Vector3f getClosestPointToOrigin(const Simplex& simplex) const;
+	static eastl::pair<eastl::vector<Vector4f>, size_t> getFaceNormals(const eastl::vector<Vector3f>& polytope,
+		const eastl::vector<size_t>& faces);
 
-		void toBestSimplex(Simplex& simplex);
-	};
+	static void addIfUniqueEdge(eastl::vector<eastl::pair<size_t, size_t>>& edges,
+		const eastl::vector<size_t>& faces, size_t a, size_t b);
 
-
-
-	static Vector3f getPenetrationDepth(const Simplex& simplex);
-
-	void tagAsProcessed(CollisionComponent* collision);
+	void tagAsProcessed(const CollisionComponent* collision);
 };
-
-template<uint32_t S>
-CollisionResolver::Simplex CollisionResolver::findNextSimplex(const Simplex& currentSimplex, const Vector3f& newSupportPoint, Vector3f& outClosestPoint)
-{
-	constexpr uint32_t dimCount = eastl::max(S + 1, 3);
-
-	// Initialization
-	mathter::Matrix<float, dimCount, dimCount> lambdaSystem;
-	for (uint8_t i = 0; i != dimCount; ++i)
-	{
-		lambdaSystem(0, i) = 1;
-	}
-	mathter::Vector<float, dimCount> b(0.f);
-	b(0) = 1;
-	mathter::Vector<float, dimCount> lambda;
-
-	auto comparator = [](const Vector3f& lhs, const Vector3f& rhs) {
-		return eastl::lexicographical_compare(lhs.cbegin(), lhs.cend(), rhs.cbegin(), rhs.cend());
-	};
-	Simplex curPermutation;
-	curPermutation.emplace_back(newSupportPoint);
-	eastl::copy(currentSimplex.cbegin(), currentSimplex.cend(), eastl::back_inserter(curPermutation));
-	eastl::sort(curPermutation.begin() + 1, curPermutation.end(), comparator);
-
-	// Iterations
-	do
-	{
-		// Fill system
-		for (uint8_t i = 1; i != lambdaSystem.Height(); ++i) // rows
-		{
-			Vector3f diff = curPermutation[i] - curPermutation[0]; // (w_i - w_0)
-			// w_0 = newSupportPoint, because newSupportPoint is always in next simplex
-			for (uint8_t j = 0; j != lambdaSystem.Width(); ++j) // columns
-			{
-				lambdaSystem(i, j) = mathter::Dot(diff, curPermutation[j]);
-			}
-		}
-		// Solve system
-		lambda = mathter::DecomposeLU(lambdaSystem).Solve(b);
-		if (eastl::any_of(lambda.cbegin(), lambda.cend(), [](float val) {return val > 0.f;}))
-		{
-			for (uint8_t i = 0; i != dimCount; ++i)
-			{
-				outClosestPoint += lambda[i] * curPermutation[i];
-			}
-			return Simplex{};
-		}
-	} while (eastl::next_permutation(curPermutation.begin() + 1, curPermutation.end(), comparator));
-	// FIXME Excesive iterations
-
-	// Fail
-	return {};
-}
