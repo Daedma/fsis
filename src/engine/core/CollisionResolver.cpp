@@ -21,21 +21,37 @@ void CollisionResolver::unregistry(CollisionComponent* collision)
 	m_beginProcessed = m_collisions.end();
 }
 
+void CollisionResolver::tick(float deltaSeconds)
+{
+	while (!m_actorsToResolve.empty())
+	{
+		m_actorsToResolve.top().first->move(m_actorsToResolve.top().second);
+		m_actorsToResolve.pop();
+	}
+}
+
 void CollisionResolver::resolve(CollisionComponent* collision)
 {
 	eastl::vector<CollisionComponent*> candidates = getOverlapCandidates(collision); // broadcast phase
-	for (auto i : candidates)
+	for (auto i : candidates) // narrow phase
 	{
 		auto simplex = GJK(collision, i);
+		// One directional check, may be wrong and must be fixed
 		if (simplex) // if intersects
 		{
-			// find penetration depth
-			Vector3f pd = getPenetrationDepth(simplex.value(), collision, i);
-			float firstMovement = mathter::LengthSquared(collision->getOwner()->getLastMovement());
-			float seconddMovement = mathter::LengthSquared(i->getOwner()->getLastMovement());
-			float sumMovement = firstMovement + seconddMovement;
-			collision->getOwner()->move(pd * seconddMovement / sumMovement);
-			i->getOwner()->move(pd * firstMovement / sumMovement);
+			bool isBlocking = collision->getOverlapRule(i->getOwner()->getGroup()) == CollisionComponent::OverlapRules::BLOCKING;
+			if (isBlocking)
+			{
+				// find penetration depth
+				Vector3f pd = getPenetrationDepth(simplex.value(), collision, i);
+				float firstMovement = mathter::Length(collision->getOwner()->getLastMovement());
+				float secondMovement = mathter::Length(i->getOwner()->getLastMovement());
+				float invSumMovement = 1.f / (firstMovement + secondMovement);
+				m_actorsToResolve.emplace(collision->getOwner(), firstMovement * invSumMovement * pd);
+				m_actorsToResolve.emplace(i->getOwner(), -secondMovement * invSumMovement * pd);
+			}
+			collision->overlap(i);
+			i->overlap(collision);
 		}
 	}
 	tagAsProcessed(collision);
@@ -44,7 +60,7 @@ void CollisionResolver::resolve(CollisionComponent* collision)
 void CollisionResolver::tagAsProcessed(const CollisionComponent* collision)
 {
 	if (m_beginProcessed == m_collisions.begin()) return;
-	auto pos = eastl::find(m_collisions.begin(), m_collisions.end(), collision);
+	auto pos = eastl::find(m_collisions.begin(), m_beginProcessed, collision);
 	--m_beginProcessed;
 	eastl::swap(*pos, *m_beginProcessed);
 }
@@ -54,7 +70,11 @@ eastl::vector<CollisionComponent*> CollisionResolver::getOverlapCandidates(const
 	eastl::vector<CollisionComponent*> candidates;
 	for (auto i = m_collisions.cbegin(); i != m_beginProcessed; ++i)
 	{
-		if (*i != component && component->isMayIntersects(*i))
+		CollisionComponent::OverlapRules rule = component->getOverlapRule((*i)->getOwner()->getGroup());
+		bool isNotSame = *i != component;
+		bool isMayIntersect = component->isMayIntersects(*i);
+		bool isNotIgnored = rule != CollisionComponent::OverlapRules::IGNORE || rule != CollisionComponent::OverlapRules::NONE;
+		if (isNotSame && isMayIntersect && isNotIgnored)
 		{
 			candidates.emplace_back(*i);
 		}

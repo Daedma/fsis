@@ -2,6 +2,7 @@
 // #include "components/SceneComponent.hpp"
 #include "core/GameObject.hpp"
 #include "core/TransformTypes.hpp"
+#include "actors/ActorGroups.hpp"
 #include "EASTL/unique_ptr.h"
 #include "EASTL/vector.h"
 
@@ -163,6 +164,12 @@ public:
 	 */
 	const Vector3f& getLastMovement() const { return m_lastMovement; }
 
+	ActorsGroups getGroup() const { return m_group; }
+
+protected:
+
+	void setGroup(ActorsGroups group) { m_group = group; }
+
 private:
 	/**
 	 * @brief Accumulate all moves at this tick
@@ -175,5 +182,7 @@ private:
 	 *
 	 */
 	eastl::vector<eastl::unique_ptr<ActorComponent>> m_components;
+
+	ActorsGroups m_group = ActorsGroups::ACTORS;
 
 };

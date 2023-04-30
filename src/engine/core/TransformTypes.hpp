@@ -11,6 +11,14 @@ using Vector3f = mathter::Vector<float, 3>;
 
 using Vector2f = mathter::Vector<float, 2>;
 
+static const Vector3f X_AXIS = Vector3f{ 1.f, 0.f, 0.f };
+
+static const Vector3f Y_AXIS = Vector3f{ 0.f, 1.f, 0.f };
+
+static const Vector3f Z_AXIS = Vector3f{ 0.f, 0.f, 1.f };
+
+static const Vector3f ZERO_VECTOR = Vector3f{ 0.f, 0.f, 0.f };
+
 using Rotator = mathter::Quaternion<float>;
 
 namespace TSR

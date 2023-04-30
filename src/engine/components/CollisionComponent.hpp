@@ -1,33 +1,24 @@
 #pragma once
 
 #include "components/SceneComponent.hpp"
+#include "actors/ActorGroups.hpp"
 #include <EASTL/array.h>
 #include <EASTL/functional.h>
 
 class CollisionComponent : public SceneComponent
 {
-	friend CollisionResolver;
-
 public:
-	enum CollisionGroup
-	{
-		ACTORS,
-		MAP,
-		CHARACTERS,
-		ALL,
-		COLLISIONGROUPCOUNT
-	};
 
 	enum OverlapRules
 	{
 		BLOCKING, // Block movement
 		OVERLAP,  // Can overlap, generate event
 		IGNORE,   // Collision doesn't detect
-		NONE,     // Doen't set
+		NONE,     // Doesn't set
 		OVERLAPRULESCOUNT
 	};
 
-	using Tag = int;
+	using Tag = uint8_t;
 
 	using OnOverlapSignature = eastl::function<void(CollisionComponent* overlapedComponent)>;
 
@@ -44,25 +35,29 @@ public:
 		return getAABB().isIntersects(other->getAABB());
 	}
 
-	void setOverlapRule(CollisionGroup group, OverlapRules rule)
+	void setOverlapRule(ActorsGroups group, OverlapRules rule)
 	{
-		m_overlapRules[group] = rule;
+		m_overlapRules[static_cast<int>(group)] = rule;
 	}
 
-	OverlapRules getOverlapRule(CollisionGroup group)
+	OverlapRules getOverlapRule(ActorsGroups group) const
 	{
-		return m_overlapRules[group];
+		return m_overlapRules[static_cast<int>(group)];
 	}
 
 	void setTag(Tag tag) { m_tag = tag; }
 
 	Tag getTag() const { return m_tag; }
 
-protected:
-	OnOverlapSignature m_onOverlapEvent = nullptr;
+	void setOnOverlapEvent(OnOverlapSignature event) { m_onOverlapEvent = event; }
 
-	virtual void onAttached() override;
-
+	void overlap(CollisionComponent* overlapedComponent)
+	{
+		if (m_onOverlapEvent)
+		{
+			m_onOverlapEvent(overlapedComponent);
+		}
+	}
 	// Collision detection
 
 	struct AABB
@@ -88,13 +83,26 @@ protected:
 		}
 	};
 
-	virtual AABB getAABB() const = 0;
+	AABB getAABB() const
+	{
+		AABB aabb;
+		aabb.lowerCorner = Vector3f{ getSupportPoint(X_AXIS).x, getSupportPoint(Y_AXIS).y, getSupportPoint(Z_AXIS).z };
+		aabb.upperCorner = Vector3f{ getSupportPoint(-X_AXIS).x, getSupportPoint(-Y_AXIS).y, getSupportPoint(-Z_AXIS).z };
+		return aabb;
+	}
+
+	Vector3f getSupportPoint(const Vector3f& direction) const;
+
+protected:
+	OnOverlapSignature m_onOverlapEvent = nullptr;
+
+	virtual void onAttached() override;
 
 	virtual Vector3f supportMapping(const Vector3f& direction) const = 0;
 
 private:
-	eastl::array<OverlapRules, CollisionGroup::COLLISIONGROUPCOUNT> m_overlapRules =
-	{ OverlapRules::NONE, OverlapRules::NONE, OverlapRules::NONE, OverlapRules::NONE };
+	eastl::array<OverlapRules, static_cast<int>(ActorsGroups::COUNT)> m_overlapRules =
+	{ OverlapRules::NONE, OverlapRules::NONE, OverlapRules::NONE, OverlapRules::NONE, OverlapRules::NONE };
 
 	Tag m_tag;
 };
