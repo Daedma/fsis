@@ -36,10 +36,7 @@ private:
 
 	// GJK
 
-	static Vector3f getSupportPoint(const CollisionComponent* lhs, const CollisionComponent* rhs, const Vector3f& direction)
-	{
-		return lhs->getSupportPoint(direction) - rhs->getSupportPoint(-direction);
-	}
+	static Vector3f getSupportPoint(const CollisionComponent* lhs, const CollisionComponent* rhs, const Vector3f& direction);
 
 	static bool isSameDirection(const Vector3f& direction, const Vector3f& ao)
 	{

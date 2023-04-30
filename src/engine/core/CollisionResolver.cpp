@@ -5,6 +5,7 @@
 #include <EASTL/iterator.h>
 #include <EASTL/fixed_vector.h>
 #include <cmath>
+#include "log.hpp"
 
 void CollisionResolver::registry(CollisionComponent* collision)
 {
@@ -28,6 +29,7 @@ void CollisionResolver::tick(float deltaSeconds)
 		m_actorsToResolve.top().first->move(m_actorsToResolve.top().second);
 		m_actorsToResolve.pop();
 	}
+	m_beginProcessed = m_collisions.end();
 }
 
 void CollisionResolver::resolve(CollisionComponent* collision)
@@ -47,8 +49,8 @@ void CollisionResolver::resolve(CollisionComponent* collision)
 				float firstMovement = mathter::Length(collision->getOwner()->getLastMovement());
 				float secondMovement = mathter::Length(i->getOwner()->getLastMovement());
 				float invSumMovement = 1.f / (firstMovement + secondMovement);
-				m_actorsToResolve.emplace(collision->getOwner(), firstMovement * invSumMovement * pd);
-				m_actorsToResolve.emplace(i->getOwner(), -secondMovement * invSumMovement * pd);
+				m_actorsToResolve.emplace(collision->getOwner(), -firstMovement * invSumMovement * pd);
+				m_actorsToResolve.emplace(i->getOwner(), secondMovement * invSumMovement * pd);
 			}
 			collision->overlap(i);
 			i->overlap(collision);
@@ -68,7 +70,7 @@ void CollisionResolver::tagAsProcessed(const CollisionComponent* collision)
 eastl::vector<CollisionComponent*> CollisionResolver::getOverlapCandidates(const CollisionComponent* component) const
 {
 	eastl::vector<CollisionComponent*> candidates;
-	for (auto i = m_collisions.cbegin(); i != m_beginProcessed; ++i)
+	for (auto i = m_collisions.begin(); i != m_beginProcessed; ++i)
 	{
 		CollisionComponent::OverlapRules rule = component->getOverlapRule((*i)->getOwner()->getGroup());
 		bool isNotSame = *i != component;
@@ -87,7 +89,7 @@ eastl::vector<CollisionComponent*> CollisionResolver::getOverlapCandidates(const
 
 eastl::optional<CollisionResolver::Simplex> CollisionResolver::GJK(const CollisionComponent* lhs, const CollisionComponent* rhs)
 {
-	Vector3f support = getSupportPoint(lhs, rhs, { 1.f, 0.f, 0.f });
+	Vector3f support = getSupportPoint(lhs, rhs, X_AXIS);
 	Simplex	points;
 	points.push_back(support);
 	Vector3f direction = -support;
@@ -105,6 +107,11 @@ eastl::optional<CollisionResolver::Simplex> CollisionResolver::GJK(const Collisi
 		}
 	}
 	return {};
+}
+
+Vector3f CollisionResolver::getSupportPoint(const CollisionComponent* lhs, const CollisionComponent* rhs, const Vector3f& direction)
+{
+	return lhs->getSupportPoint(direction) - rhs->getSupportPoint(-direction);
 }
 
 bool CollisionResolver::nextSimplex(Simplex& points, Vector3f& direction)
@@ -152,7 +159,7 @@ bool CollisionResolver::triangle(Simplex& points, Vector3f& direction)
 	{
 		if (isSameDirection(ac, ao))
 		{
-			points = { a, c };
+			points.assign({ a, c });
 			direction = mathter::Cross(mathter::Cross(ac, ao), ac);
 		}
 		else

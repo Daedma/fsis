@@ -5,3 +5,6 @@
 #include "components/PrimitiveComponent.hpp"
 #include "components/SceneComponent.hpp"
 #include "components/SpriteComponent.hpp"
+#include "components/CollisionComponent.hpp"
+#include "components/SphereComponent.hpp"
+#include "components/BoxComponent.hpp"

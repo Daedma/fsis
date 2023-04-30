@@ -22,6 +22,7 @@ void SceneComponent::attachComponent(SceneComponent* child)
 	m_childs.emplace_back(child);
 	child->initWorld(getWorld());
 	child->m_parent = this;
+	child->m_owner = getOwner();
 	child->onAttached();
 }
 

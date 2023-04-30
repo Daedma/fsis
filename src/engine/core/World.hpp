@@ -4,13 +4,14 @@
 #include "EASTL/priority_queue.h"
 #include "EASTL/unique_ptr.h"
 #include "EASTL/vector.h"
-// #include "components/ActorComponent.hpp"
+#include <core/TransformTypes.hpp>
 
 class GameObject;
 class Actor;
 class ActorComponent;
 class Character;
 class CollisionResolver;
+class Controller;
 
 class World
 {
@@ -20,7 +21,7 @@ private:
 	eastl::vector_set<GameObject*> m_phys;
 	eastl::vector_set<GameObject*> m_postphys;
 
-	//TODO Add controllers group
+	eastl::vector<eastl::unique_ptr<Controller>> m_controllers;
 
 	eastl::vector<eastl::unique_ptr<Actor>> m_actors;
 
@@ -41,6 +42,8 @@ private:
 
 public:
 	~World();
+
+	World();
 
 	CollisionResolver* getCollisionResolver() const { return m_collision.get(); }
 
@@ -70,13 +73,21 @@ public:
 
 	void destroyComponent(ActorComponent* component) { m_componentsToDestroy.emplace(component); }
 
-	/**
-	 * @brief Spawn actor in the world
-	 *
-	 * @param actor actor to spawned
-	 */
-	void spawnActor(Actor* actor); //TODO allow user to specify spawn position
-	//TODO make template version with return value
+	template<typename T>
+	T* spawnActor(const Vector3f& pos = ZERO_VECTOR)
+	{
+		T* actor = new T(this);
+		spawnActor(actor, pos);
+		return actor;
+	}
+
+	template<typename T>
+	T* spawnController()
+	{
+		T* controller = new T();
+		spawnController(controller);
+		return controller;
+	}
 
 	/**
 	 * @brief Get the gravitational acceleration of the world
@@ -90,4 +101,14 @@ public:
 private:
 	void execDestroy();
 
+	/**
+	 * @brief Spawn actor in the world
+	 *
+	 * @param actor actor to spawned
+	 *
+	 * @note Not recommendet, use template version instead
+	 */
+	void spawnActor(Actor* actor, const Vector3f& pos = ZERO_VECTOR);
+
+	void spawnController(Controller* controller);
 };

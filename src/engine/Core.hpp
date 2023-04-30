@@ -5,3 +5,4 @@
 #include "core/InputEventListener.hpp"
 #include "core/TransformTypes.hpp"
 #include "core/World.hpp"
+#include "core/CollisionResolver.hpp"

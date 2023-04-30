@@ -1,6 +1,5 @@
 #pragma once 
 #include "core/GameObject.hpp"
-// #include "actors/Actor.hpp"
 
 class Actor;
 
@@ -9,9 +8,9 @@ class Actor;
  * Actor is owner of component. Component lifetime is actor depends.
  * Each component may has only one owner.
  */
-class ActorComponent: public GameObject
+class ActorComponent : public GameObject
 {
-private:
+protected:
 	Actor* m_owner = nullptr;
 
 public:

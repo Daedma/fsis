@@ -3,8 +3,12 @@
 #include "actors/Actor.hpp"
 #include "core/GameObject.hpp"
 #include "World.hpp"
+#include "core/CollisionResolver.hpp"
+#include "controllers/Controller.hpp"
 
 World::~World() {}
+
+World::World() : m_collision(new CollisionResolver()) {}
 
 bool World::ActorComponentPriorityCompare::operator()(ActorComponent* lhs, ActorComponent* rhs)
 {
@@ -63,16 +67,25 @@ void World::execDestroy()
 			}));
 		m_actorsToDestroy.pop();
 	}
-	if (m_actors.empty()) finish();
 }
 
-void World::spawnActor(Actor* actor)
+void World::spawnActor(Actor* actor, const Vector3f& pos)
 {
 	m_actors.emplace_back(actor);
+	actor->setPosition(pos);
+}
+
+void World::spawnController(Controller* controller)
+{
+	m_controllers.emplace_back(controller);
 }
 
 void World::tick(float deltaSeconds)
 {
+	for (auto& i : m_controllers)
+	{
+		i->tick(deltaSeconds);
+	}
 	for (GameObject* i : m_prephys)
 	{
 		i->tick(deltaSeconds);
@@ -81,6 +94,7 @@ void World::tick(float deltaSeconds)
 	{
 		i->tick(deltaSeconds);
 	}
+	m_collision->tick(deltaSeconds);
 	for (GameObject* i : m_postphys)
 	{
 		i->tick(deltaSeconds);

@@ -9,7 +9,7 @@ class CollisionComponent : public SceneComponent
 {
 public:
 
-	enum OverlapRules
+	enum class OverlapRules
 	{
 		BLOCKING, // Block movement
 		OVERLAP,  // Can overlap, generate event
@@ -86,8 +86,8 @@ public:
 	AABB getAABB() const
 	{
 		AABB aabb;
-		aabb.lowerCorner = Vector3f{ getSupportPoint(X_AXIS).x, getSupportPoint(Y_AXIS).y, getSupportPoint(Z_AXIS).z };
-		aabb.upperCorner = Vector3f{ getSupportPoint(-X_AXIS).x, getSupportPoint(-Y_AXIS).y, getSupportPoint(-Z_AXIS).z };
+		aabb.lowerCorner = Vector3f{ getSupportPoint(-X_AXIS).x, getSupportPoint(-Y_AXIS).y, getSupportPoint(-Z_AXIS).z };
+		aabb.upperCorner = Vector3f{ getSupportPoint(X_AXIS).x, getSupportPoint(Y_AXIS).y, getSupportPoint(Z_AXIS).z };
 		return aabb;
 	}
 
@@ -102,7 +102,7 @@ protected:
 
 private:
 	eastl::array<OverlapRules, static_cast<int>(ActorsGroups::COUNT)> m_overlapRules =
-	{ OverlapRules::NONE, OverlapRules::NONE, OverlapRules::NONE, OverlapRules::NONE, OverlapRules::NONE };
+	{ OverlapRules::BLOCKING, OverlapRules::BLOCKING, OverlapRules::BLOCKING, OverlapRules::BLOCKING, OverlapRules::BLOCKING };
 
 	Tag m_tag;
 };
