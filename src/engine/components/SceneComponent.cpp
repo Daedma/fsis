@@ -42,7 +42,7 @@ void SceneComponent::setPosition(const Vector3f& position)
 	Transform t = mathter::Translation(position);
 	Transform s = mathter::Scale(m_scale);
 	Transform r = Transform(m_rotation);
-	m_transform = s * t * r;
+	m_transform = r * s * t;
 	m_position = position;
 }
 
@@ -51,7 +51,7 @@ void SceneComponent::setScale(const Vector3f& scale)
 	Transform t = mathter::Translation(m_position);
 	Transform s = mathter::Scale(scale);
 	Transform r = Transform(m_rotation);
-	m_transform = s * t * r;
+	m_transform = r * s * t;
 	m_scale = scale;
 }
 
@@ -60,16 +60,26 @@ void SceneComponent::setRotation(const Rotator& rotation)
 	Transform t = mathter::Translation(m_position);
 	Transform s = mathter::Scale(m_scale);
 	Transform r = Transform(rotation);
-	m_transform = s * t * r;
+	m_transform = r * s * t;
 	m_rotation = rotation;
 }
 
 void SceneComponent::orientByDirection(const Vector3f& direction)
 {
-	const static Vector3f xAxis(1, 0, 0);
-	Vector3f axis = mathter::Cross(xAxis, direction);
-	float angle = mathter::Dot(xAxis, direction);
-	Rotator rot = mathter::RotationAxisAngle(axis, angle);
-	Rotator normRot(mathter::Normalize(rot.vec));
-	setRotation(normRot);
+	if (direction == X_AXIS)
+	{
+		setRotation(mathter::Identity());
+	}
+	else if (direction == -X_AXIS)
+	{
+		Rotator rot = mathter::RotationAxisAngle(Z_AXIS, mathter::Deg2Rad(180));
+		setRotation(rot);
+	}
+	else
+	{
+		Vector3f axis = mathter::Normalize(mathter::Cross(X_AXIS, direction));
+		float angle = std::acos(mathter::Dot(X_AXIS, direction));
+		Rotator rot = mathter::RotationAxisAngle(axis, angle);
+		setRotation(rot);
+	}
 }

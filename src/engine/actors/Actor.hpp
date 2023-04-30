@@ -92,7 +92,7 @@ public:
 	 *
 	 * @return const Vector3f&
 	 */
-	const Vector3f& getForwardVector() const;
+	Vector3f getForwardVector() const;
 
 	/**
 	 * @brief Set the position

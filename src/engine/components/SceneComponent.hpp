@@ -122,12 +122,16 @@ public:
 		m_forwardVector = direction;
 	}
 
-/**
- * @brief Get the Forward Vector object
- *
- * @return const Vector3f&
- */
-	const Vector3f& getForwardVector() const { return m_forwardVector; }
+	/**
+	 * @brief Get the Forward Vector object
+	 *
+	 * @return const Vector3f&
+	 */
+	Vector3f getForwardVector() const
+	{
+	//  return m_forwardVector; 
+		return X_AXIS * mathter::Matrix<float, 3, 3>{ m_rotation };
+	}
 
 	/**
 	 * @brief Set the relative position

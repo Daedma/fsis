@@ -42,7 +42,7 @@ void Actor::setForwardVector(const Vector3f& direction)
 	m_rootComponent->setForwardVector(direction);
 }
 
-const Vector3f& Actor::getForwardVector() const
+Vector3f Actor::getForwardVector() const
 {
 	return m_rootComponent->getForwardVector();
 }

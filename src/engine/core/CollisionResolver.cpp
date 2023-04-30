@@ -5,7 +5,6 @@
 #include <EASTL/iterator.h>
 #include <EASTL/fixed_vector.h>
 #include <cmath>
-#include "log.hpp"
 
 void CollisionResolver::registry(CollisionComponent* collision)
 {
@@ -45,12 +44,15 @@ void CollisionResolver::resolve(CollisionComponent* collision)
 			if (isBlocking)
 			{
 				// find penetration depth
-				Vector3f pd = getPenetrationDepth(simplex.value(), collision, i);
 				float firstMovement = mathter::Length(collision->getOwner()->getLastMovement());
 				float secondMovement = mathter::Length(i->getOwner()->getLastMovement());
-				float invSumMovement = 1.f / (firstMovement + secondMovement);
-				m_actorsToResolve.emplace(collision->getOwner(), -firstMovement * invSumMovement * pd);
-				m_actorsToResolve.emplace(i->getOwner(), secondMovement * invSumMovement * pd);
+				if ((firstMovement + secondMovement) != 0.f)
+				{
+					Vector3f pd = getPenetrationDepth(simplex.value(), collision, i);
+					float invSumMovement = 1.f / (firstMovement + secondMovement);
+					m_actorsToResolve.emplace(collision->getOwner(), -firstMovement * invSumMovement * pd);
+					m_actorsToResolve.emplace(i->getOwner(), secondMovement * invSumMovement * pd);
+				}
 			}
 			collision->overlap(i);
 			i->overlap(collision);

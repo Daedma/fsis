@@ -42,13 +42,12 @@ void MovementComponent::tick(float deltaSeconds)
 		getOwner()->move(movement * deltaSeconds); // Apply input
 	}
 	m_speed = (getOwner()->getPosition() - m_lastPosition) / deltaSeconds; // Correct speed
-	m_speed += m_acceleration; // Apply acceleration
+	// m_speed += m_acceleration; // Apply acceleration
 	// FIXME Acceleration doesn't work
-	getOwner()->move((m_speed - m_accumulatedMovement) * deltaSeconds); // Apply acceleration difference
+	// getOwner()->move((m_speed - m_accumulatedMovement) * deltaSeconds); // Apply acceleration difference
 	if (b_orientRotationToMovement && !mathter::IsNullvector(m_speed))
 	{
-		// getOwner()->orientByDirection(mathter::Normalize(m_speed));
-		getOwner()->setForwardVector(mathter::Normalize(m_speed));
+		getOwner()->orientByDirection(mathter::Normalize(m_speed));
 	}
 	m_lastPosition = getOwner()->getPosition();
 	m_accumulatedMovement = { 0.f, 0.f, 0.f };
