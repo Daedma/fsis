@@ -12,16 +12,9 @@
 !src/engine/network/
 !src/engine/render/
 !src/fsis
-!resources/
-!resources/map
-!resources/sound
-!resources/music
-!resources/fonts
-!resources/textures
-!resources/textures/creatures
-!resources/textures/map
-!resources/ui
-!resources/creatures
+!"src/Data Files"
+!src/fsis/client
+!src/fsis/server
 
 # md files  
 !**.md
