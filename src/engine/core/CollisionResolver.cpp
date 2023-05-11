@@ -34,13 +34,15 @@ void CollisionResolver::tick(float deltaSeconds)
 void CollisionResolver::resolve(CollisionComponent* collision)
 {
 	eastl::vector<CollisionComponent*> candidates = getOverlapCandidates(collision); // broadcast phase
+	bool onFloor = false;
 	for (auto i : candidates) // narrow phase
 	{
 		auto simplex = GJK(collision, i);
 		// One directional check, may be wrong and must be fixed
 		if (simplex) // if intersects
 		{
-			bool isBlocking = collision->getOverlapRule(i->getOwner()->getGroup()) == CollisionComponent::OverlapRules::BLOCKING;
+			bool isBlocking = collision->getOverlapRule(i->getOwner()->getGroup()) == CollisionComponent::OverlapRules::BLOCKING
+				&& i->getOverlapRule(collision->getOwner()->getGroup()) == CollisionComponent::OverlapRules::BLOCKING;
 			if (isBlocking)
 			{
 				// find penetration depth
@@ -52,12 +54,15 @@ void CollisionResolver::resolve(CollisionComponent* collision)
 					float invSumMovement = 1.f / (firstMovement + secondMovement);
 					m_actorsToResolve.emplace(collision->getOwner(), -firstMovement * invSumMovement * pd);
 					m_actorsToResolve.emplace(i->getOwner(), secondMovement * invSumMovement * pd);
+					// On floor check
+					onFloor |= isSameDirection(pd, Z_AXIS);
 				}
 			}
 			collision->overlap(i);
 			i->overlap(collision);
 		}
 	}
+	collision->getOwner()->setOnFloor(onFloor);
 	tagAsProcessed(collision);
 }
 

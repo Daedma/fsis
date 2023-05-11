@@ -7,7 +7,7 @@
  * @brief Class control movements of owner actor.
  * Apply all input movements via this component.
  */
-class MovementComponent: public ActorComponent
+class MovementComponent : public ActorComponent
 {
 	float m_walkSpeed = 0.f;
 
@@ -16,6 +16,10 @@ class MovementComponent: public ActorComponent
 	Vector3f m_speed = { 0.f, 0.f, 0.f }; // Speed at this moment
 
 	Vector3f m_acceleration = { 0.f, 0.f, 0.f };
+
+	Vector3f m_speedFromAcceleration = { 0.f, 0.f, 0.f };
+
+	Vector3f m_launchSpeed = { 0.f, 0.f, 0.f };
 
 	Vector3f m_accumulatedMovement = { 0.f, 0.f, 0.f };
 
@@ -26,6 +30,8 @@ class MovementComponent: public ActorComponent
 	bool b_run = false;
 
 	bool b_orientRotationToMovement = false;
+
+	bool b_launch = false;
 
 public:
 	MovementComponent(Actor* owner);
@@ -143,10 +149,20 @@ public:
 	 * @brief Launch actor in given @p direction
 	 * with current speed
 	 *
-	 * @param direction normalized vector if direction
-	 * @note If you toggle run after launch - speed will now change
+	 * @param direction normalized vector in direction
+	 * @note If you toggle run after launch - speed will not change
 	 */
-	void launch(const Vector3f& direction) { m_speed = direction * getSpeed(); }
+	void launch(const Vector3f& direction)
+	{
+		m_launchSpeed = direction * getSpeed();
+		b_launch = true;
+	}
+
+	void stop()
+	{
+		m_launchSpeed = { 0, 0, 0 };
+		b_launch = false;
+	}
 
 	/**
 	 * @brief Get the Last Movement

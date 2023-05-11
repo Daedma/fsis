@@ -78,6 +78,8 @@ public:
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
+	void setHeight(float height);
+
 private:
 	uint8_t m_origin = ONFLOOR;
 };

@@ -29,7 +29,7 @@ private:
 
 	bool m_isFinished = false;
 
-	float m_globalAcceleration = -9.8f;
+	float m_globalAcceleration = -90.8f;
 
 	struct ActorComponentPriorityCompare
 	{

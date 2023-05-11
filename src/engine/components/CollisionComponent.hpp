@@ -73,7 +73,7 @@ public:
 			float d2y = other.lowerCorner.y - upperCorner.y;
 			float d2z = other.lowerCorner.z - upperCorner.z;
 
-			if (d1x > 0.0f || d1y > 0.0f || d1z > 0.0f)
+			if (d1x > 0.0f && d1y > 0.0f && d1z > 0.0f)
 				return true;
 
 			if (d2x > 0.0f || d2y > 0.0f || d2z > 0.0f)

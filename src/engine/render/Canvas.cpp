@@ -48,7 +48,7 @@ void Canvas::draw()
 	{
 		return;
 	}
-	m_window->clear();
+	m_window->clear(sf::Color::Cyan);
 	if (m_camera && !m_primitives.empty())
 	{
 		Transform cameraTransform = m_camera->getProjectionMatrix();
@@ -73,7 +73,7 @@ void Canvas::draw()
 sf::Transform Canvas::getToScreenTransform(const Transform& transform) const
 {
 	float minDimension = eastl::min_alt(m_window->getSize().x, m_window->getSize().y);
-	Transform projection = transform * Transform(mathter::Scale(minDimension, minDimension, 1.f));
+	Transform projection = transform * Transform(mathter::Scale(minDimension, minDimension, minDimension));
 	Vector3f translation = TSR::getTranslation(projection);
 	Vector3f scale = TSR::getScale(projection);
 	// We don't need rotation for 2d srites

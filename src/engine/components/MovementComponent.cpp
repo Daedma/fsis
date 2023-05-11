@@ -13,19 +13,13 @@ MovementComponent::MovementComponent(Actor* owner) : ActorComponent(owner)
 
 void MovementComponent::enableGravity()
 {
-	if (!b_gravity)
-	{
-		m_acceleration += {0.f, 0.f, getWorld()->getGravity()};
-	}
+	m_acceleration = { 0.f, 0.f, getWorld()->getGravity() };
 	b_gravity = true;
 }
 
 void MovementComponent::disableGravity()
 {
-	if (b_gravity)
-	{
-		m_acceleration -= {0.f, 0.f, getWorld()->getGravity()};
-	}
+	m_acceleration = { 0.f, 0.f, 0.f };
 	b_gravity = false;
 }
 
@@ -36,19 +30,25 @@ void MovementComponent::move(const Vector3f& direction)
 
 void MovementComponent::tick(float deltaSeconds)
 {
+	m_speed = (getOwner()->getPosition() - m_lastPosition) / deltaSeconds; // Correct speed
+	m_lastPosition = getOwner()->getPosition();
+
+	Vector3f movement(0, 0, 0);
 	if (float distance = mathter::Length(m_accumulatedMovement);distance)
 	{
-		Vector3f movement = m_accumulatedMovement * getSpeed() / distance;
+		movement = m_accumulatedMovement * getSpeed() / distance;
 		getOwner()->move(movement * deltaSeconds); // Apply input
 	}
-	m_speed = (getOwner()->getPosition() - m_lastPosition) / deltaSeconds; // Correct speed
-	// m_speed += m_acceleration; // Apply acceleration
-	// FIXME Acceleration doesn't work
-	// getOwner()->move((m_speed - m_accumulatedMovement) * deltaSeconds); // Apply acceleration difference
-	if (b_orientRotationToMovement && !mathter::IsNullvector(m_speed))
+	getOwner()->move(m_launchSpeed * deltaSeconds);
+	m_speedFromAcceleration *= (m_speed.z < 0.f);
+	m_speedFromAcceleration += m_acceleration * deltaSeconds; // Apply acceleration
+	getOwner()->move(m_speedFromAcceleration * deltaSeconds);
+
+	Vector3f orientation = { m_speed.x, m_speed.y, 0 };
+	if (b_orientRotationToMovement && !mathter::IsNullvector(orientation))
 	{
-		getOwner()->orientByDirection(mathter::Normalize(m_speed));
+		getOwner()->orientByDirection(mathter::Normalize(orientation));
 	}
-	m_lastPosition = getOwner()->getPosition();
-	m_accumulatedMovement = { 0.f, 0.f, 0.f };
+
+	m_accumulatedMovement.Set(0.f, 0.f, 0.f);
 }

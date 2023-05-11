@@ -19,6 +19,10 @@ static const Vector3f Z_AXIS = Vector3f{ 0.f, 0.f, 1.f };
 
 static const Vector3f ZERO_VECTOR = Vector3f{ 0.f, 0.f, 0.f };
 
+static const Vector3f TO_PLAYER = Vector3f{ 0.70710678f, 0.70710678f, 0.f };
+
+static const Vector3f TO_RIGHTSIDE = Vector3f{ -0.70710678f, 0.70710678f, 0.f };
+
 using Rotator = mathter::Quaternion<float>;
 
 namespace TSR

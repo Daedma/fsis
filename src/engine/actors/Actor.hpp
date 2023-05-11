@@ -166,6 +166,10 @@ public:
 
 	ActorsGroups getGroup() const { return m_group; }
 
+	void setOnFloor(bool onFloor) { b_onFloor = onFloor; }
+
+	bool isOnFloor() const { return b_onFloor; }
+
 protected:
 
 	void setGroup(ActorsGroups group) { m_group = group; }
@@ -184,5 +188,7 @@ private:
 	eastl::vector<eastl::unique_ptr<ActorComponent>> m_components;
 
 	ActorsGroups m_group = ActorsGroups::ACTORS;
+
+	bool b_onFloor = false;
 
 };

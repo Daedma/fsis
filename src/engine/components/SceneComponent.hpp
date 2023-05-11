@@ -101,7 +101,7 @@ public:
 	 */
 	Transform getWorldTransform() const
 	{
-		return m_parent ? m_parent->getWorldTransform() * m_transform : m_transform;
+		return m_parent ? m_transform * m_parent->getWorldTransform() : m_transform;
 	}
 
 	/**
@@ -130,7 +130,10 @@ public:
 	Vector3f getForwardVector() const
 	{
 	//  return m_forwardVector; 
-		return X_AXIS * mathter::Matrix<float, 3, 3>{ m_rotation };
+		Rotator axisX(X_AXIS);
+		Rotator forward = m_rotation * axisX * mathter::Conjugate(m_rotation);
+		return forward.VectorPart();
+		// return X_AXIS * mathter::Matrix<float, 3, 3>{ m_rotation };
 	}
 
 	/**
