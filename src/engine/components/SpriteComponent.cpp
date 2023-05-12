@@ -80,6 +80,6 @@ void SpriteComponent::setHeight(float value)
 	EASTL_ASSERT(value != 0 && m_texture);
 	uint32_t textureHeight = m_texture->getSize().y;
 	// float ratio = textureHeight / (2 * value);
-	float ratio = 2 * value / textureHeight;
+	float ratio = sqrt(3) * value / textureHeight;
 	m_sprite->setScale(ratio, ratio);
 }
