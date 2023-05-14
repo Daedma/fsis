@@ -1,6 +1,8 @@
 #pragma once 
 #include "core/GameObject.hpp"
 
+// TODO think about components creation interface  
+
 class Actor;
 
 /**

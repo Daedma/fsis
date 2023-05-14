@@ -8,7 +8,6 @@ static Transform getIsometricTransform()
 	// True isometric
 	// https://gamedev.stackexchange.com/questions/181651/why-when-i-do-an-isometric-projection-do-i-get-a-dimmetric-view?rq=1
 	Transform rotz = mathter::RotationAxis(mathter::Deg2Rad(45), 2);
-	// Transform rotx = mathter::RotationAxis(mathter::Deg2Rad(35.264), 0);
 	Transform rotx = mathter::RotationAxis(acos(1 / sqrt(3)), 0);
 	return rotz * rotx;
 

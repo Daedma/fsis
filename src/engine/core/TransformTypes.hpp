@@ -21,7 +21,11 @@ static const Vector3f ZERO_VECTOR = Vector3f{ 0.f, 0.f, 0.f };
 
 static const Vector3f TO_PLAYER = Vector3f{ 0.70710678f, 0.70710678f, 0.f };
 
-static const Vector3f TO_RIGHTSIDE = Vector3f{ -0.70710678f, 0.70710678f, 0.f };
+static const Vector3f TO_RIGHTSIDE = Vector3f{ 0.70710678f, -0.70710678f, 0.f };
+
+static const double SQRT_3 = 1.7320508075688772935274463415059;
+
+static const double INVSQRT_3 = 0.57735026918962576450914878050196;
 
 using Rotator = mathter::Quaternion<float>;
 

@@ -44,15 +44,15 @@ public:
 	 *
 	 * @param projectionType
 	 */
-	void setView(const Transform& view) { m_transform = view; }
+	void setView(const Transform& view) { m_transform = view; } // TODO remove for release (debug only feature)
 
-	const Transform& getView() const { return m_transform; }
+	const Transform& getView() const { return m_transform; } // TODO remove
 
 	Transform getProjectionMatrix()
 	{
 		updatePosition();
 		Vector3f position{ m_position.x, m_position.y, m_distance };
-		Transform projection = mathter::Orthographic(position - m_scale, position + m_scale, 1.f, -1.f);
+		Transform projection = mathter::Orthographic(position - m_scale * SQRT_3, position + m_scale * SQRT_3, 1.f, -1.f);
 		return m_transform * projection;
 	}
 

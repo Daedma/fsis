@@ -30,16 +30,18 @@ void Canvas::setCamera(Camera* camera) { m_camera.reset(camera); }
 
 void Canvas::registry(PrimitiveComponent* primitive)
 {
-	if (eastl::find(m_primitives.cbegin(), m_primitives.cend(), primitive)
-		== m_primitives.cend())
+	auto& layer = m_layers[primitive->getLayer()];
+	if (eastl::find(layer.cbegin(), layer.cend(), primitive)
+		== layer.cend())
 	{
-		m_primitives.emplace_back(primitive);
+		layer.emplace_back(primitive); // safe
 	}
 }
 
 void Canvas::unregistry(PrimitiveComponent* primitive)
 {
-	m_primitives.erase_first(primitive);
+	auto& layer = m_layers[primitive->getLayer()];
+	layer.erase_first(primitive);
 }
 
 void Canvas::draw()
@@ -49,18 +51,16 @@ void Canvas::draw()
 		return;
 	}
 	m_window->clear(sf::Color::Cyan);
-	if (m_camera && !m_primitives.empty())
+	if (m_camera && !m_layers.empty())
 	{
 		Transform cameraTransform = m_camera->getProjectionMatrix();
-		eastl::sort(m_primitives.begin(), m_primitives.end(),
-			[&cameraTransform](PrimitiveComponent* lhs, PrimitiveComponent* rhs) {
-				Vector3f z(0.f, 0.f, 1.f);
-				return (z * lhs->getWorldTransform() * cameraTransform).z >
-					(z * rhs->getWorldTransform() * cameraTransform).z;
-			});
-		for (PrimitiveComponent* i : m_primitives)
+		updateOrderZ(cameraTransform);
+		for (const auto& [n, layer] : m_layers)
 		{
-			i->draw(*m_window, getToScreenTransform(i->getWorldTransform() * cameraTransform));
+			for (PrimitiveComponent* i : layer)
+			{
+				i->draw(*m_window, getToScreenTransform(i->getWorldTransform() * cameraTransform));
+			}
 		}
 	}
 	if (m_hud)
@@ -84,3 +84,14 @@ sf::Transform Canvas::getToScreenTransform(const Transform& transform) const
 	return trans2d;
 }
 
+void Canvas::updateOrderZ(const Transform& projection)
+{
+	for (auto& [n, layer] : m_layers)
+	{
+		eastl::stable_sort(layer.begin(), layer.end(),
+			[&projection](PrimitiveComponent* lhs, PrimitiveComponent* rhs) {
+				return (Z_AXIS * lhs->getWorldTransform() * projection).z >
+					(Z_AXIS * rhs->getWorldTransform() * projection).z;
+			});
+	}
+}

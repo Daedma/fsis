@@ -11,7 +11,7 @@ namespace sf
 }
 class Actor;
 
-namespace OriginY
+namespace OriginY // TODO remove
 {
 	enum : uint8_t
 	{
@@ -22,7 +22,7 @@ namespace OriginY
 } // namespace OriginY
 
 
-namespace OriginX
+namespace OriginX // TODO remove
 {
 
 	enum : uint8_t
@@ -62,15 +62,16 @@ public:
 	 *
 	 * @param texture new texture instance
 	 */
-	void updateTexture(sf::Texture* texture);
+	void updateTexture(sf::Texture* texture); // TODO remove
 
 	void loadTexture(eastl::string_view filename);
 
-	void setTexture(sf::Texture* texture);
+	void setTexture(sf::Texture* texture); // TODO remove
 
-	void setOrigin(uint8_t mask);
+	void setOrigin(uint8_t mask); // TODO remove this ability 
+	// Origin is always {0.5, 1 - 1/sqrt(3)} for match to collision 
 
-	uint8_t getOrigin() const { return m_origin; }
+	uint8_t getOrigin() const { return m_origin; } // TODO remove
 
 	//TODO make more fit texture usage interface
 

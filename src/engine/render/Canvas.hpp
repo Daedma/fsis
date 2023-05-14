@@ -2,6 +2,7 @@
 
 #include <EASTL/unique_ptr.h>
 #include <EASTL/vector.h>
+#include <EASTL/vector_map.h>
 #include <SFML/Graphics/Transform.hpp>
 #include "core/TransformTypes.hpp"
 
@@ -23,7 +24,7 @@ class Canvas
 
 	eastl::unique_ptr<HUD> m_hud;
 
-	eastl::vector<PrimitiveComponent*> m_primitives;
+	eastl::vector_map<int32_t, eastl::vector<PrimitiveComponent*>> m_layers;
 
 	static eastl::unique_ptr<Canvas> m_instance;
 
@@ -31,16 +32,22 @@ public:
 
 	~Canvas();
 
+	// NOTE maybe we don't need singletone? We can use only static methods
 	static Canvas* getInstance() { return m_instance.get(); }
 
+	// TODO remove this
+	// incapsulate window creation process
 	void setWindow(sf::RenderWindow* window);
 
 	sf::RenderWindow* getWindow() const { return m_window.get(); }
 
+	// TODO make template version (no-new)
 	void setHUD(HUD* hud);
 
 	HUD* getHUD() const { return m_hud.get(); }
 
+	// TODO incapsulate camera setup
+	// make template version
 	void setCamera(Camera* camera);
 
 	Camera* getCamera() const { return m_camera.get(); }
@@ -52,7 +59,10 @@ public:
 	void draw();
 
 private:
+	// If we refuse to singletone it whould be to declared as deleted 
 	Canvas();
 
 	sf::Transform getToScreenTransform(const Transform& transform) const;
+
+	void updateOrderZ(const Transform& projection);
 };

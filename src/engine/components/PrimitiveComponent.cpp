@@ -25,3 +25,10 @@ PrimitiveComponent::PrimitiveComponent(SceneComponent* parent) : SceneComponent(
 }
 
 void PrimitiveComponent::draw(sf::RenderTarget& target, sf::RenderStates states) const {}
+
+void PrimitiveComponent::setLayer(int32_t layer)
+{
+	Canvas::getInstance()->unregistry(this);
+	m_layer = layer;
+	Canvas::getInstance()->registry(this);
+}

@@ -15,4 +15,11 @@ public:
 	virtual ~PrimitiveComponent();
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+	int32_t getLayer() const { return m_layer; }
+
+	void setLayer(int32_t layer);
+
+private:
+	int32_t m_layer = 0;
 };
