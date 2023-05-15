@@ -28,6 +28,8 @@ public:
 
 	CollisionComponent(SceneComponent* parent);
 
+	virtual ~CollisionComponent();
+
 	virtual void tick(float deltaSeconds) override;
 
 	bool isMayIntersects(CollisionComponent* other) const

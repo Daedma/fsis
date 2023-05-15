@@ -19,6 +19,14 @@ CollisionComponent::CollisionComponent(SceneComponent* parent) : SceneComponent(
 	getWorld()->getCollisionResolver()->registry(this);
 }
 
+CollisionComponent::~CollisionComponent()
+{
+	if (getWorld())
+	{
+		getWorld()->getCollisionResolver()->unregistry(this);
+	}
+}
+
 void CollisionComponent::tick(float deltaSeconds)
 {
 	SceneComponent::tick(deltaSeconds);

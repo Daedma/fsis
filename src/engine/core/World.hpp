@@ -36,8 +36,8 @@ private:
 		bool operator()(ActorComponent* lhs, ActorComponent* rhs);
 	};
 
-	eastl::queue<Actor*> m_actorsToDestroy;
-	eastl::priority_queue<ActorComponent*, eastl::vector<ActorComponent*>, ActorComponentPriorityCompare>
+	eastl::vector_set<Actor*> m_actorsToDestroy;
+	eastl::vector_set<ActorComponent*, ActorComponentPriorityCompare>
 		m_componentsToDestroy;
 
 public:

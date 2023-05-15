@@ -14,6 +14,7 @@ void SceneComponent::destroyChild(SceneComponent* child)
 
 void SceneComponent::forceDestroy()
 {
+	EASTL_ASSERT(m_parent);
 	m_parent->destroyChild(this);
 }
 

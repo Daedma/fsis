@@ -54,19 +54,18 @@ void World::unregistry(GameObject* obj)
 
 void World::execDestroy()
 {
-	while (!m_componentsToDestroy.empty())
+	for (ActorComponent* i : m_componentsToDestroy)
 	{
-		m_componentsToDestroy.top()->forceDestroy();
-		m_componentsToDestroy.pop();
+		i->forceDestroy();
 	}
-	while (!m_actorsToDestroy.empty())
+	m_componentsToDestroy.clear();
+	for (Actor* i : m_actorsToDestroy)
 	{
-		Actor* actorToDestroy = m_actorsToDestroy.front();
 		m_actors.erase(eastl::find_if(m_actors.begin(), m_actors.end(),
-			[actorToDestroy](const eastl::unique_ptr<Actor>& rhs) {return rhs.get() == actorToDestroy;
+			[i](const eastl::unique_ptr<Actor>& rhs) {return rhs.get() == i;
 			}));
-		m_actorsToDestroy.pop();
 	}
+	m_actorsToDestroy.clear();
 }
 
 void World::spawnActor(Actor* actor, const Vector3f& pos)
