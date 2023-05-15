@@ -37,11 +37,6 @@ void Actor::rotate(const Rotator& rotation)
 	setRotation(rotation * getRotation());
 }
 
-void Actor::setForwardVector(const Vector3f& direction)
-{
-	m_rootComponent->setForwardVector(direction);
-}
-
 Vector3f Actor::getForwardVector() const
 {
 	return m_rootComponent->getForwardVector();

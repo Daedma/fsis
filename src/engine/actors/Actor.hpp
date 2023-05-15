@@ -81,13 +81,6 @@ public:
 	void destroyComponent(ActorComponent* comp);
 
 	/**
-	 * @brief Set the Forward Vector object
-	 *
-	 * @param direction new normalized forward vector
-	 */
-	void setForwardVector(const Vector3f& direction);
-
-	/**
 	 * @brief Get the Forward Vector object
 	 *
 	 * @return const Vector3f&

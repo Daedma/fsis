@@ -2,7 +2,7 @@
 
 #include "components/PrimitiveComponent.hpp"
 #include <EASTL/unique_ptr.h>
-#include <EASTL/string_view.h>
+#include <EASTL/string.h>
 
 namespace sf
 {
@@ -11,41 +11,13 @@ namespace sf
 }
 class Actor;
 
-namespace OriginY // TODO remove
-{
-	enum : uint8_t
-	{
-		UP = 0x1,
-		CENTER = 0x2,
-		DOWN = 0x4
-	};
-} // namespace OriginY
-
-
-namespace OriginX // TODO remove
-{
-
-	enum : uint8_t
-	{
-		LEFT = 0x8,
-		CENTER = 0x10,
-		RIGHT = 0x20
-	};
-} // namespace OriginX
-
 class SpriteComponent : public PrimitiveComponent
 {
 	eastl::unique_ptr<sf::Sprite> m_sprite;
 
-	eastl::unique_ptr<sf::Texture> m_texture = nullptr;
+	sf::Texture* m_texture = nullptr;
 
 public:
-
-	static constexpr uint8_t ONFLOOR = OriginY::DOWN | OriginX::CENTER;
-
-	static constexpr uint8_t FLYING = OriginY::CENTER | OriginX::CENTER;
-
-	static constexpr uint8_t ONCEILING = OriginY::UP | OriginX::CENTER;
 
 	SpriteComponent();
 
@@ -55,23 +27,7 @@ public:
 
 	~SpriteComponent();
 
-	/**
-	 * @brief Save texture in this component.
-	 * Use every time you change/set texture
-	 * of sprite owned by this component
-	 *
-	 * @param texture new texture instance
-	 */
-	void updateTexture(sf::Texture* texture); // TODO remove
-
-	void loadTexture(eastl::string_view filename);
-
-	void setTexture(sf::Texture* texture); // TODO remove
-
-	void setOrigin(uint8_t mask); // TODO remove this ability 
-	// Origin is always {0.5, 1 - 1/sqrt(3)} for match to collision 
-
-	uint8_t getOrigin() const { return m_origin; } // TODO remove
+	void loadTexture(const eastl::string& filename);
 
 	//TODO make more fit texture usage interface
 
@@ -81,6 +37,4 @@ public:
 
 	void setHeight(float height);
 
-private:
-	uint8_t m_origin = ONFLOOR;
 };

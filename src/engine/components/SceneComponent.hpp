@@ -48,8 +48,6 @@ private:
 	 */
 	Rotator m_rotation = mathter::Identity();
 
-	Vector3f  m_forwardVector = { 1.f, 0.f, 0.f };
-
 public:
 	/**
 	 * @brief Construct a new Scene Component object
@@ -112,28 +110,15 @@ public:
 	const Transform& getRelativeTransform() const { return m_transform; }
 
 	/**
-	 * @brief Set the Forward Vector object
-	 *
-	 * @param direction
-	 */
-	void setForwardVector(const Vector3f& direction)
-	{
-		EASTL_ASSERT(mathter::IsNormalized(direction));
-		m_forwardVector = direction;
-	}
-
-	/**
 	 * @brief Get the Forward Vector object
 	 *
 	 * @return const Vector3f&
 	 */
 	Vector3f getForwardVector() const
 	{
-	//  return m_forwardVector; 
 		Rotator axisX(X_AXIS);
 		Rotator forward = m_rotation * axisX * mathter::Conjugate(m_rotation);
 		return forward.VectorPart();
-		// return X_AXIS * mathter::Matrix<float, 3, 3>{ m_rotation };
 	}
 
 	/**
