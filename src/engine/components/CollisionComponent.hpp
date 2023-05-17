@@ -39,7 +39,17 @@ public:
 
 	void setOverlapRule(ActorsGroups group, OverlapRules rule)
 	{
-		m_overlapRules[static_cast<int>(group)] = rule;
+		if (group != ActorsGroups::ALL)
+		{
+			m_overlapRules[static_cast<int>(group)] = rule;
+		}
+		else
+		{
+			for (auto& i : m_overlapRules)
+			{
+				i = rule;
+			}
+		}
 	}
 
 	OverlapRules getOverlapRule(ActorsGroups group) const

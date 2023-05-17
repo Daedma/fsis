@@ -8,3 +8,4 @@
 #include "components/CollisionComponent.hpp"
 #include "components/SphereComponent.hpp"
 #include "components/BoxComponent.hpp"
+#include "components/AudioComponent.hpp"

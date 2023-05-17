@@ -82,7 +82,10 @@ eastl::vector<CollisionComponent*> CollisionResolver::getOverlapCandidates(const
 		CollisionComponent::OverlapRules rule = component->getOverlapRule((*i)->getOwner()->getGroup());
 		bool isNotSame = *i != component;
 		bool isMayIntersect = component->isMayIntersects(*i);
-		bool isNotIgnored = rule != CollisionComponent::OverlapRules::IGNORE || rule != CollisionComponent::OverlapRules::NONE;
+		bool isNotIgnored = rule != CollisionComponent::OverlapRules::IGNORE
+			&& rule != CollisionComponent::OverlapRules::NONE
+			&& (*i)->getOverlapRule(component->getOwner()->getGroup()) != CollisionComponent::OverlapRules::IGNORE
+			&& (*i)->getOverlapRule(component->getOwner()->getGroup()) != CollisionComponent::OverlapRules::NONE;
 		if (isNotSame && isMayIntersect && isNotIgnored)
 		{
 			candidates.emplace_back(*i);

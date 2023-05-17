@@ -20,6 +20,8 @@ public:
 
 	void setLayer(int32_t layer);
 
+	void hide();
+
 private:
 	int32_t m_layer = 0;
 };

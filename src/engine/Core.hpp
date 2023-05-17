@@ -6,3 +6,4 @@
 #include "core/TransformTypes.hpp"
 #include "core/World.hpp"
 #include "core/CollisionResolver.hpp"
+#include "core/AssetManager.hpp"

@@ -32,3 +32,8 @@ void PrimitiveComponent::setLayer(int32_t layer)
 	m_layer = layer;
 	Canvas::getInstance()->registry(this);
 }
+
+void PrimitiveComponent::hide()
+{
+	Canvas::getInstance()->unregistry(this);
+}
