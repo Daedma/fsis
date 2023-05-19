@@ -11,6 +11,7 @@
 !/src/engine/gui/
 !/src/engine/network/
 !/src/engine/render/
+!/src/engine/animation/
 !/src/fsis/client/
 !/src/fsis/server/
 !/src/Data Files
