@@ -2,19 +2,16 @@
 *
 
 # ... Except folders
-# !actors/
-# !client/
-# !components/
-# !controllers/
-# !core/
-# !gui/
-# !network/
-# !render/
-# !server/
 !src/
 !src/engine
 !src/fsis
-!"src/Data Files"
+!resources/
+!resources/sound
+!resources/music
+!resources/fonts
+!resources/textures/creatures
+!resources/textures/map
+!resources/ui
 
 # md files  
 !**.md
@@ -30,3 +27,16 @@
 # headers
 !**.hpp
 !**.h
+
+# forms
+!**.txt
+
+# textures
+!**.png
+!**.jpeg
+!**.jpg
+!**.bmp
+
+# sounds
+!**.ogg
+!**.wav
