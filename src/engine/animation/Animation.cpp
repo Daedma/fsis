@@ -8,6 +8,7 @@ void Animation::play(bool bContinue)
 	if (!bContinue)
 	{
 		m_curFrame = 0;
+		m_elapsedTimeSinceFrameChange = 0.f;
 	}
 }
 

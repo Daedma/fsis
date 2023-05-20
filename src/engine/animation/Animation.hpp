@@ -55,7 +55,11 @@ public:
 
 	void pause();
 
+	void setReverse(bool bReverse) { b_reverse = bReverse; }
+
 	Status getStatus() const { return m_status; }
+
+	bool isActive() const { return m_status == Status::PLAYING; }
 
 	void setHeight(float height)
 	{
@@ -119,11 +123,20 @@ private:
 
 	eastl::vector<Notify> m_notifies;
 
+	bool b_reverse = false;
+
 private:
 	void nextFrame()
 	{
 		sf::IntRect frame = m_initFrame;
-		frame.left = m_initFrame.width * m_curFrame + m_initFrame.left;
+		if (!b_reverse)
+		{
+			frame.left = m_initFrame.width * m_curFrame + m_initFrame.left;
+		}
+		else
+		{
+			frame.left = m_initFrame.width * (m_framesCount - m_curFrame) + m_initFrame.left;
+		}
 		m_sprite->setTextureRect(frame);
 	}
 
