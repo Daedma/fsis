@@ -7,7 +7,7 @@
 Animation* CharacterAnimComponent::addOrientedAnimation(uint8_t sector, uint32_t group)
 {
 	EASTL_ASSERT_MSG(group != UNDIRECTED_GROUP, "0 group is reserved for undirected animations");
-	Animation* newAnimation = m_animations.emplace_back(new Animation(getWorld())).get();
+	Animation* newAnimation = m_animations.emplace_back(new Animation()).get();
 	newAnimation->pause();
 	if (m_groups.count(group) == 0)
 	{
@@ -19,7 +19,7 @@ Animation* CharacterAnimComponent::addOrientedAnimation(uint8_t sector, uint32_t
 
 Animation* CharacterAnimComponent::addUndirectedAnimation(uint32_t id)
 {
-	Animation* newAnimation = m_animations.emplace_back(new Animation(getWorld())).get();
+	Animation* newAnimation = m_animations.emplace_back(new Animation()).get();
 	newAnimation->pause();
 	m_undirectedAnimations[id] = newAnimation;
 	return newAnimation;
@@ -175,5 +175,9 @@ bool CharacterAnimComponent::checkInitializationCompleteness() const
 
 void CharacterAnimComponent::setInitState(uint32_t group)
 {
+	for (auto& i : m_animations)
+	{
+		i->initWorld(getWorld());
+	}
 	playAnimationGroup(group);
 }

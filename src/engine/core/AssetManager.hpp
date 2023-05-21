@@ -12,6 +12,7 @@ class AssetManager
 
 	static eastl::hash_map<eastl::string, eastl::unique_ptr<sf::SoundBuffer>, eastl::hash<eastl::string>, eastl::equal_to<eastl::string>, eastl::allocator, true> m_sounds;
 
+	static eastl::hash_map<eastl::string, uint32_t, eastl::hash<eastl::string>, eastl::equal_to<eastl::string>, eastl::allocator, true> m_animGroups;
 public:
 	AssetManager() = delete;
 
@@ -20,4 +21,14 @@ public:
 	static sf::Texture* loadTexture(const eastl::string& filename);
 
 	static sf::SoundBuffer* loadSound(const eastl::string& filename);
+
+	static class CharacterAnimComponent* loadCharacterAnimation(const eastl::string& filename);
+
+	static void initAnimGroups(const eastl::string& filename);
+
+private:
+	static uint32_t getAnimationGroupId(const eastl::string& groupname)
+	{
+		return m_animGroups.at(groupname);
+	}
 };
