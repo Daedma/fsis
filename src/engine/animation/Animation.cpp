@@ -5,6 +5,7 @@
 void Animation::play(bool bContinue)
 {
 	m_status = Status::PLAYING;
+	nextFrame();
 	if (!bContinue)
 	{
 		m_curFrame = 0;
@@ -17,16 +18,20 @@ void Animation::stop()
 	m_status = Status::STOPPED;
 	m_curFrame = 0;
 	m_elapsedTimeSinceFrameChange = 0.f;
+	nextFrame();
 }
 
 void Animation::pause()
 {
 	m_status = Status::PAUSED;
+	nextFrame();
 }
 
 void Animation::addNotify(const Notify& notify)
 {
-	if (eastl::none_of(m_notifies.begin(), m_notifies.end(), Notify::equal(notify)))
+	if (eastl::none_of(m_notifies.begin(), m_notifies.end(), [&notify](const Notify& other) {
+		return other.name == notify.name;
+		}))
 	{
 		m_notifies.emplace_back(notify);
 	}
@@ -47,6 +52,7 @@ void Animation::tick(float deltaSeconds)
 	{
 	case Status::PAUSED: case Status::STOPPED:
 		return;
+	case Status::PLAYING: default: break;
 	}
 	m_elapsedTimeSinceFrameChange += deltaSeconds;
 	if (m_elapsedTimeSinceFrameChange > m_period)

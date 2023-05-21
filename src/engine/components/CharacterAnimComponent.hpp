@@ -2,13 +2,12 @@
 
 #include "components/PrimitiveComponent.hpp"
 #include "actors/Character.hpp"
+#include "animation/Animation.hpp"
 #include <SFML/Graphics.hpp>
 #include <EASTL/hash_map.h>
 #include <EASTL/vector.h>
 #include <EASTL/array.h>
 #include <EASTL/unique_ptr.h>
-
-class Animation;
 
 class CharacterAnimComponent : public PrimitiveComponent
 {
@@ -30,6 +29,10 @@ public:
 
 	Animation* addUndirectedAnimation(uint32_t id);
 
+	bool checkInitializationCompleteness() const;
+
+	void setInitState(uint32_t group = MOVEMENT_GROUP);
+
 	Animation* playAnimationGroup(uint32_t group)
 	{
 		return playAnimation(getSector(), group);
@@ -44,6 +47,12 @@ public:
 	Animation* getActiveAnimation() const { return m_activeAnimation; }
 
 	void setMovementStopAnimation(bool bMovementStopAnimation) { b_movementStopAnimation = bMovementStopAnimation; }
+
+	void attachToActor(Character* owner)
+	{
+		m_character = owner;
+		PrimitiveComponent::attachToActor(owner);
+	}
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

@@ -9,3 +9,4 @@
 #include "components/SphereComponent.hpp"
 #include "components/BoxComponent.hpp"
 #include "components/AudioComponent.hpp"
+#include "components/CharacterAnimComponent.hpp"

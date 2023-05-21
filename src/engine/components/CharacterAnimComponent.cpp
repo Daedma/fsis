@@ -1,14 +1,18 @@
 #include "components/CharacterAnimComponent.hpp"
-#include "animation/Animation.hpp"
-#include "actors/Actor.hpp"
 #include "components/MovementComponent.hpp"
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <EASTL/algorithm.h>
 #include <cmath>
 
 Animation* CharacterAnimComponent::addOrientedAnimation(uint8_t sector, uint32_t group)
 {
+	EASTL_ASSERT_MSG(group != UNDIRECTED_GROUP, "0 group is reserved for undirected animations");
 	Animation* newAnimation = m_animations.emplace_back(new Animation(getWorld())).get();
 	newAnimation->pause();
+	if (m_groups.count(group) == 0)
+	{
+		eastl::fill(m_groups[group].begin(), m_groups[group].end(), nullptr);
+	}
 	m_groups[group][sector] = newAnimation;
 	return newAnimation;
 }
@@ -23,10 +27,9 @@ Animation* CharacterAnimComponent::addUndirectedAnimation(uint32_t id)
 
 Animation* CharacterAnimComponent::playAnimation(uint32_t id)
 {
-	EASTL_ASSERT_MSG(m_undirectedAnimations.count(id), "Unexpected group");
+	EASTL_ASSERT_MSG(m_undirectedAnimations.count(id), "Unexpected animation id");
+	stopAnimation();
 	Animation* anim = m_undirectedAnimations[id];
-	EASTL_ASSERT_MSG(anim, "Null animation");
-	m_activeAnimation->stop();
 	anim->play();
 	m_activeAnimation = anim;
 	m_activeGroup = UNDIRECTED_GROUP;
@@ -35,10 +38,11 @@ Animation* CharacterAnimComponent::playAnimation(uint32_t id)
 
 Animation* CharacterAnimComponent::playAnimation(uint8_t sector, uint32_t group)
 {
-	EASTL_ASSERT_MSG(m_undirectedAnimations.count(id), "Unexpected group");
-	Animation* anim = m_groups[sector][group];
+	EASTL_ASSERT_MSG(m_groups.count(group), "Unexpected group");
+	EASTL_ASSERT_MSG(group != UNDIRECTED_GROUP, "You cannot play undirected animation with this method");
+	Animation* anim = m_groups[group][sector];
 	EASTL_ASSERT_MSG(anim, "Null animation");
-	m_activeAnimation->stop();
+	stopAnimation();
 	anim->play();
 	m_activeAnimation = anim;
 	m_activeGroup = group;
@@ -57,13 +61,13 @@ Animation* CharacterAnimComponent::stopAnimation()
 void CharacterAnimComponent::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	EASTL_ASSERT(m_activeAnimation);
-	target.draw(*m_activeAnimation, states);
+	m_activeAnimation->draw(target, states);
 }
 
 void CharacterAnimComponent::tick(float deltaSeconds)
 {
 	Vector3f speed = m_character->getMovementComponent()->getCurrentSpeed();
-	bool isNoMovement = mathter::IsNullvector(speed);
+	bool isNoMovement = mathter::IsNullvector(Vector2f(speed.xy));
 	// Если активная группа не является группой движения
 	if (m_activeGroup != MOVEMENT_GROUP)
 	{
@@ -152,4 +156,24 @@ void CharacterAnimComponent::onAttached()
 {
 	PrimitiveComponent::onAttached();
 	m_character = dynamic_cast<Character*>(getOwner());
+}
+
+bool CharacterAnimComponent::checkInitializationCompleteness() const
+{
+	bool status = true;
+	status = status && m_groups.find(MOVEMENT_GROUP) != m_groups.end();
+	status = status && m_character;
+	for (const auto& i : m_groups)
+	{
+		for (const auto& j : i.second)
+		{
+			status = status && j;
+		}
+	}
+	return status;
+}
+
+void CharacterAnimComponent::setInitState(uint32_t group)
+{
+	playAnimationGroup(group);
 }

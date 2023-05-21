@@ -22,19 +22,10 @@ public:
 		uint8_t frame;
 		eastl::string name;
 		NotifyEventHandlerSignature handler = nullptr;
-
-		static constexpr auto equal = [](const Notify& notify) {
-			return [&notify](const Notify& other) {
-				return notify.name == other.name;
-			};
-		};
-
-		static constexpr auto isMyFrame = [](uint8_t frame) {
-			return [frame](const Notify& notify) {return frame == notify.frame; };
-		};
 	};
 
-	Animation(World* world) : GameObject(world), m_sprite(new sf::Sprite()) {}
+	Animation(World* world) : GameObject(world), m_sprite(new sf::Sprite())
+	{}
 
 	Animation() : m_sprite(new sf::Sprite()) {}
 
@@ -135,19 +126,27 @@ private:
 		}
 		else
 		{
-			frame.left = m_initFrame.width * (m_framesCount - m_curFrame) + m_initFrame.left;
+			frame.left = m_initFrame.width * (m_framesCount - m_curFrame - 1) + m_initFrame.left;
 		}
 		m_sprite->setTextureRect(frame);
+		updateOrigin(frame);
 	}
 
 	void handleNotifies()
 	{
 		eastl::vector<Notify> curFrameNotifies;
 		eastl::copy_if(m_notifies.begin(), m_notifies.end(),
-			eastl::back_inserter(curFrameNotifies), Notify::isMyFrame(m_curFrame));
+			eastl::back_inserter(curFrameNotifies), [this](const Notify& notify) {
+				return notify.frame == m_curFrame;
+			});
 		for (auto& i : curFrameNotifies)
 		{
 			i.handler(m_period * m_curFrame);
 		}
+	}
+
+	void updateOrigin(const sf::IntRect& frame)
+	{
+		m_sprite->setOrigin(frame.width / 2, frame.height * (1 - INVSQRT_3));
 	}
 };
