@@ -89,6 +89,7 @@ void World::tick(float deltaSeconds)
 	{
 		i->tick(deltaSeconds);
 	}
+	m_collision->updateAABB();
 	for (GameObject* i : m_phys)
 	{
 		i->tick(deltaSeconds);

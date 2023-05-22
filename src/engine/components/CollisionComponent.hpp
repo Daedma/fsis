@@ -95,7 +95,7 @@ public:
 		}
 	};
 
-	AABB getAABB() const
+	const AABB& getAABB() const
 	{
 		return m_aabb;
 	}

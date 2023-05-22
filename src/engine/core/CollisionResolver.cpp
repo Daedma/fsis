@@ -94,6 +94,14 @@ eastl::vector<CollisionComponent*> CollisionResolver::getOverlapCandidates(const
 	return candidates;
 }
 
+void CollisionResolver::updateAABB()
+{
+	for (auto& i : m_collisions)
+	{
+		i->updateAABB();
+	}
+}
+
 // Begin GJK implementation
 // https://blog.winter.dev/2020/gjk-algorithm/
 
