@@ -27,6 +27,8 @@ public:
 
 	~SpriteComponent();
 
+	void setTexture(sf::Texture* texture);
+
 	void loadTexture(const eastl::string& filename);
 
 	//TODO make more fit texture usage interface

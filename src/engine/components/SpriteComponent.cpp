@@ -37,3 +37,11 @@ void SpriteComponent::setHeight(float value)
 	float ratio = SQRT_3 * value / textureHeight;
 	m_sprite->setScale(ratio, ratio);
 }
+
+void SpriteComponent::setTexture(sf::Texture* texture)
+{
+	m_texture = texture;
+	m_sprite->setTexture(*texture);
+	sf::Vector2u textureSize = m_texture->getSize();
+	m_sprite->setOrigin(textureSize.x / 2, textureSize.y * (1 - INVSQRT_3));
+}

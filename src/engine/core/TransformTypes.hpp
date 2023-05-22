@@ -2,6 +2,7 @@
 #include "Mathter/Matrix.hpp"
 #include "Mathter/Vector.hpp"
 #include "Mathter/Quaternion.hpp"
+#include <EASTL/functional.h>
 
 using Transform = mathter::Matrix<float, 4, 4>;
 
@@ -10,6 +11,52 @@ using Vector4f = mathter::Vector<float, 4>;
 using Vector3f = mathter::Vector<float, 3>;
 
 using Vector2f = mathter::Vector<float, 2>;
+
+using Vector3u32 = mathter::Vector<uint32_t, 3>;
+
+using Vector3i32 = mathter::Vector<int32_t, 3>;
+
+using Vector3u64 = mathter::Vector<uint64_t, 3>;
+
+using Vector3i64 = mathter::Vector<int64_t, 3>;
+
+using Vector2u32 = mathter::Vector<uint32_t, 2>;
+
+using Vector2i32 = mathter::Vector<int32_t, 2>;
+
+using Vector2u64 = mathter::Vector<uint64_t, 2>;
+
+using Vector2i64 = mathter::Vector<int64_t, 2>;
+
+using Vector3u = Vector3u32;
+
+using Vector3i = Vector3i32;
+
+using Vector2u = Vector2u32;
+
+using Vector2i = Vector2i32;
+
+namespace eastl
+{
+
+	template<typename T>
+	struct hash<mathter::Vector<T, 3>>
+	{
+		size_t operator()(const mathter::Vector<T, 3>& val) const
+		{
+			return static_cast<size_t>(val.x) ^ static_cast<size_t>(val.y) ^ static_cast<size_t>(val.z);
+		}
+	};
+
+	template<typename T>
+	struct hash<mathter::Vector<T, 2>>
+	{
+		size_t operator()(const mathter::Vector<T, 2>& val) const
+		{
+			return static_cast<size_t>(val.x) ^ static_cast<size_t>(val.y);
+		}
+	};
+}
 
 static const Vector3f X_AXIS = Vector3f{ 1.f, 0.f, 0.f };
 
@@ -36,23 +83,14 @@ namespace TSR
 		return { transform(3, 0), transform(3, 1), transform(3, 2) };
 	}
 
-	// DONT WORK
 	inline Vector3f getScale(const  Transform& transform)
 	{
 		return {
 			mathter::Length(Vector3f{ transform(0, 0), transform(1, 0), transform(2, 0) }),
 			mathter::Length(Vector3f{ transform(0, 1), transform(1, 1), transform(2, 1) }),
 			mathter::Length(Vector3f{ transform(0, 2), transform(1, 2), transform(2, 2) }) };
-		// mathter::Matrix<float, 3, 3> m(transform(0, 0), transform(1, 0), transform(2, 0),
-		// 	transform(0, 1), transform(1, 1), transform(2, 1),
-		// 	transform(0, 2), transform(1, 2), transform(2, 2));
-		// auto [S, V, D] = mathter::DecomposeSVD(m);
-		// return { V(0, 0), V(1, 1), V(2, 2) };
-		// auto [Q, R] = mathter::DecomposeQR(transform);
-		// return { R(0, 0), R(1, 1), R(2, 2) };
 	}
 
-	// DONT WORK
 	inline Transform getRotation(const Transform& transform, const Vector3f& scale)
 	{
 		return Transform{

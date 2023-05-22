@@ -71,7 +71,7 @@ public:
 		}
 	}
 	// Collision detection
-
+	// TODO Cash AABB
 	struct AABB
 	{
 		Vector3f upperCorner, lowerCorner;
@@ -97,10 +97,13 @@ public:
 
 	AABB getAABB() const
 	{
-		AABB aabb;
-		aabb.lowerCorner = Vector3f{ getSupportPoint(-X_AXIS).x, getSupportPoint(-Y_AXIS).y, getSupportPoint(-Z_AXIS).z };
-		aabb.upperCorner = Vector3f{ getSupportPoint(X_AXIS).x, getSupportPoint(Y_AXIS).y, getSupportPoint(Z_AXIS).z };
-		return aabb;
+		return m_aabb;
+	}
+
+	void updateAABB()
+	{
+		m_aabb.lowerCorner = Vector3f{ getSupportPoint(-X_AXIS).x, getSupportPoint(-Y_AXIS).y, getSupportPoint(-Z_AXIS).z };
+		m_aabb.upperCorner = Vector3f{ getSupportPoint(X_AXIS).x, getSupportPoint(Y_AXIS).y, getSupportPoint(Z_AXIS).z };
 	}
 
 	Vector3f getSupportPoint(const Vector3f& direction) const;
@@ -117,4 +120,6 @@ private:
 	{ OverlapRules::BLOCKING, OverlapRules::BLOCKING, OverlapRules::BLOCKING, OverlapRules::BLOCKING, OverlapRules::BLOCKING };
 
 	Tag m_tag;
+
+	AABB m_aabb;
 };

@@ -27,6 +27,8 @@ public:
 
 	void resolve(CollisionComponent* collision);
 
+	void updateAABB(); // TODO
+
 	void tick(float deltaSeconds);
 
 private:
