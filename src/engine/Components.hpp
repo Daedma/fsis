@@ -10,3 +10,4 @@
 #include "components/BoxComponent.hpp"
 #include "components/AudioComponent.hpp"
 #include "components/CharacterAnimComponent.hpp"
+#include "components/RampComponent.hpp"
