@@ -35,6 +35,11 @@ void Canvas::registry(PrimitiveComponent* primitive)
 		== layer.cend())
 	{
 		layer.emplace_back(primitive); // safe
+		auto stable = m_stableLayers.find(primitive->getLayer());
+		if (stable != m_stableLayers.end())
+		{
+			stable->second = false;
+		}
 	}
 }
 
@@ -88,6 +93,18 @@ void Canvas::updateOrderZ(const Transform& projection)
 {
 	for (auto& [n, layer] : m_layers)
 	{
+		auto stable = m_stableLayers.find(n);
+		if (stable != m_stableLayers.end())
+		{
+			if (stable->second)
+			{
+				continue;
+			}
+			else
+			{
+				stable->second = true;
+			}
+		}
 		eastl::stable_sort(layer.begin(), layer.end(),
 			[&projection](PrimitiveComponent* lhs, PrimitiveComponent* rhs) {
 				return (Z_AXIS * lhs->getWorldTransform() * projection).z >

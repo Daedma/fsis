@@ -22,12 +22,15 @@ void Map::addFloor(const Vector3i& lowerCorner, const Vector3i& upperCorner, sf:
 				Vector3i currentCell(x, y, z);
 				auto blockToInsert = minorFillers.find(currentCell);
 				sf::Texture* texture = blockToInsert == minorFillers.end() ? majorFiller : blockToInsert->second;
-				SpriteComponent* blockSprite = new SpriteComponent();
-				blockSprite->setLayer(layer);
-				blockSprite->setTexture(texture);
-				blockSprite->setPosition({ currentCell.x * m_cellSize.x, currentCell.y * m_cellSize.y, currentCell.z * m_cellSize.z });
-				blockSprite->attachToActor(this);
-				blockSprite->setHeight(m_cellSize.z);
+				if (texture)
+				{
+					SpriteComponent* blockSprite = new SpriteComponent();
+					blockSprite->setLayer(layer);
+					blockSprite->setTexture(texture);
+					blockSprite->setPosition({ currentCell.x * m_cellSize.x, currentCell.y * m_cellSize.y, currentCell.z * m_cellSize.z });
+					blockSprite->attachToActor(this);
+					blockSprite->setHeight(m_cellSize.z);
+				}
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 #pragma once 
 
 #include "actors/Actor.hpp"
+#include "render/Canvas.hpp"
 #include <EASTL/string.h>
 #include <EASTL/hash_map.h>
 
@@ -16,6 +17,7 @@ class Map : public Actor
 public:
 	Map(World* world) : Actor(world)
 	{
+		Canvas::getInstance()->addStableLayer(-1);
 		setGroup(ActorsGroups::MAP);
 	};
 

@@ -3,6 +3,7 @@
 #include <EASTL/unique_ptr.h>
 #include <EASTL/vector.h>
 #include <EASTL/vector_map.h>
+#include <EASTL/vector_set.h>
 #include <SFML/Graphics/Transform.hpp>
 #include "core/TransformTypes.hpp"
 
@@ -26,10 +27,12 @@ class Canvas
 
 	eastl::vector_map<int32_t, eastl::vector<PrimitiveComponent*>> m_layers;
 
+	eastl::vector_map<int32_t, bool> m_stableLayers;
+
 	static eastl::unique_ptr<Canvas> m_instance;
 
 public:
-
+	//TODO add stable layers
 	~Canvas();
 
 	// NOTE maybe we don't need singletone? We can use only static methods
@@ -51,6 +54,10 @@ public:
 	void setCamera(Camera* camera);
 
 	Camera* getCamera() const { return m_camera.get(); }
+
+	void addStableLayer(int32_t layer) { m_stableLayers[layer] = false; }
+
+	bool isStableLayer(int32_t layer) { return m_stableLayers.count(layer); }
 
 	void registry(PrimitiveComponent* primitive);
 
