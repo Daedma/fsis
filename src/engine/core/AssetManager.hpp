@@ -24,6 +24,8 @@ public:
 
 	static class CharacterAnimComponent* loadCharacterAnimation(const eastl::string& filename);
 
+	static class Map* loadMap(class Map* map, const eastl::string& filename);
+
 	static void initAnimGroups(const eastl::string& filename);
 
 private:

@@ -37,7 +37,7 @@ void Map::addFloor(const Vector3i& lowerCorner, const Vector3i& upperCorner, sf:
 	}
 }
 
-void Map::addRampX(const Vector3i& position, const Vector2i& size, sf::Texture* blockFiller, sf::Texture* majorFiller, const eastl::hash_map<Vector3i, sf::Texture*>& minorFillers, int32_t layer)
+void Map::addRampY(const Vector3i& position, const Vector2i& size, sf::Texture* blockFiller, sf::Texture* majorFiller, const eastl::hash_map<Vector3i, sf::Texture*>& minorFillers, int32_t layer)
 {
 	Vector3f rampSize(size.y * m_cellSize.y, size.x * m_cellSize.x, size.y * m_cellSize.y);
 	Vector3f rampPosition(rampSize.y / 2 + position.x * m_cellSize.x, rampSize.x / 2 + position.y * m_cellSize.y, rampSize.z / 2 + position.z * m_cellSize.z);
@@ -87,7 +87,7 @@ void Map::addRampX(const Vector3i& position, const Vector2i& size, sf::Texture* 
 	}
 }
 
-void Map::addRampY(const Vector3i& position, const Vector2i& size, sf::Texture* blockFiller, sf::Texture* majorFiller, const eastl::hash_map<Vector3i, sf::Texture*>& minorFillers, int32_t layer)
+void Map::addRampX(const Vector3i& position, const Vector2i& size, sf::Texture* blockFiller, sf::Texture* majorFiller, const eastl::hash_map<Vector3i, sf::Texture*>& minorFillers, int32_t layer)
 {
 	Vector3f rampSize(size.x * m_cellSize.x, size.y * m_cellSize.y, size.x * m_cellSize.x);
 	Vector3f rampPosition(rampSize.x / 2 + position.x * m_cellSize.x, rampSize.y / 2 + position.y * m_cellSize.y, rampSize.z / 2 + position.z * m_cellSize.z);

@@ -1,5 +1,7 @@
 #include "core/AssetManager.hpp"
 #include "components/CharacterAnimComponent.hpp"
+#include "actors/Map.hpp"
+#include "core/World.hpp"
 #include <boost/json.hpp>
 #include <fstream>
 #include "log.hpp"
@@ -102,3 +104,130 @@ void AssetManager::initAnimGroups(const eastl::string& filename)
 
 }
 
+Map* AssetManager::loadMap(Map* map, const eastl::string& filename)
+{
+	namespace json = boost::json;
+	std::ifstream ifs(filename.c_str());
+	EASTL_ASSERT_MSG(ifs, "Failed to open file");
+
+	json::object mapInfo = json::parse(ifs).as_object();
+
+	json::object cellSizeInfo = mapInfo.at("cellSize").as_object();
+	Vector3f cellSize
+	(
+		cellSizeInfo.at("x").as_int64(),
+		cellSizeInfo.at("y").as_int64(),
+		cellSizeInfo.at("z").as_int64()
+	);
+	map->setCellSize(cellSize);
+
+	json::array spawnPointsInfo = mapInfo.at("spawnPoints").as_array();
+	for (const auto& i : spawnPointsInfo)
+	{
+		json::object curSpawnPointInfo = i.as_object();
+		Vector3i curSpawnPoint(
+			curSpawnPointInfo.at("coordinates").as_object().at("x").as_int64(),
+			curSpawnPointInfo.at("coordinates").as_object().at("y").as_int64(),
+			curSpawnPointInfo.at("coordinates").as_object().at("z").as_int64()
+		);
+		map->addSpawnPoint(curSpawnPointInfo.at("id").as_int64(), curSpawnPoint);
+	}
+
+	json::array segmentsInfo = mapInfo.at("segments").as_array();
+	for (const auto& i : segmentsInfo)
+	{
+		json::object curSegmentInfo = i.as_object();
+
+		json::string type = curSegmentInfo.at("type").as_string();
+
+		sf::Texture* majorFiller = nullptr;
+		if (curSegmentInfo.contains("majorFiller"))
+		{
+			majorFiller = loadTexture(curSegmentInfo.at("majorFiller").as_string().c_str());
+		}
+
+		int32_t layer = -1;
+		if (curSegmentInfo.contains("layer"))
+		{
+			layer = curSegmentInfo.at("layer").as_int64();
+		}
+
+		eastl::hash_map<Vector3i, sf::Texture*> minorFillers;
+
+		if (curSegmentInfo.contains("minorFillers"))
+		{
+			json::array minorFillersInfo = curSegmentInfo.at("minorFillers").as_array();
+			for (const auto& i : minorFillersInfo)
+			{
+				json::object curMinorFillerInfo = i.as_object();
+				sf::Texture* texture = nullptr;
+				if (curMinorFillerInfo.contains("texture"))
+				{
+					texture = loadTexture(curMinorFillerInfo.at("texture").as_string().c_str());
+				}
+				Vector3i lower(
+					curMinorFillerInfo.at("lower").as_object().at("x").as_int64(),
+					curMinorFillerInfo.at("lower").as_object().at("y").as_int64(),
+					curMinorFillerInfo.at("lower").as_object().at("z").as_int64()
+				);
+				Vector3i upper(
+					curMinorFillerInfo.at("upper").as_object().at("x").as_int64(),
+					curMinorFillerInfo.at("upper").as_object().at("y").as_int64(),
+					curMinorFillerInfo.at("upper").as_object().at("z").as_int64()
+				);
+
+				for (int32_t x = lower.x; x <= upper.x; ++x)
+				{
+					for (int32_t y = lower.y; y <= upper.y; ++y)
+					{
+						for (int32_t z = lower.z; z <= upper.z; ++z)
+						{
+							minorFillers[{x, y, z}] = texture;
+						}
+					}
+				}
+			}
+		}
+
+		if (type == "box")
+		{
+			Vector3i lower(
+				curSegmentInfo.at("lower").as_object().at("x").as_int64(),
+				curSegmentInfo.at("lower").as_object().at("y").as_int64(),
+				curSegmentInfo.at("lower").as_object().at("z").as_int64()
+			);
+			Vector3i upper(
+				curSegmentInfo.at("upper").as_object().at("x").as_int64(),
+				curSegmentInfo.at("upper").as_object().at("y").as_int64(),
+				curSegmentInfo.at("upper").as_object().at("z").as_int64()
+			);
+			map->addFloor(lower, upper, majorFiller, minorFillers, layer);
+		}
+		else
+		{
+			Vector3i position(
+				curSegmentInfo.at("position").as_object().at("x").as_int64(),
+				curSegmentInfo.at("position").as_object().at("y").as_int64(),
+				curSegmentInfo.at("position").as_object().at("z").as_int64()
+			);
+			Vector2i size(
+				curSegmentInfo.at("size").as_object().at("x").as_int64(),
+				curSegmentInfo.at("size").as_object().at("y").as_int64()
+			);
+			sf::Texture* sideFiller = nullptr;
+			if (curSegmentInfo.contains("sideFiller"))
+			{
+				sideFiller = loadTexture(curSegmentInfo.at("sideFiller").as_string().c_str());
+			}
+			if (type == "ramp_x")
+			{
+				map->addRampX(position, size, sideFiller, majorFiller, minorFillers, layer);
+			}
+			else if (type == "ramp_y")
+			{
+				map->addRampY(position, size, sideFiller, majorFiller, minorFillers, layer);
+			}
+		}
+	}
+	return map;
+}

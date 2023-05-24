@@ -2,6 +2,7 @@
 
 #include "actors/Actor.hpp"
 #include "render/Canvas.hpp"
+#include "core/World.hpp"
 #include <EASTL/string.h>
 #include <EASTL/hash_map.h>
 
@@ -14,6 +15,8 @@ class Map : public Actor
 {
 	Vector3f m_cellSize;
 
+	eastl::hash_map<uint32_t, Vector3i> m_spawnPoints;
+
 public:
 	Map(World* world) : Actor(world)
 	{
@@ -22,6 +25,17 @@ public:
 	};
 
 	void setCellSize(const Vector3f& cell) { m_cellSize = cell; }
+
+	void addSpawnPoint(uint32_t ind, const Vector3i& position)
+	{
+		m_spawnPoints[ind] = position;
+	}
+
+	Vector3f getSpawnPoint(uint32_t ind) const
+	{
+		Vector3f cellPosition = m_spawnPoints.at(ind);
+		return cellPosition * m_cellSize;
+	}
 
 	void addFloor(const Vector3i& lowerCorner, const Vector3i& upperCorner, sf::Texture* majorFiller = nullptr, const eastl::hash_map<Vector3i, sf::Texture*>& minorFillers = {}, int32_t layer = -1);
 

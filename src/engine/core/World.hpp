@@ -12,6 +12,7 @@ class ActorComponent;
 class Character;
 class CollisionResolver;
 class Controller;
+class Map;
 
 class World
 {
@@ -40,6 +41,7 @@ private:
 	eastl::vector_set<ActorComponent*, ActorComponentPriorityCompare>
 		m_componentsToDestroy;
 
+	Map* m_map = nullptr;
 public:
 	~World();
 
@@ -74,11 +76,27 @@ public:
 	void destroyComponent(ActorComponent* component) { m_componentsToDestroy.emplace(component); }
 
 	template<typename T>
+	T* spawnMap()
+	{
+		T* map = spawnActor<T>();
+		m_map = map;
+		return map;
+	}
+
+	template<typename T>
 	T* spawnActor(const Vector3f& pos = ZERO_VECTOR)
 	{
 		T* actor = new T(this);
 		spawnActor(actor, pos);
 		return actor;
+	}
+
+	template<typename T>
+	T* spawnCharacter(int32_t spawnPoint)
+	{
+		T* character = new T(this);
+		spawnCharacter(character, spawnPoint);
+		return character;
 	}
 
 	template<typename T>
@@ -109,6 +127,8 @@ private:
 	 * @note Not recommendet, use template version instead
 	 */
 	void spawnActor(Actor* actor, const Vector3f& pos = ZERO_VECTOR);
+
+	void spawnCharacter(Character* actor, int32_t spawnPoint) {} // TODO implement this
 
 	void spawnController(Controller* controller);
 };
