@@ -75,6 +75,8 @@ public:
 
 	void destroyComponent(ActorComponent* component) { m_componentsToDestroy.emplace(component); }
 
+	Map* getMap() const { return m_map; }
+
 	template<typename T>
 	T* spawnMap()
 	{
@@ -89,14 +91,6 @@ public:
 		T* actor = new T(this);
 		spawnActor(actor, pos);
 		return actor;
-	}
-
-	template<typename T>
-	T* spawnCharacter(int32_t spawnPoint)
-	{
-		T* character = new T(this);
-		spawnCharacter(character, spawnPoint);
-		return character;
 	}
 
 	template<typename T>
@@ -127,8 +121,6 @@ private:
 	 * @note Not recommendet, use template version instead
 	 */
 	void spawnActor(Actor* actor, const Vector3f& pos = ZERO_VECTOR);
-
-	void spawnCharacter(Character* actor, int32_t spawnPoint) {} // TODO implement this
 
 	void spawnController(Controller* controller);
 };

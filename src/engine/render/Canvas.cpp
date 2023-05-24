@@ -6,7 +6,7 @@
 #include <EASTL/sort.h>
 #include <EASTL/vector.h>
 
-eastl::unique_ptr<Canvas> Canvas::m_instance{new Canvas()};
+eastl::unique_ptr<Canvas> Canvas::m_instance{ new Canvas() };
 
 Canvas::Canvas() : m_window(nullptr), m_hud(nullptr), m_camera(new Camera())
 {
@@ -70,7 +70,7 @@ void Canvas::draw()
 	}
 	if (m_hud)
 	{
-		m_hud->draw(*m_window, sf::RenderStates::Default);
+		m_hud->draw();
 	}
 	m_window->display();
 }

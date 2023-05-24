@@ -1,9 +1,12 @@
 #pragma once
 
-#include <SFML/Graphics/Drawable.hpp>
+#include <TGUI/Backends/SFML.hpp>
+#include <core/InputEventListener.hpp>
 
-class HUD: public sf::Drawable
+class HUD : public tgui::GuiSFML, public InputEventListener
 {
 public:
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	HUD(sf::RenderWindow* window) : tgui::GuiSFML(*window) {}
+
+	virtual void processInput(const sf::Event& event) override;
 };
