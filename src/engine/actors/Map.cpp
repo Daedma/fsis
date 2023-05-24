@@ -86,3 +86,52 @@ void Map::addRampX(const Vector3i& position, const Vector2i& size, sf::Texture* 
 		}
 	}
 }
+
+void Map::addRampY(const Vector3i& position, const Vector2i& size, sf::Texture* blockFiller, sf::Texture* majorFiller, const eastl::hash_map<Vector3i, sf::Texture*>& minorFillers, int32_t layer)
+{
+	Vector3f rampSize(size.x * m_cellSize.x, size.y * m_cellSize.y, size.x * m_cellSize.x);
+	Vector3f rampPosition(rampSize.x / 2 + position.x * m_cellSize.x, rampSize.y / 2 + position.y * m_cellSize.y, rampSize.z / 2 + position.z * m_cellSize.z);
+	RampComponent* ramp = new RampComponent();
+	ramp->setSize(rampSize);
+	ramp->setPosition(rampPosition);
+	ramp->setOverlapRule(ActorsGroups::MAP, CollisionComponent::OverlapRules::IGNORE);
+	ramp->attachToActor(this);
+
+	for (int32_t x = position.x + size.x - 1, z = position.z; x >= position.x; --x, ++z)
+	{
+		for (int32_t y = position.y; y != position.y + size.y; ++y)
+		{
+			Vector3i currentCell(x, y, z);
+			auto blockToInsert = minorFillers.find(currentCell);
+			sf::Texture* texture = blockToInsert == minorFillers.end() ? majorFiller : blockToInsert->second;
+			if (texture)
+			{
+				SpriteComponent* blockSprite = new SpriteComponent();
+				blockSprite->setLayer(layer);
+				blockSprite->setTexture(texture);
+				blockSprite->setPosition({ currentCell.x * m_cellSize.x, currentCell.y * m_cellSize.y, currentCell.z * m_cellSize.z });
+				blockSprite->attachToActor(this);
+				blockSprite->setHeight(m_cellSize.z);
+			}
+		}
+	}
+
+	for (int32_t z = position.z; z != position.z + size.x; ++z)
+	{
+		for (int32_t x = position.x; x != position.x + size.x - z - position.z + 1; ++x)
+		{
+			Vector3i currentCell(x, position.y + size.y - 1, z);
+			auto blockToInsert = minorFillers.find(currentCell);
+			sf::Texture* texture = blockToInsert == minorFillers.end() ? blockFiller : blockToInsert->second;
+			if (texture)
+			{
+				SpriteComponent* blockSprite = new SpriteComponent();
+				blockSprite->setLayer(layer);
+				blockSprite->setTexture(texture);
+				blockSprite->setPosition({ currentCell.x * m_cellSize.x, currentCell.y * m_cellSize.y, currentCell.z * m_cellSize.z });
+				blockSprite->attachToActor(this);
+				blockSprite->setHeight(m_cellSize.z);
+			}
+		}
+	}
+}

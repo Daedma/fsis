@@ -27,5 +27,5 @@ public:
 
 	void addRampX(const Vector3i& position, const Vector2i& size, sf::Texture* blockFiller, sf::Texture* majorFiller = nullptr, const eastl::hash_map<Vector3i, sf::Texture*>& minorFillers = {}, int32_t layer = -1);
 
-	// void addRampY(const Vector3i& position, const Vector2i& size, sf::Texture* blockFiller, sf::Texture* majorFiller = nullptr, const eastl::hash_map<Vector3i, sf::Texture*>& minorFillers = {}, int32_t layer = -1);
+	void addRampY(const Vector3i& position, const Vector2i& size, sf::Texture* blockFiller, sf::Texture* majorFiller = nullptr, const eastl::hash_map<Vector3i, sf::Texture*>& minorFillers = {}, int32_t layer = -1);
 };
