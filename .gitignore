@@ -9,6 +9,7 @@
 !resources/sound
 !resources/music
 !resources/fonts
+!resources/textures
 !resources/textures/creatures
 !resources/textures/map
 !resources/ui
@@ -40,4 +41,3 @@
 # sounds
 !**.ogg
 !**.wav
-!**.png
