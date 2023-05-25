@@ -10,7 +10,7 @@ class Character : public Actor
 {
 	MovementComponent* m_movement = nullptr;
 
-	bool b_possessed = false;
+	class Controller* m_controller = nullptr;
 
 public:
 	Character(World* world);
@@ -19,7 +19,9 @@ public:
 
 	virtual void setupController(Controller* controller);
 
-	bool isPossessed() const { return b_possessed; }
+	bool isPossessed() const { return m_controller; }
 
-	void setPossessed(bool possessed) { b_possessed = possessed; }
+	void setController(class Controller* controller) { m_controller = controller; }
+
+	class Controller* getController() const { return m_controller; }
 };

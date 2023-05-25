@@ -13,6 +13,7 @@ class Character;
 class CollisionResolver;
 class Controller;
 class Map;
+class GameMode;
 
 class World
 {
@@ -42,6 +43,8 @@ private:
 		m_componentsToDestroy;
 
 	Map* m_map = nullptr;
+
+	eastl::unique_ptr<GameMode> m_mode;
 public:
 	~World();
 
@@ -53,7 +56,9 @@ public:
 
 	bool isFinished() const { return m_isFinished; }
 
-	void finish() { m_isFinished = true; }
+	void start();
+
+	void finish();
 
 	/**
 	 * @brief Add GameObject to tickgroup
@@ -76,6 +81,14 @@ public:
 	void destroyComponent(ActorComponent* component) { m_componentsToDestroy.emplace(component); }
 
 	Map* getMap() const { return m_map; }
+
+	template<typename T>
+	T* setGameMode()
+	{
+		T* mode = new T(this);
+		setGameMode(mode);
+		return mode;
+	}
 
 	template<typename T>
 	T* spawnMap()
@@ -101,6 +114,11 @@ public:
 		return controller;
 	}
 
+	const eastl::vector<eastl::unique_ptr<Controller>>& getControllers() const
+	{
+		return m_controllers;
+	}
+
 	/**
 	 * @brief Get the gravitational acceleration of the world
 	 *
@@ -123,4 +141,6 @@ private:
 	void spawnActor(Actor* actor, const Vector3f& pos = ZERO_VECTOR);
 
 	void spawnController(Controller* controller);
+
+	void setGameMode(GameMode* mode);
 };

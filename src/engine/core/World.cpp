@@ -5,14 +5,27 @@
 #include "World.hpp"
 #include "core/CollisionResolver.hpp"
 #include "controllers/Controller.hpp"
+#include "core/GameMode.hpp"
 
 World::~World() {}
 
-World::World() : m_collision(new CollisionResolver()) {}
+World::World() : m_collision(new CollisionResolver()), m_mode(nullptr) {}
 
 bool World::ActorComponentPriorityCompare::operator()(ActorComponent* lhs, ActorComponent* rhs)
 {
 	return lhs->getDepth() < rhs->getDepth();
+}
+
+void World::start()
+{
+	m_mode->spawnPlayer();
+	m_mode->onStartLevel();
+}
+
+void World::finish()
+{
+	m_isFinished = true;
+	m_mode->onEndLevel();
 }
 
 void World::registry(GameObject* obj)
@@ -68,6 +81,11 @@ void World::execDestroy()
 	m_actorsToDestroy.clear();
 }
 
+void World::setGameMode(GameMode* mode)
+{
+	m_mode.reset(mode);
+}
+
 void World::spawnActor(Actor* actor, const Vector3f& pos)
 {
 	m_actors.emplace_back(actor);
@@ -99,5 +117,6 @@ void World::tick(float deltaSeconds)
 	{
 		i->tick(deltaSeconds);
 	}
+	m_mode->tick(deltaSeconds);
 	execDestroy();
 }

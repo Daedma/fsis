@@ -1,6 +1,7 @@
 #pragma once
 #include <EASTL/functional.h>
 #include <EASTL/hash_map.h>
+#include <EASTL/vector.h>
 
 class Character;
 struct ActionBinding;
@@ -66,6 +67,8 @@ public:
 	Controller(Character* character);
 
 	virtual ~Controller();
+
+	eastl::vector<Character*> getNearestCharacters(float maxDistance = INFINITY) const;
 
 	virtual void tick(float deltaSeconds);
 

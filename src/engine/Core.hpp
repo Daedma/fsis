@@ -7,3 +7,4 @@
 #include "core/World.hpp"
 #include "core/CollisionResolver.hpp"
 #include "core/AssetManager.hpp"
+#include "core/GameMode.hpp"
