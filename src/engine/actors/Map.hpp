@@ -20,7 +20,7 @@ class Map : public Actor
 public:
 	Map(World* world) : Actor(world)
 	{
-		Canvas::getInstance()->addStableLayer(-1);
+		Canvas::addStableLayer(-1);
 		setGroup(ActorsGroups::MAP);
 	};
 

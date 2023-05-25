@@ -6,27 +6,26 @@
 #include <EASTL/sort.h>
 #include <EASTL/vector.h>
 
-eastl::unique_ptr<Canvas> Canvas::m_instance{ new Canvas() };
+eastl::unique_ptr<sf::RenderWindow> Canvas::m_window = nullptr;
 
-Canvas::Canvas() : m_window(nullptr), m_hud(nullptr), m_camera(new Camera())
+eastl::unique_ptr<Camera> Canvas::m_camera = nullptr;
+
+eastl::unique_ptr<HUD> Canvas::m_hud = nullptr;
+
+eastl::vector_map<int32_t, eastl::vector<PrimitiveComponent*>> Canvas::m_layers;
+
+eastl::vector_map<int32_t, bool> Canvas::m_stableLayers;
+
+void Canvas::resetCamera()
 {
-	m_camera->setView(Camera::ISOMETRIC);
+	m_camera.reset();
 }
 
-Canvas::~Canvas() {}
-
-void Canvas::setWindow(sf::RenderWindow* window)
+void Canvas::init(const char* title)
 {
-	m_window.reset(window);
-	m_window->setKeyRepeatEnabled(false);
+	m_window.reset(new sf::RenderWindow(sf::VideoMode::getFullscreenModes()[0], title));
+	m_hud.reset(new HUD(m_window.get()));
 }
-
-void Canvas::setHUD(HUD* hud)
-{
-	m_hud.reset(hud);
-}
-
-void Canvas::setCamera(Camera* camera) { m_camera.reset(camera); }
 
 void Canvas::registry(PrimitiveComponent* primitive)
 {
@@ -75,7 +74,7 @@ void Canvas::draw()
 	m_window->display();
 }
 
-sf::Transform Canvas::getToScreenTransform(const Transform& transform) const
+sf::Transform Canvas::getToScreenTransform(const Transform& transform)
 {
 	float minDimension = eastl::min_alt(m_window->getSize().x, m_window->getSize().y);
 	Transform projection = transform * Transform(mathter::Scale(minDimension, minDimension, minDimension));

@@ -4,11 +4,7 @@
 
 class Camera
 {
-	Transform m_transform = mathter::Identity();
-
 	Vector2f m_position = { 0.f, 0.f };
-
-	float m_distance = 0.f;
 
 	/**
 	 * @brief How much units placed in window
@@ -18,10 +14,6 @@ class Camera
 
 public:
 	static const Transform ISOMETRIC;
-
-	static const Transform TOPDOWN;
-
-	static const Transform SIDE;
 
 	Camera() = default;
 
@@ -35,25 +27,12 @@ public:
 
 	const Vector2f& getPosition() const { return m_position; }
 
-	void setDistance(float distance) { m_distance = distance; }
-
-	float getDistance() const { return m_distance; }
-
-	/**
-	 * @brief Set the world orientation relative camera (e.g. isometric)
-	 *
-	 * @param projectionType
-	 */
-	void setView(const Transform& view) { m_transform = view; } // TODO remove for release (debug only feature)
-
-	const Transform& getView() const { return m_transform; } // TODO remove
-
 	Transform getProjectionMatrix()
 	{
 		updatePosition();
-		Vector3f position{ m_position.x, m_position.y, m_distance };
-		Transform projection = mathter::Orthographic(position - m_scale * SQRT_3, position + m_scale * SQRT_3, 1.f, -1.f);
-		return m_transform * projection;
+		Vector3f position{ m_position.x, m_position.y, 0 };
+		Transform projection = mathter::Orthographic(position - m_scale * INVSQRT_3, position + m_scale * INVSQRT_3, 1.f, -1.f);
+		return ISOMETRIC * projection;
 	}
 
 protected:

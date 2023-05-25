@@ -19,57 +19,51 @@ class HUD;
 
 class Canvas
 {
-	eastl::unique_ptr<sf::RenderWindow> m_window;
+	static eastl::unique_ptr<sf::RenderWindow> m_window;
 
-	eastl::unique_ptr<Camera> m_camera;
+	static eastl::unique_ptr<Camera> m_camera;
 
-	eastl::unique_ptr<HUD> m_hud;
+	static eastl::unique_ptr<HUD> m_hud;
 
-	eastl::vector_map<int32_t, eastl::vector<PrimitiveComponent*>> m_layers;
+	static eastl::vector_map<int32_t, eastl::vector<PrimitiveComponent*>> m_layers;
 
-	eastl::vector_map<int32_t, bool> m_stableLayers;
-
-	static eastl::unique_ptr<Canvas> m_instance;
+	static eastl::vector_map<int32_t, bool> m_stableLayers;
 
 public:
-	//TODO add stable layers
-	~Canvas();
+	Canvas() = delete;
 
-	// NOTE maybe we don't need singletone? We can use only static methods
-	static Canvas* getInstance() { return m_instance.get(); }
+	static void init(const char* title);
 
-	// TODO remove this
-	// incapsulate window creation process
-	void setWindow(sf::RenderWindow* window);
+	static sf::RenderWindow* getWindow() { return m_window.get(); }
 
-	sf::RenderWindow* getWindow() const { return m_window.get(); }
+	static HUD* getHUD() { return m_hud.get(); }
 
-	// TODO make template version (no-new)
-	void setHUD(HUD* hud);
+	static Camera* getCamera() { return m_camera.get(); }
 
-	HUD* getHUD() const { return m_hud.get(); }
+	static void resetCamera();
 
-	// TODO incapsulate camera setup
-	// make template version
-	void setCamera(Camera* camera);
+	template<typename T, typename ...Args>
+	static T* createCamera(Args&&... args);
 
-	Camera* getCamera() const { return m_camera.get(); }
+	static void addStableLayer(int32_t layer) { m_stableLayers[layer] = false; }
 
-	void addStableLayer(int32_t layer) { m_stableLayers[layer] = false; }
+	static bool isStableLayer(int32_t layer) { return m_stableLayers.count(layer); }
 
-	bool isStableLayer(int32_t layer) { return m_stableLayers.count(layer); }
+	static void registry(PrimitiveComponent* primitive);
 
-	void registry(PrimitiveComponent* primitive);
+	static void unregistry(PrimitiveComponent* primitive);
 
-	void unregistry(PrimitiveComponent* primitive);
-
-	void draw();
+	static void draw();
 
 private:
-	// If we refuse to singletone it whould be to declared as deleted 
-	Canvas();
+	static sf::Transform getToScreenTransform(const Transform& transform);
 
-	sf::Transform getToScreenTransform(const Transform& transform) const;
-
-	void updateOrderZ(const Transform& projection);
+	static void updateOrderZ(const Transform& projection);
 };
+
+template<typename T, typename ...Args>
+T* Canvas::createCamera(Args&&... args)
+{
+	m_camera = eastl::make_unique<T>(eastl::forward<Args>(args)...);
+	return dynamic_cast<T*>(m_camera.get());
+}

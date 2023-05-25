@@ -24,15 +24,5 @@ static Transform getIsometricTransform()
 
 const Transform Camera::ISOMETRIC = getIsometricTransform();
 
-const Transform Camera::TOPDOWN = mathter::Identity();
-
-const Transform Camera::SIDE{
-	1.f, 0.f, 0.f, 0.f,
-		0.f, 0.f, 1.f, 0.f,
-		0.f, 1.f, 0.f, 0.f,
-		0.f, 0.f, 0.f, 1.f
-};
-// Swap y and z axises
-
 void Camera::updatePosition()
 {}
