@@ -23,7 +23,8 @@ void Canvas::resetCamera()
 
 void Canvas::init(const char* title)
 {
-	m_window.reset(new sf::RenderWindow(sf::VideoMode::getFullscreenModes()[0], title));
+	m_window.reset(new sf::RenderWindow(sf::VideoMode::getDesktopMode(), title, sf::Style::None));
+	m_window->setKeyRepeatEnabled(false);
 	m_hud.reset(new HUD(m_window.get()));
 }
 
