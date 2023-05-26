@@ -74,6 +74,10 @@ static const double SQRT_3 = 1.7320508075688772935274463415059;
 
 static const double INVSQRT_3 = 0.57735026918962576450914878050196;
 
+static const double SQRT_2 = 1.4142135623730950488016887242097;
+
+static const double INVSQRT_2 = 0.70710678118654752440084436210485;
+
 using Rotator = mathter::Quaternion<float>;
 
 namespace TSR

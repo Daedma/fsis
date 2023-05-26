@@ -65,6 +65,8 @@ public:
 		return m_undirectedAnimations.count(id);
 	}
 
+	void setHeight(float value);
+
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	virtual void tick(float deltaSeconds) override;

@@ -15,6 +15,7 @@
 !/src/fsis/client/
 !/src/fsis/server/
 !/src/Data Files
+!/src/fsis
 
 # md files  
 !**.md

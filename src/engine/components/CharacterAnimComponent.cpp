@@ -198,3 +198,12 @@ void CharacterAnimComponent::setInitState(uint32_t group)
 	}
 	playAnimationGroup(group);
 }
+
+void CharacterAnimComponent::setHeight(float value)
+{
+	EASTL_ASSERT(value != 0);
+	for (auto& i : m_animations)
+	{
+		i->setHeight(value);
+	}
+}
