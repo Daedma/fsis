@@ -31,6 +31,17 @@ void CollisionResolver::tick(float deltaSeconds)
 	m_beginProcessed = m_collisions.end();
 }
 
+void CollisionResolver::setHandlerByTag(CollisionComponent::Tag tag, CollisionComponent::OnOverlapSignature handler)
+{
+	for (CollisionComponent* i : m_collisions)
+	{
+		if (i->getTag() == tag)
+		{
+			i->setOnOverlapEvent(handler);
+		}
+	}
+}
+
 void CollisionResolver::resolve(CollisionComponent* collision)
 {
 	eastl::vector<CollisionComponent*> candidates = getOverlapCandidates(collision); // broadcast phase

@@ -146,7 +146,13 @@ void FSISCharacter::onDeath(FSISCharacter* killer)
 	getMovementComponent()->deactivate();
 }
 
-void FSISCharacter::onKill(FSISCharacter* victim) {}
+void FSISCharacter::onKill(FSISCharacter* victim)
+{
+	if (m_target == victim && m_autoResetTarget)
+	{
+		resetTarget();
+	}
+}
 
 void FSISCharacter::onBeginTargeted(FSISCharacter* killer) {}
 

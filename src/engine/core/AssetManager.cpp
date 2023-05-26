@@ -228,5 +228,25 @@ Map* AssetManager::loadMap(Map* map, const eastl::string& filename)
 			}
 		}
 	}
+	if (mapInfo.contains("triggers"))
+	{
+		json::array triggers = mapInfo.at("triggers").as_array();
+		for (const auto& i : triggers)
+		{
+			json::object curTriggetInfo = i.as_object();
+			Vector3i lower(
+				curTriggetInfo.at("lower").as_object().at("x").as_int64(),
+				curTriggetInfo.at("lower").as_object().at("y").as_int64(),
+				curTriggetInfo.at("lower").as_object().at("z").as_int64()
+			);
+			Vector3i upper(
+				curTriggetInfo.at("upper").as_object().at("x").as_int64(),
+				curTriggetInfo.at("upper").as_object().at("y").as_int64(),
+				curTriggetInfo.at("upper").as_object().at("z").as_int64()
+			);
+			uint8_t tag = curTriggetInfo.at("tag").as_int64();
+			map->addTrigger(lower, upper, tag);
+		}
+	}
 	return map;
 }

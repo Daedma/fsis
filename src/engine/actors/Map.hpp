@@ -37,6 +37,8 @@ public:
 		return cellPosition * m_cellSize;
 	}
 
+	void addTrigger(const Vector3i& lowerCorner, const Vector3i& upperCorner, uint8_t tag);
+
 	void addFloor(const Vector3i& lowerCorner, const Vector3i& upperCorner, sf::Texture* majorFiller = nullptr, const eastl::hash_map<Vector3i, sf::Texture*>& minorFillers = {}, int32_t layer = -1);
 
 	void addRampX(const Vector3i& position, const Vector2i& size, sf::Texture* blockFiller, sf::Texture* majorFiller = nullptr, const eastl::hash_map<Vector3i, sf::Texture*>& minorFillers = {}, int32_t layer = -1);

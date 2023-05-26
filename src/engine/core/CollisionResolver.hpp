@@ -8,6 +8,7 @@
 #include <EASTL/optional.h>
 #include <EASTL/sort.h>
 #include "core/TransformTypes.hpp"
+#include "components/CollisionComponent.hpp"
 
 class CollisionComponent;
 class Actor;
@@ -26,6 +27,8 @@ public:
 	void unregistry(CollisionComponent* collision);
 
 	void resolve(CollisionComponent* collision);
+
+	void setHandlerByTag(CollisionComponent::Tag tag, CollisionComponent::OnOverlapSignature handler);
 
 	void updateAABB();
 
