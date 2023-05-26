@@ -5,6 +5,7 @@
 #include <EASTL/vector_map.h>
 #include <EASTL/vector_set.h>
 #include <SFML/Graphics/Transform.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include "core/TransformTypes.hpp"
 
 namespace sf
@@ -37,6 +38,14 @@ public:
 	static sf::RenderWindow* getWindow() { return m_window.get(); }
 
 	static HUD* getHUD() { return m_hud.get(); }
+
+	template<typename T>
+	static T* setHUD()
+	{
+		T* hud = new T(m_window.get());
+		m_hud.reset(hud);
+		return hud;
+	}
 
 	static Camera* getCamera() { return m_camera.get(); }
 
