@@ -68,6 +68,7 @@ void CharacterAnimComponent::tick(float deltaSeconds)
 {
 	Vector3f speed = m_character->getMovementComponent()->getCurrentSpeed();
 	bool isNoMovement = mathter::IsNullvector(Vector2f(speed.xy));
+	updateOrientation();
 	// Если активная группа не является группой движения
 	if (m_activeGroup != MOVEMENT_GROUP)
 	{
@@ -93,11 +94,6 @@ void CharacterAnimComponent::tick(float deltaSeconds)
 		// Если не нужно остановить анимацию движения
 		else
 		{
-			// Если активная группа не является группой безнаправленных движений, то выполнить обновление ориентации
-			if (m_activeGroup != UNDIRECTED_GROUP)
-			{
-				updateOrientation();
-			}
 			// Если активная анимация уже запущена
 			if (m_activeAnimation->isActive())
 			{
@@ -121,8 +117,10 @@ void CharacterAnimComponent::tick(float deltaSeconds)
 		// Если текущая скорость не равна нулю
 		else
 		{
-			// Выполнить обновление ориентации
-			updateOrientation();
+			if (!m_activeAnimation->isActive())
+			{
+				m_activeAnimation->play();
+			}
 			// Установить флаг обратного направления анимации в зависимости от направления движения
 			bool isDifferentDirections = mathter::Dot(speed,
 				getOwner()->getForwardVector()) < 0;
@@ -143,12 +141,15 @@ uint8_t CharacterAnimComponent::getSector() const
 
 void CharacterAnimComponent::updateOrientation()
 {
-	Animation* fitAnimation = m_groups[m_activeGroup][getSector()];
-	if (fitAnimation != m_activeAnimation)
+	if (m_activeGroup != UNDIRECTED_GROUP)
 	{
-		m_activeAnimation->stop();
-		m_activeAnimation = fitAnimation;
-		fitAnimation->play();
+		Animation* fitAnimation = m_groups[m_activeGroup][getSector()];
+		if (fitAnimation != m_activeAnimation)
+		{
+			m_activeAnimation->stop();
+			m_activeAnimation = fitAnimation;
+			fitAnimation->play();
+		}
 	}
 }
 

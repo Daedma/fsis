@@ -67,11 +67,11 @@ void SceneComponent::setRotation(const Rotator& rotation)
 
 void SceneComponent::orientByDirection(const Vector3f& direction)
 {
-	if (direction == X_AXIS)
+	if (mathter::IsNullvector(direction - X_AXIS))
 	{
 		setRotation(mathter::Identity());
 	}
-	else if (direction == -X_AXIS)
+	else if (mathter::IsNullvector(direction + X_AXIS))
 	{
 		Rotator rot = mathter::RotationAxisAngle(Z_AXIS, mathter::Deg2Rad(180));
 		setRotation(rot);

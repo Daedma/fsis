@@ -4,7 +4,6 @@
 #include "core/World.hpp"
 #include <boost/json.hpp>
 #include <fstream>
-#include "log.hpp"
 
 eastl::hash_map<eastl::string, eastl::unique_ptr<sf::Texture>, eastl::hash<eastl::string>, eastl::equal_to<eastl::string>, eastl::allocator, true> AssetManager::m_textures;
 
@@ -58,7 +57,6 @@ CharacterAnimComponent* AssetManager::loadCharacterAnimation(const eastl::string
 	{
 		Animation* currentAnimation = nullptr;
 		json::object cur = i.as_object();
-		LOG(cur);
 		uint32_t group = getAnimationGroupId(cur.at("group").as_string().c_str());
 		if (cur.contains("sector"))
 		{

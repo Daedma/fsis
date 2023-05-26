@@ -172,7 +172,7 @@ private:
 	 * @brief Accumulate all moves at this tick
 	 *
 	 */
-	Vector3f m_lastMovement;
+	Vector3f m_lastMovement = { 0.f, 0.f, 0.f };
 
 	/**
 	 * @brief Components are owning by this actor
