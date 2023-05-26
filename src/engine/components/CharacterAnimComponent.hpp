@@ -8,13 +8,17 @@
 #include <EASTL/vector.h>
 #include <EASTL/array.h>
 #include <EASTL/unique_ptr.h>
+#include <EASTL/string.h>
 
 class CharacterAnimComponent : public PrimitiveComponent
 {
 public:
-	static constexpr uint32_t MOVEMENT_GROUP = uint32_t(-1);
+	static void setMovementGroup(uint32_t id)
+	{
+		movementGroup = id;
+	}
 
-	static constexpr uint32_t UNDIRECTED_GROUP = 0;
+	static uint32_t movementGroup;
 
 	CharacterAnimComponent() = default;
 
@@ -22,7 +26,7 @@ public:
 
 	Animation* addMovementAnimation(uint8_t sector)
 	{
-		return addOrientedAnimation(sector, MOVEMENT_GROUP);
+		return addOrientedAnimation(sector, movementGroup);
 	}
 
 	Animation* addOrientedAnimation(uint8_t sector, uint32_t group);
@@ -31,7 +35,7 @@ public:
 
 	bool checkInitializationCompleteness() const;
 
-	void setInitState(uint32_t group = MOVEMENT_GROUP);
+	void setInitState(uint32_t group = movementGroup);
 
 	Animation* playAnimationGroup(uint32_t group)
 	{
@@ -41,6 +45,8 @@ public:
 	Animation* playAnimation(uint32_t id);
 
 	Animation* playAnimation(uint8_t sector, uint32_t group);
+
+	Animation* playAnimation(const eastl::string& anim);
 
 	Animation* stopAnimation();
 
@@ -52,6 +58,11 @@ public:
 	{
 		m_character = owner;
 		PrimitiveComponent::attachToActor(owner);
+	}
+
+	bool isUndirectedGroup(uint32_t id)
+	{
+		return m_undirectedAnimations.count(id);
 	}
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -70,7 +81,7 @@ private:
 
 	Animation* m_activeAnimation = nullptr;
 
-	uint32_t m_activeGroup = MOVEMENT_GROUP;
+	uint32_t m_activeGroup;
 
 	Character* m_character = nullptr;
 

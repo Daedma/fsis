@@ -99,7 +99,8 @@ void AssetManager::initAnimGroups(const eastl::string& filename)
 		json::object cur = i.as_object();
 		m_animGroups[cur.at("name").as_string().c_str()] = cur.at("id").as_int64();
 	}
-
+	EASTL_ASSERT(m_animGroups.count("movement"));
+	CharacterAnimComponent::setMovementGroup(m_animGroups.at("movement"));
 }
 
 Map* AssetManager::loadMap(Map* map, const eastl::string& filename)

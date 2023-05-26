@@ -28,7 +28,6 @@ public:
 
 	static void initAnimGroups(const eastl::string& filename);
 
-private:
 	static uint32_t getAnimationGroupId(const eastl::string& groupname)
 	{
 		return m_animGroups.at(groupname);

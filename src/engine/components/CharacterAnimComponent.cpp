@@ -1,12 +1,14 @@
 #include "components/CharacterAnimComponent.hpp"
 #include "components/MovementComponent.hpp"
+#include "core/AssetManager.hpp"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <EASTL/algorithm.h>
 #include <cmath>
 
+uint32_t CharacterAnimComponent::movementGroup = -1;
+
 Animation* CharacterAnimComponent::addOrientedAnimation(uint8_t sector, uint32_t group)
 {
-	EASTL_ASSERT_MSG(group != UNDIRECTED_GROUP, "0 group is reserved for undirected animations");
 	Animation* newAnimation = m_animations.emplace_back(new Animation()).get();
 	newAnimation->pause();
 	if (m_groups.count(group) == 0)
@@ -32,14 +34,14 @@ Animation* CharacterAnimComponent::playAnimation(uint32_t id)
 	Animation* anim = m_undirectedAnimations[id];
 	anim->play();
 	m_activeAnimation = anim;
-	m_activeGroup = UNDIRECTED_GROUP;
+	m_activeGroup = id;
 	return anim;
 }
 
 Animation* CharacterAnimComponent::playAnimation(uint8_t sector, uint32_t group)
 {
 	EASTL_ASSERT_MSG(m_groups.count(group), "Unexpected group");
-	EASTL_ASSERT_MSG(group != UNDIRECTED_GROUP, "You cannot play undirected animation with this method");
+	EASTL_ASSERT_MSG(!isUndirectedGroup(group), "You cannot play undirected animation with this method");
 	Animation* anim = m_groups[group][sector];
 	EASTL_ASSERT_MSG(anim, "Null animation");
 	stopAnimation();
@@ -47,6 +49,20 @@ Animation* CharacterAnimComponent::playAnimation(uint8_t sector, uint32_t group)
 	m_activeAnimation = anim;
 	m_activeGroup = group;
 	return anim;
+}
+
+Animation* CharacterAnimComponent::playAnimation(const eastl::string& anim)
+{
+	uint32_t id = AssetManager::getAnimationGroupId(anim);
+	if (m_groups.count(id))
+	{
+		return playAnimationGroup(id);
+	}
+	else if (m_undirectedAnimations.count(id))
+	{
+		return playAnimation(id);
+	}
+	return nullptr;
 }
 
 Animation* CharacterAnimComponent::stopAnimation()
@@ -70,7 +86,7 @@ void CharacterAnimComponent::tick(float deltaSeconds)
 	bool isNoMovement = mathter::IsNullvector(Vector2f(speed.xy));
 	updateOrientation();
 	// Если активная группа не является группой движения
-	if (m_activeGroup != MOVEMENT_GROUP)
+	if (m_activeGroup != movementGroup)
 	{
 		// Если нужно остановить анимацию движения
 		if (b_movementStopAnimation)
@@ -83,12 +99,12 @@ void CharacterAnimComponent::tick(float deltaSeconds)
 			// Если текущая скорость равна нулю и активная анимация не запущена
 			if (isNoMovement && !m_activeAnimation->isActive())
 			{
-				playAnimationGroup(MOVEMENT_GROUP);
+				playAnimationGroup(movementGroup);
 			}
 			// Если текущая скорость не равна нулю
 			if (!isNoMovement)
 			{
-				playAnimationGroup(MOVEMENT_GROUP);
+				playAnimationGroup(movementGroup);
 			}
 		}
 		// Если не нужно остановить анимацию движения
@@ -102,7 +118,7 @@ void CharacterAnimComponent::tick(float deltaSeconds)
 			// Если активная анимация не запущена
 			else
 			{
-				playAnimationGroup(MOVEMENT_GROUP);
+				playAnimationGroup(movementGroup);
 			}
 		}
 	}
@@ -141,7 +157,7 @@ uint8_t CharacterAnimComponent::getSector() const
 
 void CharacterAnimComponent::updateOrientation()
 {
-	if (m_activeGroup != UNDIRECTED_GROUP)
+	if (!isUndirectedGroup(m_activeGroup))
 	{
 		Animation* fitAnimation = m_groups[m_activeGroup][getSector()];
 		if (fitAnimation != m_activeAnimation)
@@ -162,7 +178,7 @@ void CharacterAnimComponent::onAttached()
 bool CharacterAnimComponent::checkInitializationCompleteness() const
 {
 	bool status = true;
-	status = status && m_groups.find(MOVEMENT_GROUP) != m_groups.end();
+	status = status && m_groups.find(movementGroup) != m_groups.end();
 	status = status && m_character;
 	for (const auto& i : m_groups)
 	{
