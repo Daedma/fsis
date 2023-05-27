@@ -34,7 +34,7 @@ public:
 	Vector3f getSpawnPoint(uint32_t ind) const
 	{
 		Vector3f cellPosition = m_spawnPoints.at(ind);
-		return cellPosition * m_cellSize;
+		return cellPosition * m_cellSize + m_cellSize * 0.5f;
 	}
 
 	void addTrigger(const Vector3i& lowerCorner, const Vector3i& upperCorner, uint8_t tag);

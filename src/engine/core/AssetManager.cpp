@@ -16,7 +16,11 @@ sf::Texture* AssetManager::loadTexture(const eastl::string& filename)
 	if (m_textures.count(filename) == 0)
 	{
 		m_textures[filename].reset(new sf::Texture());
-		m_textures[filename]->loadFromFile(filename.c_str());
+		if (!(m_textures[filename]->loadFromFile(filename.c_str())))
+		{
+			m_textures[filename] = nullptr;
+			return nullptr;
+		}
 	}
 	return m_textures[filename].get();
 }
