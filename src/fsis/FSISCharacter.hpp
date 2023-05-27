@@ -129,6 +129,11 @@ public:
 		return m_entity;
 	}
 
+	void kill(FSISCharacter* killer)
+	{
+		takeDamage(m_health, killer);
+	}
+
 	virtual void takeDamage(float damage, FSISCharacter* instigator);
 
 	virtual void attack();
@@ -145,6 +150,8 @@ protected:
 	virtual void onEndTargeted(FSISCharacter* hunter);
 
 	virtual void load_Internal(const boost::json::object& obj);
+
+	void initProjectilePosition(class Projectile* ball);
 
 private:
 	eastl::list<Character*> m_nearestCharacters;

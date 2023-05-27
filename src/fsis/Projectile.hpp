@@ -12,6 +12,15 @@ public:
 
 	void setRadius(float radius);
 
+	float getRadius() const
+	{
+		return m_radius;
+	}
+
+	void setSpeed(float speed);
+
+	float getSpeed() const;
+
 	Entity getType() const
 	{
 		return m_type;
@@ -24,7 +33,7 @@ public:
 		m_maxLifetime = lifetime;
 	}
 
-	void launch(const Vector3f& speed);
+	void launch(const Vector3f& direction);
 
 	void setOnHit(OnHitSignature handler)
 	{

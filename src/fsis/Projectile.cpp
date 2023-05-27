@@ -6,6 +6,8 @@
 Projectile::Projectile(World* world) : Actor(world)
 {
 	m_movement = new MovementComponent(this);
+	m_movement->setRunSpeed(600);
+	m_movement->setWalkSpeed(600);
 	m_movement->disableGravity();
 	m_movement->setOrientRotationToMovement(false);
 	m_movement->attachToActor(this);
@@ -42,6 +44,17 @@ Projectile::Projectile(World* world) : Actor(world)
 
 }
 
+void Projectile::setSpeed(float speed)
+{
+	m_movement->setWalkSpeed(speed);
+	m_movement->setRunSpeed(speed);
+}
+
+float Projectile::getSpeed() const
+{
+	return m_movement->getRunSpeed();
+}
+
 void Projectile::setRadius(float radius)
 {
 	m_radius = radius;
@@ -69,10 +82,13 @@ void Projectile::setType(Entity type)
 	case Entity::DIVINE:
 		m_sprite->loadTexture("Ball_Glowstone.png");
 		break;
+	case Entity::QUINTESSENCE:
+		m_sprite->loadTexture("Ball_Black.png");
 	case Entity::NONE:
 	default:
 		break;
 	}
+	m_sprite->setHeight(m_radius * 2);
 }
 
 void Projectile::launch(const Vector3f& speed)
@@ -82,6 +98,7 @@ void Projectile::launch(const Vector3f& speed)
 
 void Projectile::tick(float deltaSeconds)
 {
+	Actor::tick(deltaSeconds);
 	m_curLifetime += deltaSeconds;
 	if (m_curLifetime > m_maxLifetime)
 	{

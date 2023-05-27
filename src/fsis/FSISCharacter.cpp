@@ -1,4 +1,5 @@
 #include "FSISCharacter.hpp"
+#include "Projectile.hpp"
 #include "core/AssetManager.hpp"
 #include "core/World.hpp"
 #include "Components.hpp"
@@ -157,6 +158,7 @@ void FSISCharacter::attack()
 
 void FSISCharacter::tick(float deltaSeconds)
 {
+	Character::tick(deltaSeconds);
 	updateCurrentTarget();
 	if (m_target)
 	{
@@ -175,6 +177,8 @@ void FSISCharacter::onDeath(FSISCharacter* killer)
 	}
 	killer->onKill(this);
 	getMovementComponent()->deactivate();
+	m_anim->playAnimation("death");
+	deactivate();
 }
 
 void FSISCharacter::onKill(FSISCharacter* victim)
@@ -213,4 +217,9 @@ void FSISCharacter::updateCurrentTarget()
 	{
 		setTarget(nullptr);
 	}
+}
+
+void FSISCharacter::initProjectilePosition(Projectile* ball)
+{
+	ball->setPosition(getPosition() + getForwardVector() * (ball->getRadius() + m_proxBox->getSize().x * 0.5f + 10.f));
 }

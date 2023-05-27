@@ -154,7 +154,7 @@ public:
 	 */
 	void launch(const Vector3f& direction)
 	{
-		m_launchSpeed = direction;
+		m_launchSpeed = direction * getSpeed();
 		b_launch = true;
 	}
 
