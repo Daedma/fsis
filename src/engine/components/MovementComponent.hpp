@@ -149,12 +149,12 @@ public:
 	 * @brief Launch actor in given @p direction
 	 * with current speed
 	 *
-	 * @param direction normalized vector in direction
+	 * @param direction vector in direction
 	 * @note If you toggle run after launch - speed will not change
 	 */
 	void launch(const Vector3f& direction)
 	{
-		m_launchSpeed = direction * getSpeed();
+		m_launchSpeed = direction;
 		b_launch = true;
 	}
 

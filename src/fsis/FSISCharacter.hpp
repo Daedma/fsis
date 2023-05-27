@@ -1,6 +1,7 @@
 #pragma once
 
 #include "actors/Character.hpp"
+#include "Entity.hpp"
 #include <boost/json.hpp>
 #include <EASTL/string.h>
 #include <EASTL/list.h>
@@ -118,6 +119,16 @@ public:
 		setTarget(nullptr);
 	}
 
+	void setEntity(Entity entity)
+	{
+		m_entity = entity;
+	}
+
+	Entity getEntity() const
+	{
+		return m_entity;
+	}
+
 	virtual void takeDamage(float damage, FSISCharacter* instigator);
 
 	virtual void attack();
@@ -141,6 +152,8 @@ private:
 	size_t m_nearestCharactersCount = 0;
 
 	eastl::list<Character*>::iterator m_targetPosition;
+
+	Entity m_entity = Entity::NONE;
 
 private:
 	void updateNearestCharacters();

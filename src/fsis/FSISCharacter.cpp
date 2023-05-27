@@ -31,6 +31,7 @@ void FSISCharacter::load(const eastl::string& filename)
 		m_anim->destroy();
 	}
 	m_anim = AssetManager::loadCharacterAnimation(characterInfo.at("sprite").as_string().c_str());
+	m_anim->attachToActor(this);
 	EASTL_ASSERT(m_anim->checkInitializationCompleteness());
 	m_anim->setInitState();
 
@@ -44,6 +45,36 @@ void FSISCharacter::load(const eastl::string& filename)
 
 	getMovementComponent()->setWalkSpeed(characterInfo.at("defaultSpeed").as_double());
 	getMovementComponent()->setRunSpeed(characterInfo.at("runSpeed").as_double());
+
+	if (characterInfo.contains("entity"))
+	{
+		json::string entity = characterInfo.at("entity").as_string();
+		// INFERNAL, DISEASED, DIVINE, UNHOLY, PURIFIED, NONE
+		if (entity == "infernal")
+		{
+			m_entity = Entity::INFERNAL;
+		}
+		else if (entity == "diseased")
+		{
+			m_entity = Entity::DISEASED;
+		}
+		else if (entity == "divine")
+		{
+			m_entity = Entity::DIVINE;
+		}
+		else if (entity == "unholy")
+		{
+			m_entity = Entity::UNHOLY;
+		}
+		else if (entity == "purified")
+		{
+			m_entity = Entity::PURIFIED;
+		}
+		else if (entity == "none")
+		{
+			m_entity = Entity::NONE;
+		}
+	}
 
 	load_Internal(characterInfo);
 }
