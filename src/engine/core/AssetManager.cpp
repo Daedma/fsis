@@ -174,7 +174,6 @@ Map* AssetManager::loadMap(Map* map, const eastl::string& filename)
 					curMinorFillerInfo.at("upper").as_object().at("y").as_int64(),
 					curMinorFillerInfo.at("upper").as_object().at("z").as_int64()
 				);
-
 				for (int32_t x = lower.x; x <= upper.x; ++x)
 				{
 					for (int32_t y = lower.y; y <= upper.y; ++y)

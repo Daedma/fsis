@@ -67,9 +67,9 @@ void Map::addRampY(const Vector3i& position, const Vector2i& size, sf::Texture* 
 		}
 	}
 
-	for (int32_t z = position.z; z != position.z + size.y; ++z)
+	for (int32_t z = position.z; z != position.z + size.y - 1; ++z)
 	{
-		for (int32_t y = position.y; y != position.y + size.y - z - position.z + 1; ++y)
+		for (int32_t y = position.y; y != position.y + size.y - z + position.z - 1; ++y)
 		{
 			Vector3i currentCell(position.x + size.x - 1, y, z);
 			auto blockToInsert = minorFillers.find(currentCell);
@@ -116,9 +116,9 @@ void Map::addRampX(const Vector3i& position, const Vector2i& size, sf::Texture* 
 		}
 	}
 
-	for (int32_t z = position.z; z != position.z + size.x; ++z)
+	for (int32_t z = position.z; z != position.z + size.x - 1; ++z)
 	{
-		for (int32_t x = position.x; x != position.x + size.x - z - position.z + 1; ++x)
+		for (int32_t x = position.x; x != position.x + size.x - z + position.z - 1; ++x)
 		{
 			Vector3i currentCell(x, position.y + size.y - 1, z);
 			auto blockToInsert = minorFillers.find(currentCell);

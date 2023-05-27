@@ -119,7 +119,7 @@ private:
 	eastl::array<OverlapRules, static_cast<int>(ActorsGroups::COUNT)> m_overlapRules =
 	{ OverlapRules::BLOCKING, OverlapRules::BLOCKING, OverlapRules::BLOCKING, OverlapRules::BLOCKING, OverlapRules::BLOCKING };
 
-	Tag m_tag;
+	Tag m_tag = 0;
 
 	AABB m_aabb;
 };
