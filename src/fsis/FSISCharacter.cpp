@@ -179,6 +179,10 @@ void FSISCharacter::onDeath(FSISCharacter* killer)
 	{
 		resetTarget();
 	}
+	if (isPossessed())
+	{
+		getController()->unpossess();
+	}
 	killer->onKill(this);
 	getMovementComponent()->deactivate();
 	m_anim->playAnimation("death");

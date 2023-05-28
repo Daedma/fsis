@@ -4,7 +4,7 @@
 
 void AIController::tick(float deltaSeconds)
 {
-	if (m_target)
+	if (m_target && getMarionette())
 	{
 		float distance = mathter::Distance(getMarionette()->getPosition(), m_target->getPosition());
 		if (distance > m_attackRange)

@@ -74,6 +74,8 @@ public:
 
 	void possess(Character* character);
 
+	void unpossess();
+
 	template<typename UserObject>
 	inline void bindAxis(ActionID axisID, UserObject* executor, InputAxisHandlerSignature<UserObject> func);
 
