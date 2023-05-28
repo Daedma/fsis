@@ -32,6 +32,7 @@ void FSISCharacter::load(const eastl::string& filename)
 		m_anim->destroy();
 	}
 	m_anim = AssetManager::loadCharacterAnimation(characterInfo.at("sprite").as_string().c_str());
+	m_anim->setMovementStopAnimation(false);
 	m_anim->attachToActor(this);
 	EASTL_ASSERT(m_anim->checkInitializationCompleteness());
 	m_anim->setInitState();
@@ -221,5 +222,5 @@ void FSISCharacter::updateCurrentTarget()
 
 void FSISCharacter::initProjectilePosition(Projectile* ball)
 {
-	ball->setPosition(getPosition() + getForwardVector() * (ball->getRadius() + m_proxBox->getSize().x * 0.5f + 10.f));
+	ball->setPosition(getPosition() + getForwardVector() * (ball->getRadius() * 2 + m_proxBox->getSize().x * 0.5f + 10.f));
 }

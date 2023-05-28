@@ -17,13 +17,14 @@ Projectile::Projectile(World* world) : Actor(world)
 	m_proxSphere->setOverlapRule(ActorsGroups::ALL, CollisionComponent::OverlapRules::OVERLAP);
 	m_proxSphere->setOnOverlapEvent([this](CollisionComponent* comp) {
 		m_sound->stopPlaying();
-		m_sound->startPlaying("Fireball_explosion_3.wav");
+		m_sound->playSound("Fireball_explosion_3.wav");
 		m_sound->setOnPlayingFinished("Fireball_explosion_3.wav", [this](float duration) {
 			destroy();
 			});
 		m_sprite->hide();
 		m_movement->deactivate();
 		m_proxSphere->setOverlapRule(ActorsGroups::ALL, CollisionComponent::OverlapRules::IGNORE);
+		m_proxSphere->deactivate();
 		FSISCharacter* hit = dynamic_cast<FSISCharacter*>(comp->getOwner());
 		if (hit && m_onHit)
 		{
@@ -34,7 +35,7 @@ Projectile::Projectile(World* world) : Actor(world)
 
 	m_sprite = new SpriteComponent();
 	m_sprite->loadTexture("Ball_Fair.png");
-	m_sprite->setHeight(m_radius * 2);
+	m_sprite->setHeight(m_radius * INVSQRT_3);
 	m_sprite->attachToActor(this);
 
 	m_sound = new AudioComponent();
@@ -59,7 +60,7 @@ void Projectile::setRadius(float radius)
 {
 	m_radius = radius;
 	m_proxSphere->setRadius(radius);
-	m_sprite->setHeight(radius * 2);
+	m_sprite->setHeight(radius * INVSQRT_3);
 }
 
 void Projectile::setType(Entity type)
@@ -83,7 +84,7 @@ void Projectile::setType(Entity type)
 		m_sprite->loadTexture("Ball_Glowstone.png");
 		break;
 	case Entity::QUINTESSENCE:
-		m_sprite->loadTexture("Ball_Black.png");
+		m_sprite->loadTexture("Picture_Black_Circle.png");
 	case Entity::NONE:
 	default:
 		break;

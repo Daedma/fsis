@@ -30,7 +30,7 @@ protected:
 
 	virtual void onDeath(FSISCharacter* killer) override;
 
-	virtual void load_Internal(const boost::json::object& obj);
+	virtual void load_Internal(const boost::json::object& obj) override;
 
 private:
 	struct

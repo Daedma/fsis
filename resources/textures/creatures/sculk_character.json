@@ -1,0 +1,152 @@
+{
+	"file" : "creatures/sculk_character.png",
+	"frame" : 
+	{
+		"width" : 64,
+		"height" : 64
+	},
+	"indent" :
+	{
+		"top" : 8,
+		"left" : 0
+	},
+	"height" : 80,
+	"animations" : 
+	[
+		{
+			"group" : "movement",
+			"sector" : 5,
+			"line" : 9,
+			"framesCount" : 9,
+			"frequency" : 8,
+			"loop" : true
+		},
+		{
+			"group" : "movement",
+			"sector" : 3,
+			"line" : 10,
+			"framesCount" : 9,
+			"frequency" : 8,
+			"loop" : true
+		},
+		{
+			"group" : "movement",
+			"sector" : 2,
+			"line" : 10,
+			"framesCount" : 9,
+			"frequency" : 8,
+			"loop" : true
+		},
+		{
+			"group" : "movement",
+			"sector" : 4,
+			"line" : 10,
+			"framesCount" : 9,
+			"frequency" : 8,
+			"loop" : true
+		},
+		{
+			"group" : "movement",
+			"sector" : 1,
+			"line" : 11,
+			"framesCount" : 9,
+			"frequency" : 8,
+			"loop" : true
+		},
+		{
+			"group" : "movement",
+			"sector" : 7,
+			"line" : 12,
+			"framesCount" : 9,
+			"frequency" : 8,
+			"loop" : true
+		},
+		{
+			"group" : "movement",
+			"sector" : 6,
+			"line" : 12,
+			"framesCount" : 9,
+			"frequency" : 8,
+			"loop" : true
+		},
+		{
+			"group" : "movement",
+			"sector" : 0,
+			"line" : 12,
+			"framesCount" : 9,
+			"frequency" : 8,
+			"loop" : true
+		},
+		{
+			"group" : "spell",
+			"sector" : 5,
+			"line" : 1,
+			"framesCount" : 7,
+			"frequency" : 8,
+			"loop" : false
+		},
+		{
+			"group" : "spell",
+			"sector" : 3,
+			"line" : 2,
+			"framesCount" : 7,
+			"frequency" : 8,
+			"loop" : false
+		},
+		{
+			"group" : "spell",
+			"sector" : 4,
+			"line" : 2,
+			"framesCount" : 7,
+			"frequency" : 8,
+			"loop" : false
+		},
+		{
+			"group" : "spell",
+			"sector" : 2,
+			"line" : 2,
+			"framesCount" : 7,
+			"frequency" : 8,
+			"loop" : false
+		},
+		{
+			"group" : "spell",
+			"sector" : 1,
+			"line" : 3,
+			"framesCount" : 7,
+			"frequency" : 8,
+			"loop" : false
+		},
+		{
+			"group" : "spell",
+			"sector" : 7,
+			"line" : 4,
+			"framesCount" : 7,
+			"frequency" : 8,
+			"loop" : false
+		},
+		{
+			"group" : "spell",
+			"sector" : 6,
+			"line" : 4,
+			"framesCount" : 7,
+			"frequency" : 8,
+			"loop" : false
+		},
+		{
+			"group" : "spell",
+			"sector" : 0,
+			"line" : 4,
+			"framesCount" : 7,
+			"frequency" : 8,
+			"loop" : false
+		},
+		{
+			"group" : "death",
+			"line" : 21,
+			"framesCount" : 6,
+			"frequency" : 12,
+			"loop" : false
+		}
+	]
+}

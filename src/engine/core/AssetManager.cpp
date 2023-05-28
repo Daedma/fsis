@@ -124,7 +124,6 @@ Map* AssetManager::loadMap(Map* map, const eastl::string& filename)
 	EASTL_ASSERT_MSG(ifs, "Failed to open file");
 
 	json::object mapInfo = json::parse(ifs).as_object();
-
 	json::object cellSizeInfo = mapInfo.at("cellSize").as_object();
 	Vector3f cellSize
 	(
@@ -156,6 +155,7 @@ Map* AssetManager::loadMap(Map* map, const eastl::string& filename)
 		sf::Texture* majorFiller = nullptr;
 		if (curSegmentInfo.contains("majorFiller"))
 		{
+			majorFiller = loadTexture(curSegmentInfo.at("majorFiller").as_string().c_str());
 		}
 
 		int32_t layer = -1;
@@ -175,6 +175,7 @@ Map* AssetManager::loadMap(Map* map, const eastl::string& filename)
 				sf::Texture* texture = nullptr;
 				if (curMinorFillerInfo.contains("texture"))
 				{
+					texture = loadTexture(curMinorFillerInfo.at("texture").as_string().c_str());
 				}
 				Vector3i lower(
 					curMinorFillerInfo.at("lower").as_object().at("x").as_int64(),
@@ -186,6 +187,7 @@ Map* AssetManager::loadMap(Map* map, const eastl::string& filename)
 					curMinorFillerInfo.at("upper").as_object().at("y").as_int64(),
 					curMinorFillerInfo.at("upper").as_object().at("z").as_int64()
 				);
+
 				for (int32_t x = lower.x; x <= upper.x; ++x)
 				{
 					for (int32_t y = lower.y; y <= upper.y; ++y)
@@ -227,6 +229,7 @@ Map* AssetManager::loadMap(Map* map, const eastl::string& filename)
 			sf::Texture* sideFiller = nullptr;
 			if (curSegmentInfo.contains("sideFiller"))
 			{
+				sideFiller = loadTexture(curSegmentInfo.at("sideFiller").as_string().c_str());
 			}
 			if (type == "ramp_x")
 			{
@@ -238,6 +241,7 @@ Map* AssetManager::loadMap(Map* map, const eastl::string& filename)
 			}
 		}
 	}
+
 	if (mapInfo.contains("triggers"))
 	{
 		json::array triggers = mapInfo.at("triggers").as_array();

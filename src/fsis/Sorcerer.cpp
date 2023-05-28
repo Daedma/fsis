@@ -70,6 +70,8 @@ void Sorcerer::setupController(Controller* controller)
 	controller->bindAction(FSISActions::SP_ABILITY, Controller::InputEvent::PRESSED, this, &Sorcerer::specialAbility);
 	controller->bindAction(FSISActions::SP_ATTACK, Controller::InputEvent::PRESSED, this, &Sorcerer::specialAttack);
 	controller->bindAction(FSISActions::SP_MODE, Controller::InputEvent::PRESSED, this, &Sorcerer::specialMode);
+	controller->bindAction(FSISActions::TOGGLE_RUN, Controller::InputEvent::PRESSED, this, &Sorcerer::toggleRun);
+	controller->bindAction(FSISActions::TOGGLE_RUN, Controller::InputEvent::RELEASED, this, &Sorcerer::toggleRun);
 	controller->bindAxis(FSISActions::MOVE_FORWARD, this, &Sorcerer::moveForward);
 	controller->bindAxis(FSISActions::MOVE_RIGHT, this, &Sorcerer::moveRight);
 }
@@ -79,6 +81,7 @@ void Sorcerer::attack()
 	if (canAttack())
 	{
 		Projectile* ball = getWorld()->spawnActor<Projectile>();
+		ball->setRadius(15);
 		initProjectilePosition(ball);
 		ball->setType(getEntity());
 		ball->setOnHit([this](FSISCharacter* target, Entity entity) {

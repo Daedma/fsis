@@ -1,6 +1,7 @@
 #include "Sorcerer.hpp"
 #include "Engine.hpp"
 #include "FSISAction.hpp"
+#include "log.hpp"
 
 
 void* operator new[](size_t size, const char* pName, int flags, unsigned debugFlags, const char* file, int line) {
@@ -20,29 +21,52 @@ public:
 	{
 		AssetManager::init("resources.ini");
 		AssetManager::initAnimGroups("animgroups.ini");
+		LOG("Assets initialization was succesfully");
+
 		Canvas::init("FSIS");
 		Canvas::setHUD<HUD>();
+		LOG("Canvas customized");
+
 		m_world.setGameMode<GameMode>();
+		LOG("Game mode customized");
 
 		Map* map = m_world.spawnMap<Map>();
 		AssetManager::loadMap(map, "map.json");
+		LOG("Map loaded");
 
 		Sorcerer* hero = m_world.spawnActor<Sorcerer>(map->getSpawnPoint(0));
-		hero->load("player.json");
+		hero->load("resources/creatures/player.json");
+		LOG("Player spawned");
 
 		FollowCamera* cam = Canvas::createCamera<FollowCamera>();
 		cam->setTarget(hero);
 		cam->setScale(3000);
+		LOG("Camera customized");
 
-		Sorcerer* enemy = m_world.spawnActor<Sorcerer>(map->getSpawnPoint(40));
-		enemy->load("enemy.json");
-		AIController* ai = m_world.spawnController<AIController>();
-		ai->setTarget(hero);
-		ai->setAttackRange(enemy->getAttackRange());
-		ai->bindAttackAction(FSISActions::ATTACK);
-		ai->possess(enemy);
+		// Sorcerer* enemy = m_world.spawnActor<Sorcerer>(map->getSpawnPoint(40));
+		// try
+		// {
+		// 	enemy->load("resources/creatures/enemy.json");
+		// 	enemy->setTarget(hero);
+		// }
+		// catch (const std::exception& e)
+		// {
+		// 	std::cerr << e.what() << '\n';
+		// }
+		// LOG("Enemy spawned");
+
+		// AIController* ai = m_world.spawnController<AIController>();
+		// ai->setTarget(hero);
+		// ai->setAttackRange(enemy->getAttackRange());
+		// ai->bindAttackAction(FSISActions::ATTACK);
+		// ai->possess(enemy);
+		// LOG("Enemy are possessed by AI controller");
 
 		PlayerController* controller = m_world.spawnController<PlayerController>();
+		controller->bindKeyAction(PlayerController::KeyCode::Q, FSISActions::NEXT_TARGET);
+		controller->bindKeyAction(PlayerController::KeyCode::Num1, FSISActions::SP_ABILITY);
+		controller->bindKeyAction(PlayerController::KeyCode::Num2, FSISActions::SP_ATTACK);
+		controller->bindKeyAction(PlayerController::KeyCode::Num3, FSISActions::SP_MODE);
 		controller->bindKeyAction(PlayerController::KeyCode::E, FSISActions::ATTACK);
 		controller->bindKeyAction(PlayerController::KeyCode::LShift, FSISActions::TOGGLE_RUN);
 		controller->bindKeyAxis(PlayerController::KeyCode::W, +1.f, FSISActions::MOVE_FORWARD);
@@ -50,6 +74,7 @@ public:
 		controller->bindKeyAxis(PlayerController::KeyCode::D, +1.f, FSISActions::MOVE_RIGHT);
 		controller->bindKeyAxis(PlayerController::KeyCode::A, -1.f, FSISActions::MOVE_RIGHT);
 		controller->possess(hero);
+		LOG("Player are possessed by controller");
 	}
 
 	void run()

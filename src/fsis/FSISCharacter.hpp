@@ -100,7 +100,7 @@ public:
 
 	bool canAttack() const
 	{
-		m_timeSinceLastAttack >= m_attackSpeed;
+		return m_timeSinceLastAttack >= m_attackSpeed;
 	}
 
 	void setSize(const Vector2f& size);

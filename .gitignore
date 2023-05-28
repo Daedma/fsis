@@ -21,6 +21,7 @@
 !resources/textures/creatures
 !resources/textures/map
 !resources/ui
+!resources/creatures
 
 # md files  
 !**.md
