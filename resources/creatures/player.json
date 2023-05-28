@@ -8,5 +8,22 @@
 	"defaultSpeed" : 200.0,
 	"runSpeed" : 500.0,
 	"attackRange" : 1000.0,
-	"entity" : "none"
+	"entity" : "none",
+	"specialAttack":
+	{
+		"cooldown" : 40.0,
+		"radius" : 20.0,
+		"speed" : 500.0
+	},
+	"specialMode" :
+	{
+		"cooldown" : 40.0,
+		"proc" : 50.0,
+		"duration" : 5.0
+	},
+	"specialAbility" :
+	{
+		"duration" : 20.0,
+		"cooldown" : 40.0
+	}
 }

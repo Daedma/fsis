@@ -67,7 +67,7 @@ private:
 
 	// EPA
 
-	static Vector3f getPenetrationDepth(const Simplex& simplex, const CollisionComponent* lhs, const CollisionComponent* rhs);
+	static eastl::optional<Vector3f> getPenetrationDepth(const Simplex& simplex, const CollisionComponent* lhs, const CollisionComponent* rhs);
 
 	static eastl::pair<eastl::vector<Vector4f>, size_t> getFaceNormals(const eastl::vector<Vector3f>& polytope,
 		const eastl::vector<size_t>& faces);

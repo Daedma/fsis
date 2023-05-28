@@ -25,6 +25,8 @@ public:
 
 	virtual void tick(float deltaSeconds) override;
 
+	virtual void takeDamage(float value, FSISCharacter* instigator) override;
+
 protected:
 	virtual void onKill(FSISCharacter* victim) override;
 
@@ -39,5 +41,23 @@ private:
 		float timer = 0.f;
 		float duration = 20.f;
 		float cooldown = 40.f;
+		float timeSinceLastUse = 0;
 	} m_beacon;
+
+	struct
+	{
+		float radius;
+		float cooldown;
+		float speed;
+		float timeSinceLastUse = 0;
+	} m_specialAttack;
+
+	struct
+	{
+		float cooldown;
+		float proc;
+		float duration = 0;
+		bool active = false;
+		float timeSinceLastUse = 0;
+	} m_specialMode;
 };

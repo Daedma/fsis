@@ -5,6 +5,7 @@
 #include "Projectile.hpp"
 #include "FSISAction.hpp"
 #include "FSISGameMode.hpp"
+#include <random>
 
 void Sorcerer::moveForward(float value)
 {
@@ -18,10 +19,11 @@ void Sorcerer::moveRight(float value)
 
 void Sorcerer::specialAttack()
 {
-	if (canAttack())
+	if (canAttack() && m_specialAttack.timeSinceLastUse >= m_specialAttack.cooldown)
 	{
 		Projectile* ball = getWorld()->spawnActor<Projectile>();
-		ball->setRadius(20);
+		ball->setRadius(m_specialAttack.radius);
+		ball->setSpeed(m_specialAttack.speed);
 		initProjectilePosition(ball);
 		ball->setType(Entity::QUINTESSENCE);
 		ball->setOnHit([this](FSISCharacter* target, Entity) {
@@ -37,12 +39,17 @@ void Sorcerer::specialAttack()
 		}
 		m_anim->playAnimation("spell");
 		m_timeSinceLastAttack = 0;
+		m_specialAttack.timeSinceLastUse = 0;
 	}
 }
 
 void Sorcerer::specialMode()
 {
-	//TODO ask gamedesigner
+	if (m_specialMode.timeSinceLastUse >= m_specialMode.cooldown)
+	{
+		m_specialMode.active = true;
+		m_specialMode.timeSinceLastUse = 0;
+	}
 }
 
 void Sorcerer::specialAbility()
@@ -51,12 +58,12 @@ void Sorcerer::specialAbility()
 	{
 		setPosition(m_beacon.ptr->getPosition());
 	}
-	else
+	else if (m_beacon.timeSinceLastUse >= m_beacon.cooldown)
 	{
 		m_beacon.ptr = getWorld()->spawnActor<Actor>(getPosition());
 		SpriteComponent* beaconSprite = new SpriteComponent();
 		beaconSprite->loadTexture("beacon1.png");
-		beaconSprite->setHeight(15);
+		beaconSprite->setHeight(30);
 		beaconSprite->attachToActor(m_beacon.ptr);
 	}
 }
@@ -139,9 +146,42 @@ void Sorcerer::tick(float deltaSeconds)
 			m_beacon.timer = 0;
 		}
 	}
+	m_beacon.timeSinceLastUse += deltaSeconds;
+	m_specialAttack.timeSinceLastUse += deltaSeconds;
+	m_specialMode.timeSinceLastUse += deltaSeconds;
+	m_specialMode.active = m_specialMode.timeSinceLastUse < m_specialMode.duration;
 }
 
 void Sorcerer::load_Internal(const boost::json::object& obj)
 {
+	namespace json = boost::json;
+
+	json::object specialAttackInfo = obj.at("specialAttack").as_object();
+	m_specialAttack.cooldown = specialAttackInfo.at("cooldown").as_double();
+	m_specialAttack.radius = specialAttackInfo.at("radius").as_double();
+	m_specialAttack.speed = specialAttackInfo.at("speed").as_double();
+	m_specialAttack.timeSinceLastUse = m_specialAttack.cooldown;
+
+	json::object specialModeInfo = obj.at("specialMode").as_object();
+	m_specialMode.cooldown = specialModeInfo.at("cooldown").as_double();
+	m_specialMode.proc = specialModeInfo.at("proc").as_double();
+	m_specialMode.duration = specialModeInfo.at("duration").as_double();
+	m_specialAttack.timeSinceLastUse = m_specialAttack.cooldown;
+
+	json::object specialAbilityInfo = obj.at("specialAbility").as_object();
+	m_beacon.duration = specialAbilityInfo.at("duration").as_double();
+	m_beacon.cooldown = specialAbilityInfo.at("cooldown").as_double();
+	m_beacon.timeSinceLastUse = m_beacon.cooldown;
+}
+
+void Sorcerer::takeDamage(float value, FSISCharacter* instigator)
+{
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::bernoulli_distribution d(m_specialMode.proc);
+	if (m_specialMode.active && d(gen) || !m_specialMode.active)
+	{
+		FSISCharacter::takeDamage(value, instigator);
+	}
 
 }

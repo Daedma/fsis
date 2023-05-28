@@ -54,3 +54,7 @@
 
 # config files
 !**.ini
+
+
+# dynamic link libraries
+!**.dll

@@ -45,7 +45,6 @@ void CollisionResolver::setHandlerByTag(CollisionComponent::Tag tag, CollisionCo
 void CollisionResolver::resolve(CollisionComponent* collision)
 {
 	eastl::vector<CollisionComponent*> candidates = getOverlapCandidates(collision); // broadcast phase
-	bool onFloor = false;
 	for (auto i : candidates) // narrow phase
 	{
 		auto simplex = GJK(collision, i);
@@ -61,19 +60,19 @@ void CollisionResolver::resolve(CollisionComponent* collision)
 				float secondMovement = mathter::Length(i->getOwner()->getLastMovement());
 				if ((firstMovement + secondMovement) != 0.f)
 				{
-					Vector3f pd = getPenetrationDepth(simplex.value(), collision, i);
-					float invSumMovement = 1.f / (firstMovement + secondMovement);
-					m_actorsToResolve.emplace(collision->getOwner(), -firstMovement * invSumMovement * pd);
-					m_actorsToResolve.emplace(i->getOwner(), secondMovement * invSumMovement * pd);
-					// On floor check
-					onFloor |= isSameDirection(pd, Z_AXIS);
+					auto pd = getPenetrationDepth(simplex.value(), collision, i);
+					if (pd)
+					{
+						float invSumMovement = 1.f / (firstMovement + secondMovement);
+						m_actorsToResolve.emplace(collision->getOwner(), -firstMovement * invSumMovement * pd.value());
+						m_actorsToResolve.emplace(i->getOwner(), secondMovement * invSumMovement * pd.value());
+					}
 				}
 			}
 			collision->overlap(i);
 			i->overlap(collision);
 		}
 	}
-	collision->getOwner()->setOnFloor(onFloor);
 	tagAsProcessed(collision);
 }
 
@@ -259,7 +258,7 @@ bool CollisionResolver::tetrahedron(Simplex& points, Vector3f& direction)
 // Begin EPA implementation
 // https://blog.winter.dev/2020/epa-algorithm/
 
-Vector3f CollisionResolver::getPenetrationDepth(const Simplex& simplex, const CollisionComponent* lhs, const CollisionComponent* rhs)
+eastl::optional<Vector3f> CollisionResolver::getPenetrationDepth(const Simplex& simplex, const CollisionComponent* lhs, const CollisionComponent* rhs)
 {
 	constexpr static float EPS = 0.001f;
 
@@ -273,7 +272,9 @@ Vector3f CollisionResolver::getPenetrationDepth(const Simplex& simplex, const Co
 	auto [normals, minFace] = getFaceNormals(polytope, faces);
 	Vector3f minNormal;
 	float minDistance = FLT_MAX;
-	while (minDistance == FLT_MAX)
+	int counter = 0;
+	constexpr int maxIterations = 30;
+	while (minDistance == FLT_MAX && ++counter != maxIterations)
 	{
 		minNormal = normals[minFace].xyz;
 		minDistance = normals[minFace].w;
@@ -329,6 +330,10 @@ Vector3f CollisionResolver::getPenetrationDepth(const Simplex& simplex, const Co
 			faces.insert(faces.end(), newFaces.begin(), newFaces.end());
 			normals.insert(normals.end(), newNormals.begin(), newNormals.end());
 		}
+	}
+	if (counter == maxIterations)
+	{
+		return {};
 	}
 	return minNormal * (minDistance + EPS);
 }
