@@ -1,0 +1,39 @@
+Picture.Picture1 {
+    Position = (41.849%, 35.2315%);
+    Size = (16.302%, 29.537%);
+
+    Renderer {
+        Texture = "textures/Control.png" Smooth;
+        TransparentTexture = false;
+    }
+}
+
+Button.Button_Close {
+    Position = (57.0312%, 35.6481%);
+    Size = (0.9375%, 1.66666%);
+    TextSize = 13;
+
+    Renderer {
+        BackgroundColor = None;
+        BackgroundColorDisabled = #E6E6E6;
+        BackgroundColorDown = #EBEBEB;
+        BackgroundColorHover = white;
+        BorderColor = #3C3C3C;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = black;
+        BorderColorFocused = None;
+        BorderColorHover = black;
+        Borders = (0, 0, 0, 0);
+        TextColor = #3C3C3C;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        Texture = "textures/TabClose.png" Smooth;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}

@@ -1,0 +1,370 @@
+Renderer.1 {
+    Texture = "textures/Frame.png" Smooth;
+    TransparentTexture = false;
+}
+
+ProgressBar.ProgressBar_OA {
+    FillDirection = BottomToTop;
+    Maximum = 100;
+    Minimum = 0;
+    Position = (44.5%, 89%);
+    Size = (2.8125%, 5%);
+    TextSize = 13;
+    Value = 0;
+
+    Renderer {
+        BackgroundColor = #CA2526;
+        BorderColor = black;
+        Borders = (1, 1, 1, 1);
+        FillColor = #008367;
+        Opacity = 1;
+        TextColor = #3C3C3C;
+        TextColorFilled = white;
+        TextureBackground = None;
+        TextureFill = None;
+    }
+}
+
+Picture.Picture_Black_Circle {
+    Position = (45.38%, 90.6%);
+    Size = (1.25%, 2.2222%);
+
+    Renderer {
+        Texture = "textures/Picture_Black_Cirlce.png" Smooth;
+        TransparentTexture = false;
+    }
+}
+
+ProgressBar.ProgressBar_CP {
+    FillDirection = BottomToTop;
+    Maximum = 100;
+    Minimum = 0;
+    Position = (1%, 37.5%);
+    Size = (2%, 25%);
+    TextSize = 13;
+    Value = 100;
+
+    Renderer {
+        BackgroundColor = None;
+        BorderColor = #9A02E9;
+        Borders = 1;
+        FillColor = #9A02E9;
+        TextColor = rgba(255, 255, 255, 215);
+        TextColorFilled = rgba(255, 255, 255, 245);
+        TextureBackground = None;
+        TextureFill = None;
+    }
+}
+
+ProgressBar.ProgressBar_CC {
+    FillDirection = BottomToTop;
+    Maximum = 100;
+    Minimum = 0;
+    Position = (97%, 37.5%);
+    Size = (2%, 25%);
+    TextSize = 13;
+    Value = 100;
+
+    Renderer {
+        BackgroundColor = None;
+        BorderColor = #10A77D;
+        Borders = 1;
+        FillColor = #10A77D;
+        TextColor = rgba(255, 255, 255, 215);
+        TextColorFilled = rgba(255, 255, 255, 245);
+        TextureBackground = None;
+        TextureFill = None;
+    }
+}
+
+ProgressBar.ProgressBar_TP {
+    FillDirection = BottomToTop;
+    Maximum = 100;
+    Minimum = 0;
+    Position = (52.6876%, 89%);
+    Size = (2.8125%, 5%);
+    TextSize = 13;
+    Value = 0;
+
+    Renderer {
+        BackgroundColor = #CA2526;
+        BorderColor = black;
+        Borders = (1, 1, 1, 1);
+        FillColor = #008367;
+        Opacity = 1;
+        TextColor = #3C3C3C;
+        TextColorFilled = white;
+        TextureBackground = None;
+        TextureFill = None;
+    }
+}
+
+ProgressBar.ProgressBar_Health {
+    FillDirection = RightToLeft;
+    Maximum = 100;
+    Minimum = 0;
+    Position = (41.5625%, 96%);
+    Size = (16.875%, 3%);
+    TextSize = 13;
+    Value = 100;
+
+    Renderer {
+        BackgroundColor = #F5F5F5;
+        BorderColor = black;
+        Borders = (0, 0, 0, 0);
+        FillColor = #CA2526;
+        TextColor = #3C3C3C;
+        TextColorFilled = white;
+        TextureBackground = None;
+        TextureFill = None;
+    }
+}
+
+TextArea.TextArea_TP {
+    DefaultText = TP;
+    HorizontalScrollbarPolicy = Never;
+    MaximumCharacters = 0;
+    Position = (53.1%, 90.2%);
+    Size = (3.65%, 4.63%);
+    Text = TP;
+    TextSize = 27;
+
+    Renderer {
+        BackgroundColor = None;
+        BorderColor = None;
+        Borders = (1, 1, 1, 1);
+        CaretColor = None;
+        CaretWidth = 1;
+        DefaultTextColor = #A0A0A0;
+        Font = "ALGER.TTF";
+        Padding = (0, 0, 0, 0);
+        SelectedTextBackgroundColor = None;
+        SelectedTextColor = white;
+        TextColor = black;
+        TextureBackground = None;
+
+        Scrollbar {
+            ArrowBackgroundColor = #F5F5F5;
+            ArrowBackgroundColorHover = white;
+            ArrowColor = #3C3C3C;
+            ArrowColorHover = black;
+            TextureArrowDown = None;
+            TextureArrowDownHover = None;
+            TextureArrowUp = None;
+            TextureArrowUpHover = None;
+            TextureThumb = None;
+            TextureThumbHover = None;
+            TextureTrack = None;
+            TextureTrackHover = None;
+            ThumbColor = #DCDCDC;
+            ThumbColorHover = #E6E6E6;
+            TrackColor = #F5F5F5;
+        }
+    }
+}
+
+Picture.Picture_Frame_OA {
+    Position = (44.5%, 89%);
+    Size = (4%, 7%);
+
+    Renderer {
+        Texture = "textures/Frame.png" Smooth;
+        TransparentTexture = false;
+    }
+}
+
+Picture.Picture_Frame_TP {
+    Position = (52.6876%, 89%);
+    Size = (4%, 7%);
+
+    Renderer {
+        Texture = "textures/Frame.png" Smooth;
+        TransparentTexture = false;
+    }
+}
+
+Picture.Picture_Frame_Health {
+    Position = (40.1562%, 96%);
+    Renderer = &1;
+    Size = (26.25%, 4.01851%);
+}
+
+Picture.Picture_Frame_CP {
+    Position = (0.8073%, 35.4629%);
+    Renderer = &1;
+    Size = (3.0729%, 38.8889%);
+}
+
+Picture.Picture_Frame_CC {
+    Position = (96.8%, 35.4629%);
+    Size = (3.0729%, 38.8889%);
+
+    Renderer {
+        Texture = "textures/Frame.png" Smooth;
+        TransparentTexture = false;
+    }
+}
+
+Picture.Picture_Ball {
+    Position = (48.0729%, 87.9629%);
+    Size = (3.9583%, 7.037%);
+
+    Renderer {
+        Texture = "textures/Ball_Fair.png" Smooth;
+        TransparentTexture = false;
+    }
+}
+
+Label.Label_Wave {
+    MaximumTextWidth = 6;
+    Position = (46.15%, 1%);
+    Size = (6.7%, 5.5%);
+    Text = Wave;
+    TextSize = 40;
+
+    Renderer {
+        BackgroundColor = transparent;
+        BorderColor = #3C3C3C;
+        Borders = (0, 0, 0, 0);
+        Font = "ALGER.TTF";
+        TextColor = #3C3C3C;
+        TextureBackground = None;
+
+        Scrollbar {
+            ArrowBackgroundColor = #F5F5F5;
+            ArrowBackgroundColorHover = white;
+            ArrowColor = #3C3C3C;
+            ArrowColorHover = black;
+            TextureArrowDown = None;
+            TextureArrowDownHover = None;
+            TextureArrowUp = None;
+            TextureArrowUpHover = None;
+            TextureThumb = None;
+            TextureThumbHover = None;
+            TextureTrack = None;
+            TextureTrackHover = None;
+            ThumbColor = #DCDCDC;
+            ThumbColorHover = #E6E6E6;
+            TrackColor = #F5F5F5;
+        }
+    }
+}
+
+TextArea.TextArea_Number_Wave {
+    HorizontalScrollbarPolicy = Never;
+    MaximumCharacters = 0;
+    Position = (53%, 1%);
+    Size = (5.73%, 5.8%);
+    Text = 1;
+    TextSize = 40;
+
+    Renderer {
+        BackgroundColor = None;
+        BorderColor = black;
+        Borders = (0, 0, 0, 0);
+        CaretColor = black;
+        CaretWidth = 1;
+        DefaultTextColor = #A0A0A0;
+        Font = "ALGER.TTF";
+        Padding = (0, 0, 0, 0);
+        SelectedTextBackgroundColor = #006EFF;
+        SelectedTextColor = white;
+        TextColor = #3C3C3C;
+        TextureBackground = None;
+
+        Scrollbar {
+            ArrowBackgroundColor = #F5F5F5;
+            ArrowBackgroundColorHover = white;
+            ArrowColor = #3C3C3C;
+            ArrowColorHover = black;
+            TextureArrowDown = None;
+            TextureArrowDownHover = None;
+            TextureArrowUp = None;
+            TextureArrowUpHover = None;
+            TextureThumb = None;
+            TextureThumbHover = None;
+            TextureTrack = None;
+            TextureTrackHover = None;
+            ThumbColor = #DCDCDC;
+            ThumbColorHover = #E6E6E6;
+            TrackColor = #F5F5F5;
+        }
+    }
+}
+
+Label.Label_Score {
+    MaximumTextWidth = 6;
+    Position = (85%, 1%);
+    Size = (6.77%, 5.5%);
+    Text = Score;
+    TextSize = 40;
+
+    Renderer {
+        BackgroundColor = transparent;
+        BorderColor = #3C3C3C;
+        Borders = (0, 0, 0, 0);
+        Font = "ALGER.TTF";
+        TextColor = #3C3C3C;
+        TextureBackground = None;
+
+        Scrollbar {
+            ArrowBackgroundColor = #F5F5F5;
+            ArrowBackgroundColorHover = white;
+            ArrowColor = #3C3C3C;
+            ArrowColorHover = black;
+            TextureArrowDown = None;
+            TextureArrowDownHover = None;
+            TextureArrowUp = None;
+            TextureArrowUpHover = None;
+            TextureThumb = None;
+            TextureThumbHover = None;
+            TextureTrack = None;
+            TextureTrackHover = None;
+            ThumbColor = #DCDCDC;
+            ThumbColorHover = #E6E6E6;
+            TrackColor = #F5F5F5;
+        }
+    }
+}
+
+TextArea.TextArea_Number_Score {
+    HorizontalScrollbarPolicy = Never;
+    MaximumCharacters = 0;
+    Position = (92%, 1%);
+    Size = (6.77%, 5.8%);
+    Text = "\t\t 0";
+    TextSize = 40;
+
+    Renderer {
+        BackgroundColor = None;
+        BorderColor = black;
+        Borders = (0, 0, 0, 0);
+        CaretColor = black;
+        CaretWidth = 1;
+        DefaultTextColor = #A0A0A0;
+        Font = "ALGER.TTF";
+        Padding = (0, 0, 0, 0);
+        SelectedTextBackgroundColor = #006EFF;
+        SelectedTextColor = white;
+        TextColor = #3C3C3C;
+        TextureBackground = None;
+
+        Scrollbar {
+            ArrowBackgroundColor = #F5F5F5;
+            ArrowBackgroundColorHover = white;
+            ArrowColor = #3C3C3C;
+            ArrowColorHover = black;
+            TextureArrowDown = None;
+            TextureArrowDownHover = None;
+            TextureArrowUp = None;
+            TextureArrowUpHover = None;
+            TextureThumb = None;
+            TextureThumbHover = None;
+            TextureTrack = None;
+            TextureTrackHover = None;
+            ThumbColor = #DCDCDC;
+            ThumbColorHover = #E6E6E6;
+            TrackColor = #F5F5F5;
+        }
+    }
+}

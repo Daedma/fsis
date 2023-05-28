@@ -1,0 +1,145 @@
+Renderer.1 {
+    BackgroundColor = #5A0FFF00;
+    BackgroundColorDisabled = None;
+    BackgroundColorDown = None;
+    BackgroundColorHover = white;
+    BorderColor = #F4D99A;
+    BorderColorDisabled = #7D7D7D;
+    BorderColorDown = None;
+    BorderColorFocused = #7A37FF;
+    BorderColorHover = black;
+    Borders = (2, 2, 2, 2);
+    Font = "ALGER.TTF";
+    TextColor = #F4D99A;
+    TextColorDisabled = #7D7D7D;
+    TextColorDown = black;
+    TextColorHover = black;
+    Texture = None;
+    TextureDisabled = None;
+    TextureDown = None;
+    TextureDownFocused = None;
+    TextureDownHover = None;
+    TextureFocused = None;
+    TextureHover = None;
+}
+
+Picture.Picture_Menu_Back {
+    Size = (1920, 1080);
+
+    Renderer {
+        Texture = "textures/Menu_back.png" NoSmooth;
+        TransparentTexture = false;
+    }
+}
+
+Button.Button_Fight {
+    Position = (3.125%, 68.8889%);
+    Size = (13.0208%, 7.96296%);
+    Text = FIGHT;
+    TextSize = 40;
+
+    Renderer {
+        BackgroundColor = #5A0FFF00;
+        BackgroundColorDisabled = None;
+        BackgroundColorDown = None;
+        BackgroundColorHover = white;
+        BorderColor = #F4D99A;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = None;
+        BorderColorFocused = #7A37FF;
+        BorderColorHover = black;
+        Borders = (2, 2, 2, 2);
+        Font = "ALGER.TTF";
+        TextColor = #F4D99A;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}
+
+Button.Button_Control {
+    Position = (3.125%, 78.1481%);
+    Renderer = &1;
+    Size = (13.0208%, 7.96296%);
+    Text = CONTROL;
+    TextSize = 40;
+}
+
+Button.Button_Exit {
+    Position = (3.125%, 87.4074%);
+    Renderer = &1;
+    Size = (13.0208%, 7.96296%);
+    Text = EXIT;
+    TextSize = 40;
+}
+
+Button.Button1 {
+    Position = (3.125%, 96.6667%);
+    Size = (5.72917%, 2.31481%);
+    Text = YES;
+    TextSize = 20;
+
+    Renderer {
+        BackgroundColor = #5A0FFF00;
+        BackgroundColorDisabled = None;
+        BackgroundColorDown = None;
+        BackgroundColorHover = white;
+        BorderColor = #F4D99A;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = None;
+        BorderColorFocused = #7A37FF;
+        BorderColorHover = black;
+        Borders = (2, 2, 2, 2);
+        Font = "ALGER.TTF";
+        TextColor = #F4D99A;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}
+
+Button.Button2 {
+    Position = (10.4167%, 96.6667%);
+    Size = (5.72917%, 2.31481%);
+    Text = NO;
+    TextSize = 20;
+
+    Renderer {
+        BackgroundColor = #5A0FFF00;
+        BackgroundColorDisabled = None;
+        BackgroundColorDown = None;
+        BackgroundColorHover = white;
+        BorderColor = #F4D99A;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = None;
+        BorderColorFocused = #7A37FF;
+        BorderColorHover = black;
+        Borders = (2, 2, 2, 2);
+        Font = "ALGER.TTF";
+        TextColor = #F4D99A;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}

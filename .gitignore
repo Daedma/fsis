@@ -2,20 +2,17 @@
 *
 
 # ... Except folders
-!/src/
-!/src/engine/
-!/src/engine/actors/
-!/src/engine/components/
-!/src/engine/controllers/
-!/src/engine/core/
-!/src/engine/gui/
-!/src/engine/network/
-!/src/engine/render/
-!/src/engine/animation/
-!/src/fsis/client/
-!/src/fsis/server/
-!/src/Data Files
-!/src/fsis
+!src/
+!src/engine
+!src/fsis
+!resources/
+!resources/sound
+!resources/music
+!resources/fonts
+!resources/textures
+!resources/textures/creatures
+!resources/textures/map
+!resources/ui
 
 # md files  
 !**.md
@@ -31,7 +28,16 @@
 # headers
 !**.hpp
 !**.h
-!**.hh
 
-# inlines
-!**.inl
+# forms
+!**.txt
+
+# textures
+!**.png
+!**.jpeg
+!**.jpg
+!**.bmp
+
+# sounds
+!**.ogg
+!**.wav

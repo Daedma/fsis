@@ -1,0 +1,155 @@
+Picture.Picture_ESC_back {
+    Position = (42.5%, 42.5%);
+    Size = (15%, 15%);
+
+    Renderer {
+        Texture = "textures/ESC_back.png" NoSmooth;
+        TransparentTexture = false;
+    }
+}
+
+Button.Button_Leave {
+    Position = (44.1667%, 50.5555%);
+    Size = (11.6667%, 5.92592%);
+    Text = LEAVE;
+    TextSize = 30;
+
+    Renderer {
+        BackgroundColor = #FFF5F700;
+        BackgroundColorDisabled = None;
+        BackgroundColorDown = None;
+        BackgroundColorHover = None;
+        BorderColor = #3C3C3C;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = black;
+        BorderColorFocused = None;
+        BorderColorHover = black;
+        Borders = (0, 0, 0, 0);
+        Font = "ALGER.TTF";
+        Opacity = 1;
+        TextColor = #EB1C07;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        TextStyle = Regular;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}
+
+Button.Button_Continue {
+    Position = (44.1667%, 43.5185%);
+    Size = (11.6667%, 5.92592%);
+    Text = CONTINUE;
+    TextSize = 30;
+
+    Renderer {
+        BackgroundColor = #FFF5F700;
+        BackgroundColorDisabled = None;
+        BackgroundColorDown = None;
+        BackgroundColorHover = None;
+        BorderColor = #3C3C3C;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = black;
+        BorderColorFocused = None;
+        BorderColorHover = black;
+        Borders = (0, 0, 0, 0);
+        Font = "ALGER.TTF";
+        Opacity = 1;
+        TextColor = #008367;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        TextStyle = Regular;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}
+
+Picture.Picture_confirm {
+    Position = (42.5%, 57.5%);
+    Size = (15%, 15%);
+
+    Renderer {
+        Texture = "textures/ESC_back_confirm.png" Smooth;
+        TransparentTexture = false;
+    }
+}
+
+Button.Button_Confirm_Leave {
+    Position = (44.1667%, 57.5926%);
+    Size = (5.20833%, 2.96296%);
+    Text = YES;
+    TextSize = 18;
+
+    Renderer {
+        BackgroundColor = #FFF5F700;
+        BackgroundColorDisabled = None;
+        BackgroundColorDown = None;
+        BackgroundColorHover = None;
+        BorderColor = #3C3C3C;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = black;
+        BorderColorFocused = None;
+        BorderColorHover = black;
+        Borders = (0, 0, 0, 0);
+        Font = "ALGER.TTF";
+        Opacity = 1;
+        TextColor = #EB1C07;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        TextStyle = Regular;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}
+
+Button.Button_Unconfirm_Leave {
+    Position = (50.625%, 57.5926%);
+    Size = (5.20833%, 2.96296%);
+    Text = NO;
+    TextSize = 18;
+
+    Renderer {
+        BackgroundColor = #FFF5F700;
+        BackgroundColorDisabled = None;
+        BackgroundColorDown = None;
+        BackgroundColorHover = None;
+        BorderColor = #3C3C3C;
+        BorderColorDisabled = #7D7D7D;
+        BorderColorDown = black;
+        BorderColorFocused = None;
+        BorderColorHover = black;
+        Borders = (0, 0, 0, 0);
+        Font = "ALGER.TTF";
+        Opacity = 1;
+        TextColor = #008367;
+        TextColorDisabled = #7D7D7D;
+        TextColorDown = black;
+        TextColorHover = black;
+        TextStyle = Regular;
+        Texture = None;
+        TextureDisabled = None;
+        TextureDown = None;
+        TextureDownFocused = None;
+        TextureDownHover = None;
+        TextureFocused = None;
+        TextureHover = None;
+    }
+}
