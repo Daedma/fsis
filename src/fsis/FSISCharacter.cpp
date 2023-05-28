@@ -185,7 +185,9 @@ void FSISCharacter::onDeath(FSISCharacter* killer)
 	}
 	killer->onKill(this);
 	getMovementComponent()->deactivate();
+	getMovementComponent()->abortAllMovements();
 	m_anim->playAnimation("death");
+	m_proxBox->setOverlapRule(ActorsGroups::ALL, CollisionComponent::OverlapRules::IGNORE);
 	deactivate();
 }
 

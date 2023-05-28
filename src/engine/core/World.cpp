@@ -6,6 +6,7 @@
 #include "core/CollisionResolver.hpp"
 #include "controllers/Controller.hpp"
 #include "core/GameMode.hpp"
+#include <EASTL/algorithm.h>
 
 World::~World() {}
 
@@ -95,6 +96,14 @@ void World::spawnActor(Actor* actor, const Vector3f& pos)
 void World::spawnController(Controller* controller)
 {
 	m_controllers.emplace_back(controller);
+}
+
+void World::removeDanglingControllers()
+{
+	eastl::erase_if(m_controllers,
+		[](const eastl::unique_ptr<Controller>& controller) {
+			return !controller->getMarionette();
+		});
 }
 
 void World::tick(float deltaSeconds)

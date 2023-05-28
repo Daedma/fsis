@@ -6,10 +6,14 @@ SceneComponent::~SceneComponent() {}
 
 void SceneComponent::destroyChild(SceneComponent* child)
 {
-	m_childs.erase(eastl::find_if(m_childs.begin(), m_childs.end(),
+	auto pos = eastl::find_if(m_childs.begin(), m_childs.end(),
 		[child](const eastl::unique_ptr<SceneComponent>& rhs) {
 			return rhs.get() == child;
-		}));
+		});
+	if (pos != m_childs.end())
+	{
+		m_childs.erase(pos);
+	}
 }
 
 void SceneComponent::forceDestroy()

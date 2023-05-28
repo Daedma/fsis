@@ -73,7 +73,7 @@ eastl::vector<Character*> Controller::getNearestCharacters(float maxDistance) co
 		result.reserve(controllers.size());
 		for (const auto& i : controllers)
 		{
-			if (i.get() != this &&
+			if (i.get() != this && i->getMarionette() &&
 				mathter::Distance(m_marionette->getPosition(), i->getMarionette()->getPosition()) <= maxDistance)
 			{
 				result.push_back(i->getMarionette());

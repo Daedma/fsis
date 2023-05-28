@@ -37,6 +37,11 @@ public:
 		return cellPosition * m_cellSize + m_cellSize * 0.5f;
 	}
 
+	size_t getNumberOfSpawnPoints() const
+	{
+		return m_spawnPoints.size();
+	}
+
 	void addTrigger(const Vector3i& lowerCorner, const Vector3i& upperCorner, uint8_t tag);
 
 	void addFloor(const Vector3i& lowerCorner, const Vector3i& upperCorner, sf::Texture* majorFiller = nullptr, const eastl::hash_map<Vector3i, sf::Texture*>& minorFillers = {}, int32_t layer = -1);

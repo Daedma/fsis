@@ -82,6 +82,11 @@ public:
 
 	Map* getMap() const { return m_map; }
 
+	GameMode* getGameMode() const
+	{
+		return m_mode.get();
+	}
+
 	template<typename T>
 	T* setGameMode()
 	{
@@ -118,6 +123,8 @@ public:
 	{
 		return m_controllers;
 	}
+
+	void removeDanglingControllers();
 
 	/**
 	 * @brief Get the gravitational acceleration of the world

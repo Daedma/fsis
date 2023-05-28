@@ -2,6 +2,7 @@
 #include "Monster.hpp"
 #include "Engine.hpp"
 #include "FSISAction.hpp"
+#include "FSISGameMode.hpp"
 #include "log.hpp"
 
 
@@ -28,54 +29,16 @@ public:
 		Canvas::setHUD<HUD>();
 		LOG("Canvas customized");
 
-		m_world.setGameMode<GameMode>();
+		m_world.setGameMode<FSISGameMode>();
 		LOG("Game mode customized");
-
-		Map* map = m_world.spawnMap<Map>();
-		AssetManager::loadMap(map, "map.json");
-		LOG("Map loaded");
-
-		Sorcerer* hero = m_world.spawnActor<Sorcerer>(map->getSpawnPoint(0));
-		hero->load("resources/creatures/player.json");
-		LOG("Player spawned");
-
-		FollowCamera* cam = Canvas::createCamera<FollowCamera>();
-		cam->setTarget(hero);
-		cam->setScale(3000);
-		LOG("Camera customized");
-
-		Monster* enemy = m_world.spawnActor<Monster>(map->getSpawnPoint(40));
-		enemy->load("resources/creatures/enemy.json");
-		enemy->setTarget(hero);
-		LOG("Enemy spawned");
-
-		AIController* ai = m_world.spawnController<AIController>();
-		ai->setTarget(hero);
-		ai->setAttackRange(enemy->getAttackRange());
-		ai->bindAttackAction(FSISActions::ATTACK);
-		ai->possess(enemy);
-		LOG("Enemy are possessed by AI controller");
-
-		PlayerController* controller = m_world.spawnController<PlayerController>();
-		controller->bindKeyAction(PlayerController::KeyCode::Q, FSISActions::NEXT_TARGET);
-		controller->bindKeyAction(PlayerController::KeyCode::Num1, FSISActions::SP_ABILITY);
-		controller->bindKeyAction(PlayerController::KeyCode::Num2, FSISActions::SP_ATTACK);
-		controller->bindKeyAction(PlayerController::KeyCode::Num3, FSISActions::SP_MODE);
-		controller->bindKeyAction(PlayerController::KeyCode::E, FSISActions::ATTACK);
-		controller->bindKeyAction(PlayerController::KeyCode::LShift, FSISActions::TOGGLE_RUN);
-		controller->bindKeyAxis(PlayerController::KeyCode::W, +1.f, FSISActions::MOVE_FORWARD);
-		controller->bindKeyAxis(PlayerController::KeyCode::S, -1.f, FSISActions::MOVE_FORWARD);
-		controller->bindKeyAxis(PlayerController::KeyCode::D, +1.f, FSISActions::MOVE_RIGHT);
-		controller->bindKeyAxis(PlayerController::KeyCode::A, -1.f, FSISActions::MOVE_RIGHT);
-		controller->possess(hero);
-		LOG("Player are possessed by controller");
 	}
 
 	void run()
 	{
 		std::cout << "Application started\n";
-		sf::Clock tick;
 		sf::RenderWindow& window = *Canvas::getWindow();
+		m_world.start();
+		sf::Clock tick;
 		while (!m_world.isFinished())
 		{
 			sf::Event event;

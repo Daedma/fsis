@@ -164,6 +164,14 @@ public:
 		b_launch = false;
 	}
 
+	void abortAllMovements()
+	{
+		m_launchSpeed = { 0, 0, 0 };
+		m_accumulatedMovement = { 0, 0, 0 };
+		m_speedFromAcceleration = { 0, 0, 0 };
+		disableGravity();
+	}
+
 	/**
 	 * @brief Get the Last Movement
 	 *

@@ -9,6 +9,11 @@ class GameMode
 public:
 	GameMode(World* world) : m_world(world) {}
 
+	World* getWorld() const
+	{
+		return m_world;
+	}
+
 	virtual void spawnPlayer();
 
 	virtual void onStartLevel();

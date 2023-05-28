@@ -16,6 +16,7 @@ Projectile::Projectile(World* world) : Actor(world)
 	m_proxSphere->setRadius(m_radius);
 	m_proxSphere->setOverlapRule(ActorsGroups::ALL, CollisionComponent::OverlapRules::OVERLAP);
 	m_proxSphere->setOnOverlapEvent([this](CollisionComponent* comp) {
+		if (comp->getTag() != 0) return;
 		m_sound->stopPlaying();
 		m_sound->playSound("Fireball_explosion_3.wav");
 		m_sound->setOnPlayingFinished("Fireball_explosion_3.wav", [this](float duration) {
@@ -31,6 +32,7 @@ Projectile::Projectile(World* world) : Actor(world)
 			m_onHit(hit, m_type);
 		}
 		});
+	m_proxSphere->setTag(55);
 	m_proxSphere->attachToActor(this);
 
 	m_sprite = new SpriteComponent();
@@ -72,7 +74,7 @@ void Projectile::setType(Entity type)
 		m_sprite->loadTexture("Ball_Fair.png");
 		break;
 	case Entity::DISEASED:
-		m_sprite->loadTexture("Ball_Warped_stem.png");
+		m_sprite->loadTexture("Ball_Warped_sterm.png");
 		break;
 	case Entity::UNHOLY:
 		m_sprite->loadTexture("Ball_Crying_obsidian.png");

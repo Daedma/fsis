@@ -4,6 +4,7 @@
 #include "controllers/Controller.hpp"
 #include "Projectile.hpp"
 #include "FSISAction.hpp"
+#include "FSISGameMode.hpp"
 
 void Sorcerer::moveForward(float value)
 {
@@ -108,13 +109,21 @@ void Sorcerer::attack()
 void Sorcerer::onKill(FSISCharacter* victim)
 {
 	FSISCharacter::onKill(victim);
-	//TODO integration with game mode
+	FSISGameMode* mode = dynamic_cast<FSISGameMode*>(getWorld()->getGameMode());
+	if (mode)
+	{
+		mode->notifyMobKilledByPlayer();
+	}
 }
 
 void Sorcerer::onDeath(FSISCharacter* killer)
 {
 	FSISCharacter::onDeath(killer);
-	//TODO integration with gamemode
+	FSISGameMode* mode = dynamic_cast<FSISGameMode*>(getWorld()->getGameMode());
+	if (mode)
+	{
+		mode->notifyPlayerDeath();
+	}
 }
 
 void Sorcerer::tick(float deltaSeconds)

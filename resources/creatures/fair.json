@@ -1,0 +1,12 @@
+{
+	"hp" : 8.0,
+	"attackSpeed": 1.1,
+	"sprite" : "fair_animation.json",
+	"width" : 30.0,
+	"height" : 80.0,
+	"damage" : 5.0,
+	"defaultSpeed" : 200.0,
+	"runSpeed" : 500.0,
+	"attackRange" : 1000.0,
+	"entity" : "infernal"
+}

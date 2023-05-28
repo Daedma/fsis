@@ -59,4 +59,6 @@ private:
 	Entity  m_type = Entity::INFERNAL;
 
 	OnHitSignature m_onHit = nullptr;
+
+	static constexpr int TAG_BALL = 55;
 };
