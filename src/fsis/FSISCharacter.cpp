@@ -123,26 +123,23 @@ void FSISCharacter::setTarget(FSISCharacter* target)
 void FSISCharacter::nextTarget()
 {
 	updateNearestCharacters();
-	if (m_target)
+	if (m_targetPosition == m_nearestCharacters.end())
 	{
-		if (m_targetPosition == m_nearestCharacters.end())
-		{
-			m_targetPosition = m_nearestCharacters.begin();
-		}
-		else
-		{
-			++m_targetPosition;
-		}
-		for (; m_targetPosition != m_nearestCharacters.end(); ++m_targetPosition)
-		{
-			if (mathter::Distance((*m_targetPosition)->getPosition(), getPosition()) <= m_attackRange)
-			{
-				setTarget(dynamic_cast<FSISCharacter*>(*m_targetPosition));
-				return;
-			}
-		}
-		setTarget(nullptr);
+		m_targetPosition = m_nearestCharacters.begin();
 	}
+	else
+	{
+		++m_targetPosition;
+	}
+	for (; m_targetPosition != m_nearestCharacters.end(); ++m_targetPosition)
+	{
+		if (mathter::Distance((*m_targetPosition)->getPosition(), getPosition()) <= m_attackRange)
+		{
+			setTarget(dynamic_cast<FSISCharacter*>(*m_targetPosition));
+			return;
+		}
+	}
+	setTarget(nullptr);
 }
 
 void FSISCharacter::takeDamage(float damage, FSISCharacter* instigator)
