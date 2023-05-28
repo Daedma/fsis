@@ -11,12 +11,22 @@ eastl::hash_map<eastl::string, eastl::unique_ptr<sf::SoundBuffer>, eastl::hash<e
 
 eastl::hash_map<eastl::string, uint32_t, eastl::hash<eastl::string>, eastl::equal_to<eastl::string>, eastl::allocator, true> AssetManager::m_animGroups;
 
+eastl::string AssetManager::m_soundPrefix = "./";
+
+eastl::string AssetManager::m_musicPrefix = "./";
+
+eastl::string AssetManager::m_texturesPrefix = "./";
+
+eastl::string AssetManager::m_characterPrefix = "./";
+
+eastl::string AssetManager::m_mapPrefix = "./";
+
 sf::Texture* AssetManager::loadTexture(const eastl::string& filename)
 {
 	if (m_textures.count(filename) == 0)
 	{
 		m_textures[filename].reset(new sf::Texture());
-		if (!(m_textures[filename]->loadFromFile(filename.c_str())))
+		if (!(m_textures[filename]->loadFromFile((m_texturesPrefix + filename).c_str())))
 		{
 			m_textures[filename] = nullptr;
 			return nullptr;
@@ -30,7 +40,7 @@ sf::SoundBuffer* AssetManager::loadSound(const eastl::string& filename)
 	if (m_sounds.count(filename) == 0)
 	{
 		m_sounds[filename].reset(new sf::SoundBuffer());
-		m_sounds[filename]->loadFromFile(filename.c_str());
+		m_sounds[filename]->loadFromFile((m_soundPrefix + filename).c_str());
 	}
 	return m_sounds[filename].get();
 }
@@ -38,7 +48,7 @@ sf::SoundBuffer* AssetManager::loadSound(const eastl::string& filename)
 CharacterAnimComponent* AssetManager::loadCharacterAnimation(const eastl::string& filename)
 {
 	namespace json = boost::json;
-	std::ifstream ifs(filename.c_str());
+	std::ifstream ifs((m_characterPrefix + filename).c_str());
 	EASTL_ASSERT_MSG(ifs, "Failed to open file");
 
 	json::object animationInfo = json::parse(ifs).as_object();
@@ -110,7 +120,7 @@ void AssetManager::initAnimGroups(const eastl::string& filename)
 Map* AssetManager::loadMap(Map* map, const eastl::string& filename)
 {
 	namespace json = boost::json;
-	std::ifstream ifs(filename.c_str());
+	std::ifstream ifs((m_mapPrefix + filename).c_str());
 	EASTL_ASSERT_MSG(ifs, "Failed to open file");
 
 	json::object mapInfo = json::parse(ifs).as_object();
@@ -146,7 +156,6 @@ Map* AssetManager::loadMap(Map* map, const eastl::string& filename)
 		sf::Texture* majorFiller = nullptr;
 		if (curSegmentInfo.contains("majorFiller"))
 		{
-			majorFiller = loadTexture(curSegmentInfo.at("majorFiller").as_string().c_str());
 		}
 
 		int32_t layer = -1;
@@ -166,7 +175,6 @@ Map* AssetManager::loadMap(Map* map, const eastl::string& filename)
 				sf::Texture* texture = nullptr;
 				if (curMinorFillerInfo.contains("texture"))
 				{
-					texture = loadTexture(curMinorFillerInfo.at("texture").as_string().c_str());
 				}
 				Vector3i lower(
 					curMinorFillerInfo.at("lower").as_object().at("x").as_int64(),
@@ -219,7 +227,6 @@ Map* AssetManager::loadMap(Map* map, const eastl::string& filename)
 			sf::Texture* sideFiller = nullptr;
 			if (curSegmentInfo.contains("sideFiller"))
 			{
-				sideFiller = loadTexture(curSegmentInfo.at("sideFiller").as_string().c_str());
 			}
 			if (type == "ramp_x")
 			{
@@ -252,4 +259,23 @@ Map* AssetManager::loadMap(Map* map, const eastl::string& filename)
 		}
 	}
 	return map;
+}
+
+void AssetManager::init(const eastl::string& filename)
+{
+	namespace json = boost::json;
+	std::ifstream ifs(filename.c_str());
+	EASTL_ASSERT_MSG(ifs, "Failed to open file");
+
+	json::object resources = json::parse(ifs).as_object();
+	m_soundPrefix = resources.at("sounds").as_string().c_str();
+
+	m_musicPrefix = resources.at("music").as_string().c_str();
+
+	m_texturesPrefix = resources.at("textures").as_string().c_str();
+
+	m_characterPrefix = resources.at("characters").as_string().c_str();
+
+	m_mapPrefix = resources.at("map").as_string().c_str();
+
 }
