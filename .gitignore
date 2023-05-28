@@ -6,6 +6,7 @@
 !src/engine
 !src/fsis
 !resources/
+!resources/map
 !resources/sound
 !resources/music
 !resources/fonts
@@ -31,6 +32,7 @@
 
 # forms
 !**.txt
+!**.json
 
 # textures
 !**.png
