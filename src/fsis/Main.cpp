@@ -44,15 +44,8 @@ public:
 		LOG("Camera customized");
 
 		Sorcerer* enemy = m_world.spawnActor<Sorcerer>(map->getSpawnPoint(40));
-		try
-		{
-			enemy->load("resources/creatures/enemy.json");
-			enemy->setTarget(hero);
-		}
-		catch (const std::exception& e)
-		{
-			std::cerr << e.what() << '\n';
-		}
+		enemy->load("resources/creatures/enemy.json");
+		enemy->setTarget(hero);
 		LOG("Enemy spawned");
 
 		AIController* ai = m_world.spawnController<AIController>();

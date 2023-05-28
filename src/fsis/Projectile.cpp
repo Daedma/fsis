@@ -84,7 +84,7 @@ void Projectile::setType(Entity type)
 		m_sprite->loadTexture("Ball_Glowstone.png");
 		break;
 	case Entity::QUINTESSENCE:
-		m_sprite->loadTexture("Picture_Black_Circle.png");
+		m_sprite->loadTexture("Ball_black_OA.png");
 	case Entity::NONE:
 	default:
 		break;

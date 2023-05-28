@@ -6,6 +6,7 @@
 #include "controllers/Controller.hpp"
 #include <fstream>
 #include <EASTL/algorithm.h>
+#include <log.hpp>
 
 FSISCharacter::FSISCharacter(World* world) : Character(world)
 {
@@ -23,6 +24,7 @@ void FSISCharacter::load(const eastl::string& filename)
 	EASTL_ASSERT(ifs);
 
 	json::object characterInfo = json::parse(ifs).as_object();
+
 	setMaxHP(characterInfo.at("hp").as_double());
 
 	setAttackSpeed(characterInfo.at("attackSpeed").as_double());
@@ -44,6 +46,8 @@ void FSISCharacter::load(const eastl::string& filename)
 	);
 
 	setDamage(characterInfo.at("damage").as_double());
+
+	setAttackRange(characterInfo.at("attackRange").as_double());
 
 	getMovementComponent()->setWalkSpeed(characterInfo.at("defaultSpeed").as_double());
 	getMovementComponent()->setRunSpeed(characterInfo.at("runSpeed").as_double());
@@ -77,7 +81,6 @@ void FSISCharacter::load(const eastl::string& filename)
 			m_entity = Entity::NONE;
 		}
 	}
-
 	load_Internal(characterInfo);
 }
 
@@ -94,7 +97,10 @@ void FSISCharacter::setTarget(FSISCharacter* target)
 {
 	if (target)
 	{
-		m_target->onEndTargeted(this);
+		if (m_target)
+		{
+			m_target->onEndTargeted(this);
+		}
 		m_target = target;
 		m_targetPosition = eastl::find(m_nearestCharacters.begin(), m_nearestCharacters.end(), target);
 		getMovementComponent()->setOrientRotationToMovement(false);

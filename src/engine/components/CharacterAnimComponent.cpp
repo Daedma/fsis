@@ -116,7 +116,7 @@ void CharacterAnimComponent::tick(float deltaSeconds)
 				return;
 			}
 			// Если активная анимация не запущена
-			else
+			else if (!isNoMovement)
 			{
 				playAnimationGroup(movementGroup);
 			}

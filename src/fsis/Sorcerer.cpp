@@ -20,6 +20,7 @@ void Sorcerer::specialAttack()
 	if (canAttack())
 	{
 		Projectile* ball = getWorld()->spawnActor<Projectile>();
+		ball->setRadius(20);
 		initProjectilePosition(ball);
 		ball->setType(Entity::QUINTESSENCE);
 		ball->setOnHit([this](FSISCharacter* target, Entity) {
@@ -53,7 +54,8 @@ void Sorcerer::specialAbility()
 	{
 		m_beacon.ptr = getWorld()->spawnActor<Actor>(getPosition());
 		SpriteComponent* beaconSprite = new SpriteComponent();
-		beaconSprite->loadTexture("beacon.png");
+		beaconSprite->loadTexture("beacon1.png");
+		beaconSprite->setHeight(15);
 		beaconSprite->attachToActor(m_beacon.ptr);
 	}
 }

@@ -4,9 +4,9 @@
 	"sprite" : "main_character.json",
 	"width" : 30.0,
 	"height" : 80.0,
-	"damage" : 20.0,
+	"damage" : 50.0,
 	"defaultSpeed" : 200.0,
 	"runSpeed" : 500.0,
-	"attackRange" : 100.0,
-	"entity" : "none"
+	"attackRange" : 1000.0,
+	"entity" : "purified"
 }

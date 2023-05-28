@@ -60,7 +60,8 @@ void Animation::tick(float deltaSeconds)
 		m_curFrame = (++m_curFrame) % m_framesCount;
 		if (m_curFrame == 0 && !b_loop)
 		{
-			stop();
+			m_curFrame = m_framesCount - 1;
+			pause();
 		}
 		else
 		{
