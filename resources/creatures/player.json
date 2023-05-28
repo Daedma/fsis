@@ -18,7 +18,7 @@
 	"specialMode" :
 	{
 		"cooldown" : 40.0,
-		"proc" : 50.0,
+		"proc" : 0.5,
 		"duration" : 5.0
 	},
 	"specialAbility" :

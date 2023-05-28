@@ -178,7 +178,7 @@ void Sorcerer::takeDamage(float value, FSISCharacter* instigator)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::bernoulli_distribution d(m_specialMode.proc);
+	std::bernoulli_distribution d(1.f - m_specialMode.proc);
 	if (m_specialMode.active && d(gen) || !m_specialMode.active)
 	{
 		FSISCharacter::takeDamage(value, instigator);

@@ -162,6 +162,7 @@ void CharacterAnimComponent::updateOrientation()
 		Animation* fitAnimation = m_groups[m_activeGroup][getSector()];
 		if (fitAnimation != m_activeAnimation)
 		{
+			fitAnimation->setFrame(m_activeAnimation->getCurrentFrame());
 			m_activeAnimation->stop();
 			m_activeAnimation = fitAnimation;
 			fitAnimation->play();

@@ -81,6 +81,12 @@ public:
 
 	void setLoop(bool loop) { b_loop = loop; }
 
+	void setFrame(uint8_t frame)
+	{
+		m_curFrame = eastl::max<uint8_t>(frame, m_framesCount - 1);
+		nextFrame();
+	}
+
 	uint8_t	getCurrentFrame() const { return m_curFrame; }
 
 	void addNotify(const Notify& notify);

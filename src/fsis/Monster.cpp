@@ -7,6 +7,7 @@
 
 Monster::Monster(World* world) : FSISCharacter(world)
 {
+	setAutoResetTarget(false);
 	m_marker = new SpriteComponent();
 	m_marker->loadTexture("Marker.png");
 	m_marker->setLayer(2);
@@ -29,7 +30,10 @@ void Monster::attack()
 		initProjectilePosition(ball);
 		ball->setType(getEntity());
 		ball->setOnHit([this](FSISCharacter* target, Entity) {
-			target->takeDamage(getDamage(), this);
+			if (target == getTarget())
+			{
+				target->takeDamage(getDamage(), this);
+			}
 			});
 		if (m_target)
 		{
