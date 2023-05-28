@@ -48,3 +48,6 @@
 # sounds
 !**.ogg
 !**.wav
+
+# config files
+!**.ini

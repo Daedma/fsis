@@ -18,13 +18,14 @@ class ClientApplication
 public:
 	ClientApplication(unsigned width, unsigned height)
 	{
-		AssetManager::initAnimGroups("groups.json");
+		AssetManager::init("resources.ini");
+		AssetManager::initAnimGroups("animgroups.ini");
 		Canvas::init("FSIS");
 		Canvas::setHUD<HUD>();
 		m_world.setGameMode<GameMode>();
 
 		Map* map = m_world.spawnMap<Map>();
-		AssetManager::loadMap(map, "map (3).json");
+		AssetManager::loadMap(map, "map.json");
 
 		Sorcerer* hero = m_world.spawnActor<Sorcerer>(map->getSpawnPoint(0));
 		hero->load("player.json");

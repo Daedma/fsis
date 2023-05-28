@@ -274,7 +274,7 @@ void AssetManager::init(const eastl::string& filename)
 
 	m_texturesPrefix = resources.at("textures").as_string().c_str();
 
-	m_characterPrefix = resources.at("characters").as_string().c_str();
+	m_characterPrefix = resources.at("animations").as_string().c_str();
 
 	m_mapPrefix = resources.at("map").as_string().c_str();
 
