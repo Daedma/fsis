@@ -22,6 +22,8 @@ public:
 
 	void hide();
 
+	void show();
+
 private:
 	int32_t m_layer = 0;
 };

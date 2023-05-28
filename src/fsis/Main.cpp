@@ -1,4 +1,5 @@
 #include "Sorcerer.hpp"
+#include "Monster.hpp"
 #include "Engine.hpp"
 #include "FSISAction.hpp"
 #include "log.hpp"
@@ -43,7 +44,7 @@ public:
 		cam->setScale(3000);
 		LOG("Camera customized");
 
-		Sorcerer* enemy = m_world.spawnActor<Sorcerer>(map->getSpawnPoint(40));
+		Monster* enemy = m_world.spawnActor<Monster>(map->getSpawnPoint(40));
 		enemy->load("resources/creatures/enemy.json");
 		enemy->setTarget(hero);
 		LOG("Enemy spawned");

@@ -37,3 +37,8 @@ void PrimitiveComponent::hide()
 {
 	Canvas::unregistry(this);
 }
+
+void PrimitiveComponent::show()
+{
+	Canvas::registry(this);
+}
