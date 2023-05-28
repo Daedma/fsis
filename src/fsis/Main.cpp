@@ -43,24 +43,24 @@ public:
 		cam->setScale(3000);
 		LOG("Camera customized");
 
-		// Sorcerer* enemy = m_world.spawnActor<Sorcerer>(map->getSpawnPoint(40));
-		// try
-		// {
-		// 	enemy->load("resources/creatures/enemy.json");
-		// 	enemy->setTarget(hero);
-		// }
-		// catch (const std::exception& e)
-		// {
-		// 	std::cerr << e.what() << '\n';
-		// }
-		// LOG("Enemy spawned");
+		Sorcerer* enemy = m_world.spawnActor<Sorcerer>(map->getSpawnPoint(40));
+		try
+		{
+			enemy->load("resources/creatures/enemy.json");
+			enemy->setTarget(hero);
+		}
+		catch (const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}
+		LOG("Enemy spawned");
 
-		// AIController* ai = m_world.spawnController<AIController>();
-		// ai->setTarget(hero);
-		// ai->setAttackRange(enemy->getAttackRange());
-		// ai->bindAttackAction(FSISActions::ATTACK);
-		// ai->possess(enemy);
-		// LOG("Enemy are possessed by AI controller");
+		AIController* ai = m_world.spawnController<AIController>();
+		ai->setTarget(hero);
+		ai->setAttackRange(enemy->getAttackRange());
+		ai->bindAttackAction(FSISActions::ATTACK);
+		ai->possess(enemy);
+		LOG("Enemy are possessed by AI controller");
 
 		PlayerController* controller = m_world.spawnController<PlayerController>();
 		controller->bindKeyAction(PlayerController::KeyCode::Q, FSISActions::NEXT_TARGET);
