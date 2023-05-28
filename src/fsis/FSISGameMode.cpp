@@ -208,13 +208,15 @@ void FSISGameMode::spawnMobOnSpawnPoint(int n)
 	{
 		mob->load("resources/creatures/glowstone.json");
 		mob->getMovementComponent()->deactivate();
+		mob->setAttackRange(mob->getAttackRange() * 5);
 	}
 	else if (151 <= n && n <= 156)
 	{
 		mob->load("resources/creatures/obsidian.json");
 		mob->getMovementComponent()->deactivate();
+		mob->setAttackRange(mob->getAttackRange() * 5);
 	}
-	mob->setDamage(mob->getDamage() * getMobDamage());
+	mob->setDamage(mob->getDamage() * getMobDamage() + 1);
 	mob->setMaxHP(mob->getMaxHP() * getMobHP());
 	mob->setTarget(m_player);
 

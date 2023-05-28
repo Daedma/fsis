@@ -29,10 +29,7 @@ void Monster::attack()
 		initProjectilePosition(ball);
 		ball->setType(getEntity());
 		ball->setOnHit([this](FSISCharacter* target, Entity) {
-			if (target == getTarget())
-			{
-				target->takeDamage(getDamage(), this);
-			}
+			target->takeDamage(getDamage(), this);
 			});
 		if (m_target)
 		{
