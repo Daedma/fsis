@@ -5,3 +5,8 @@ void HUD::processInput(const sf::Event& event)
 {
 	tgui::GuiSFML::handleEvent(event);
 }
+
+void HUD::tick(float deltaSeconds)
+{
+
+}

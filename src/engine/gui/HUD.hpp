@@ -9,4 +9,6 @@ public:
 	HUD(sf::RenderWindow* window) : tgui::GuiSFML(*window) {}
 
 	virtual void processInput(const sf::Event& event) override;
+
+	virtual void tick(float deltaSeconds);
 };
