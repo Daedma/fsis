@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <string>
-#include "FSISGameMode.hpp"
+#include "MatchStats.hpp"
 
 class NetworkClient
 {
