@@ -1,16 +1,12 @@
 #pragma once
 
 #include "core/GameMode.hpp"
+#include "MatchStats.hpp"
 #include <EASTL/vector.h>
 
 class FSISGameMode : public GameMode
 {
 public:
-	struct MatchStats
-	{
-		size_t score = 0;
-		size_t waves = 0;
-	};
 
 	FSISGameMode(World* world);
 
