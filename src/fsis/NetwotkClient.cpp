@@ -29,7 +29,7 @@ NetworkClient::Status NetworkClient::auth(const std::string& login, const std::s
     {
         
         json::object jsonObject = json::parse(response.text).as_object();
-        m_userId = jsonObject.as_int32_t();
+        m_userId = static_cast<int32_t>(jsonObject);
         return Status::SUCCESS;
     }
     else
