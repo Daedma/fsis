@@ -56,9 +56,9 @@ bool NetworkClient::sendMatchStatsToServer(const MatchStats& stats)
     {   
         auto req = json::parse(response.text).as_object();
         auto& achievments = req["achievments"].as_object();
-        m_lastReceivedAchievements.achievementId = achievments["id"];
+        m_lastReceivedAchievements.achievementId = static_cast<int32_t>(achievments["id"]);
         m_lastReceivedAchievements.description = achievments["description"].as_string();
-        m_lastReceivedAchievements.reward = achievments["reward"];
+        m_lastReceivedAchievements.reward = static_cast<int32_t>(achievments["reward"]);
         return true;
     }
     else
