@@ -12,34 +12,36 @@ void NetworkClient::init(const std::string& filename)
 	std::ifstream ifs(filename);
 	json::object serverInfo = json::parse(ifs).as_object();
 
-	m_url = serverInfo.at("url").as_string();
+	m_url = serverInfo.at("back/auth").as_string();
 }
 
 
 NetworkClient::Status NetworkClient::auth(const std::string& login, const std::string& pass)
 {
-	// send login and pass to server ...
+	namespace json = boost::json;
     cpr::Parameters parameters{{"username", login},
          {"password", pass}};
-    auto response = cpr::Get(cpr::Url{ "http://localhost:8081/back/auth" }, parameters);
+    auto response = cpr::Get(cpr::Url{ url+m_url }, parameters);
+  
+    
+   
     if (response.status_code == 200)
     {
         
-        m_userId = response.text;
+        json::object jsonObject = json::parse(response.text).as_object();
+        m_userId = jsonObject.as_int32_t();
         return Status::SUCCESS;
     }
     else
-    {
-        
-        std::cout << "Ошибка авторизации. Код ошибки: " << response.status_code << std::endl;
         return Status::FAILURE;
-    }
+    
 
    
 }
 
 bool NetworkClient::sendMatchStatsToServer(const MatchStats& stats)
 {
+    namespace json = boost::json;
     cpr::Parameters parameters{{"score", stats.score},
         {"kills", stats.kills},
         {"steps", stats.steps},
@@ -48,19 +50,19 @@ bool NetworkClient::sendMatchStatsToServer(const MatchStats& stats)
         {"duration", stats.duration},
         {"specialAttackKills", stats.specialAttackKills}
      };
-	auto response = cpr::Post(cpr::Url{ "http://localhost:8081/back/auth" }, parameters);
+	auto response = cpr::Post(cpr::Url{ url+m_url }, parameters);
 
     if (response.status_code == 200)
-    {
-        
-        m_lastReceivedAchievements = response.text;
+    {   
+        auto req = json::parse(response.text).as_object();
+        auto& achievments = req["achievments"].as_object();
+        m_lastReceivedAchievements.achievementId = achievments["id"];
+        m_lastReceivedAchievements.description = achievments["description"].as_string();
+        m_lastReceivedAchievements.reward = achievments["reward"];
         return true;
     }
     else
-    {
-        
-        std::cout << "Ошибка авторизации. Код ошибки: " << response.status_code << std::endl;
         return false;
-    }
+
 }
     
