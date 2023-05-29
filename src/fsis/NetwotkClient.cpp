@@ -40,7 +40,7 @@ NetworkClient::Status NetworkClient::auth(const std::string& login, const std::s
 
 bool NetworkClient::sendMatchStatsToServer(const MatchStats& stats)
 {
-     cpr::Parameters parameters{{"score", stats.score},
+    cpr::Parameters parameters{{"score", stats.score},
         {"kills", stats.kills},
         {"steps", stats.steps},
         {"sculcks", stats.sculcks},
