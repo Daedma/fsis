@@ -37,7 +37,9 @@ public:
 	}
 
 private:
-	std::string m_url;
+	std::string m_authorizationURL;
+
+	std::string m_achievementURL;
 
 	int32_t m_userId;
 
