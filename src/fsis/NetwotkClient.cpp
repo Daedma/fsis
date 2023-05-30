@@ -49,7 +49,8 @@ bool NetworkClient::sendMatchStatsToServer(const MatchStats& stats)
 
 	cpr::Response response = cpr::Post(cpr::Url{ m_achievementURL },
 		cpr::Parameters{ { "playerId", std::to_string(getId()) } },
-		cpr::Body{ json::serialize(body) });
+		cpr::Body{ json::serialize(body) },
+		cpr::Header{ { "Content-Type", "application/json" } });
 
 	if (response.status_code == 200)
 	{
