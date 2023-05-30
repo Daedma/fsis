@@ -21,15 +21,16 @@ NetworkClient::Status NetworkClient::auth(const std::string& login, const std::s
 	cpr::Parameters parameters{ { "username", login },
 		{ "password", pass } };
 	cpr::Response response = cpr::Get(cpr::Url{ m_authorizationURL }, parameters);
-	if (response.status_code == 401)
-	{
-		return Status::FAILURE;
-	}
-	else
+	if (response.status_code == 200)
 	{
 		json::object playerId = json::parse(response.text).as_object();
 		m_userId = playerId.at("id").as_int64();
 		return Status::SUCCESS;
+	}
+	else
+	{
+		m_lastError = response.error;
+		return Status::FAILURE;
 	}
 }
 
@@ -48,7 +49,8 @@ bool NetworkClient::sendMatchStatsToServer(const MatchStats& stats)
 
 	cpr::Response response = cpr::Post(cpr::Url{ m_achievementURL },
 		cpr::Parameters{ { "playerId", std::to_string(getId()) } },
-		cpr::Body{ json::serialize(body) });
+		cpr::Body{ json::serialize(body) },
+		cpr::Header{ { "Content-Type", "application/json" } });
 
 	if (response.status_code == 200)
 	{
@@ -66,6 +68,7 @@ bool NetworkClient::sendMatchStatsToServer(const MatchStats& stats)
 	}
 	else
 	{
+		m_lastError = response.error;
 		return false;
 	}
 

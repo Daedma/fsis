@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include "MatchStats.hpp"
+#include <cpr/cpr.h>
 
 class NetworkClient
 {
@@ -36,10 +37,17 @@ public:
 		return m_lastReceivedAchievements;
 	}
 
+	const cpr::Error& getLastError() const
+	{
+		return m_lastError;
+	}
+
 private:
 	std::string m_authorizationURL;
 
 	std::string m_achievementURL;
+
+	cpr::Error m_lastError;
 
 	int32_t m_userId;
 
