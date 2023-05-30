@@ -6,6 +6,8 @@
 
 void MenuState::init()
 {
+	m_nextState = this;
+
 	auto form = Canvas::getHUD()->pushMenuItem("menu");
 
 	form->get<tgui::Button>("Button_Exit")

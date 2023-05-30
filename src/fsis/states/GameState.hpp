@@ -49,6 +49,8 @@ private:
 
 	bool m_paused = false;
 
+	bool m_active = false;
+
 private:
 	void updateHUD();
 

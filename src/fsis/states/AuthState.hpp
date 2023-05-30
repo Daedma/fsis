@@ -8,7 +8,7 @@ class AuthState : public State
 	AuthState() = default;
 public:
 
-	AuthState* getInstance()
+	static AuthState* getInstance()
 	{
 		static AuthState instance;
 		return &instance;

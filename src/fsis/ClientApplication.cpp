@@ -1,7 +1,9 @@
 #include "ClientApplication.hpp"
-#include "Engine.hpp"
-#include "FSISHUD.hpp"
 #include "core/InputEventListener.hpp"
+#include "core/AssetManager.hpp"
+#include "render/Canvas.hpp"
+#include "states/AuthState.hpp"
+#include "gui/HUD.hpp"
 #include "NetworkClient.hpp"
 
 ClientApplication::ClientApplication()
@@ -12,7 +14,10 @@ ClientApplication::ClientApplication()
 	NetworkClient::init("client.ini");
 
 	Canvas::init("FSIS");
-	m_hud = Canvas::setHUD<FSISHUD>();
+	Canvas::setHUD<HUD>();
+	Canvas::getHUD()->loadForms("forms.ini");
+
+	m_curState = AuthState::getInstance();
 }
 
 void ClientApplication::run()

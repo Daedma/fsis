@@ -8,6 +8,8 @@
 
 void TotalState::init(const MatchStats& stats)
 {
+	m_nextState = this;
+
 	m_stats = stats;
 
 	m_dataReceived = false;

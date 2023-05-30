@@ -10,8 +10,5 @@ public:
 	void run();
 
 private:
-	class FSISHUD* m_hud;
-
 	State* m_curState = nullptr;
-
 };

@@ -11,6 +11,8 @@ void GameState::init()
 {
 	m_nextState = this;
 
+	m_active = true;
+
 	auto form = Canvas::getHUD()->pushMenuItem("fight");
 
 	m_specialAttack_PB = form->get<tgui::ProgressBar>("ProgressBar_OA");
@@ -42,6 +44,7 @@ void GameState::tick(float deltaSeconds)
 		MatchStats stats = m_mode->getMatchStats();
 		m_player = nullptr;
 		m_mode = nullptr;
+		m_active = false;
 		m_world.reset();
 		Canvas::getHUD()->popMenuItem();
 		Canvas::getWindow()->setMouseCursorVisible(true);
@@ -109,7 +112,8 @@ void GameState::updateHUD()
 
 void GameState::processInput(const sf::Event& event)
 {
-	if (event.type == sf::Event::EventType::KeyPressed
+	if (m_active
+		&& event.type == sf::Event::EventType::KeyPressed
 		&& event.key.code == sf::Keyboard::Escape)
 	{
 		if (m_paused)
@@ -120,6 +124,8 @@ void GameState::processInput(const sf::Event& event)
 		}
 		else
 		{
+			m_paused = true;
+
 			m_world->setPaused(true);
 
 			Canvas::getWindow()->setMouseCursorVisible(true);
