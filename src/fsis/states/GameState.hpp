@@ -2,11 +2,12 @@
 
 #include "State.hpp"
 #include "core/World.hpp"
+#include "core/InputEventListener.hpp"
 #include "Entity.hpp"
 #include <EASTL/optional.h>
 #include <TGUI/AllWidgets.hpp>
 
-class GameState : public State
+class GameState : public State, public InputEventListener
 {
 	GameState() = default;
 
@@ -18,6 +19,8 @@ public:
 	}
 
 	virtual void tick(float deltaSeconds) override;
+
+	virtual void processInput(const sf::Event& event) override;
 
 	void init();
 
@@ -44,6 +47,9 @@ private:
 
 	Entity m_lastEntity = Entity::INFERNAL;
 
+	bool m_paused = false;
+
 private:
 	void updateHUD();
+
 };

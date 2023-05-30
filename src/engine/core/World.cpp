@@ -108,6 +108,10 @@ void World::removeDanglingControllers()
 
 void World::tick(float deltaSeconds)
 {
+	if (m_paused)
+	{
+		return;
+	}
 	for (auto& i : m_controllers)
 	{
 		i->tick(deltaSeconds);

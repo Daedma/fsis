@@ -37,7 +37,6 @@ void GameState::init()
 
 void GameState::tick(float deltaSeconds)
 {
-	m_world->tick(deltaSeconds);
 	if (m_world->isFinished())
 	{
 		MatchStats stats = m_mode->getMatchStats();
@@ -45,13 +44,15 @@ void GameState::tick(float deltaSeconds)
 		m_mode = nullptr;
 		m_world.reset();
 		Canvas::getHUD()->popMenuItem();
+		Canvas::getWindow()->setMouseCursorVisible(true);
 		m_nextState = TotalState::getInstance();
 		TotalState::getInstance()->init(stats);
 	}
-	else
+	else if (!m_paused)
 	{
 		updateHUD();
 	}
+	m_world->tick(deltaSeconds);
 }
 
 void GameState::updateHUD()
@@ -104,4 +105,45 @@ void GameState::updateHUD()
 
 	m_wave_TA->setText(std::to_string(m_mode->getCurrentWave()));
 	m_score_TA->setText(std::to_string(m_mode->getScore()));
+}
+
+void GameState::processInput(const sf::Event& event)
+{
+	if (event.type == sf::Event::EventType::KeyPressed
+		&& event.key.code == sf::Keyboard::Escape)
+	{
+		if (m_paused)
+		{
+			Canvas::getHUD()->popMenuItem();
+			Canvas::getWindow()->setMouseCursorVisible(false);
+			m_world->setPaused(false);
+		}
+		else
+		{
+			m_world->setPaused(true);
+
+			Canvas::getWindow()->setMouseCursorVisible(true);
+
+			auto form = Canvas::getHUD()->pushMenuItem("esc");
+
+			form
+				->get<tgui::Button>("Button_Leave")
+				->onClick(
+					[this]() {
+						Canvas::getHUD()->popMenuItem();
+						m_world->finish();
+					}
+			);
+
+			form
+				->get<tgui::Button>("Button_Continue")
+				->onClick(
+					[this]() {
+						Canvas::getHUD()->popMenuItem();
+						Canvas::getWindow()->setMouseCursorVisible(false);
+						m_world->setPaused(false);
+					}
+			);
+		}
+	}
 }

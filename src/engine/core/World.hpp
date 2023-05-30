@@ -45,6 +45,8 @@ private:
 	Map* m_map = nullptr;
 
 	eastl::unique_ptr<GameMode> m_mode;
+
+	bool m_paused = false;
 public:
 	~World();
 
@@ -57,6 +59,11 @@ public:
 	bool isFinished() const { return m_isFinished; }
 
 	void start();
+
+	void setPaused(bool paused)
+	{
+		m_paused = paused;
+	}
 
 	void finish();
 
