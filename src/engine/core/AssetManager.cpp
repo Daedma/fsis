@@ -11,6 +11,8 @@ eastl::hash_map<eastl::string, eastl::unique_ptr<sf::SoundBuffer>, eastl::hash<e
 
 eastl::hash_map<eastl::string, uint32_t, eastl::hash<eastl::string>, eastl::equal_to<eastl::string>, eastl::allocator, true> AssetManager::m_animGroups;
 
+eastl::hash_map<eastl::string, eastl::unique_ptr<tgui::Texture>, eastl::hash<eastl::string>, eastl::equal_to<eastl::string>, eastl::allocator, true> AssetManager::m_tguiTextures;
+
 eastl::string AssetManager::m_soundPrefix = "./";
 
 eastl::string AssetManager::m_musicPrefix = "./";
@@ -33,6 +35,15 @@ sf::Texture* AssetManager::loadTexture(const eastl::string& filename)
 		}
 	}
 	return m_textures[filename].get();
+}
+
+tgui::Texture* AssetManager::loadTextureTGUI(const eastl::string& filename)
+{
+	if (m_tguiTextures.count(filename) == 0)
+	{
+		m_tguiTextures[filename].reset(new tgui::Texture((m_texturesPrefix + filename).c_str()));
+	}
+	return m_tguiTextures[filename].get();
 }
 
 sf::SoundBuffer* AssetManager::loadSound(const eastl::string& filename)

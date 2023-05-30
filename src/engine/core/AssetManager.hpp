@@ -5,6 +5,7 @@
 #include <EASTL/unique_ptr.h>
 #include <SFML/Audio/SoundBuffer.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <TGUI/Texture.hpp>
 #include <SFML/Audio/Music.hpp>
 
 class AssetManager
@@ -14,6 +15,8 @@ class AssetManager
 	static eastl::hash_map<eastl::string, eastl::unique_ptr<sf::SoundBuffer>, eastl::hash<eastl::string>, eastl::equal_to<eastl::string>, eastl::allocator, true> m_sounds;
 
 	static eastl::hash_map<eastl::string, uint32_t, eastl::hash<eastl::string>, eastl::equal_to<eastl::string>, eastl::allocator, true> m_animGroups;
+
+	static eastl::hash_map<eastl::string, eastl::unique_ptr<tgui::Texture>, eastl::hash<eastl::string>, eastl::equal_to<eastl::string>, eastl::allocator, true> m_tguiTextures;
 
 	// for loadSound
 	static eastl::string m_soundPrefix;
@@ -35,6 +38,13 @@ public:
 	~AssetManager() = delete;
 
 	static sf::Texture* loadTexture(const eastl::string& filename);
+
+	static sf::Texture* loadTextureSFML(const eastl::string& filename)
+	{
+		return loadTexture(filename);
+	}
+
+	static tgui::Texture* loadTextureTGUI(const eastl::string& filename);
 
 	static sf::SoundBuffer* loadSound(const eastl::string& filename);
 
