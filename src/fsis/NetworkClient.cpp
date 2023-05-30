@@ -1,7 +1,6 @@
 #include "NetworkClient.hpp"
 #include <boost/json.hpp>
 #include <fstream>
-#include <cpr/cpr.h>
 
 void NetworkClient::init(const std::string& filename)
 {

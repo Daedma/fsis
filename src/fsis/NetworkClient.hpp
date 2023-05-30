@@ -3,17 +3,14 @@
 #include <vector>
 #include <string>
 #include "MatchStats.hpp"
+#include "Achievement.hpp"
 #include <cpr/cpr.h>
 
 class NetworkClient
 {
 public:
-	struct Achievement
-	{
-		int32_t achievementId;
-		std::string description;
-		int32_t reward;
-	};
+
+	NetworkClient() = delete;
 
 	enum class Status
 	{
@@ -21,35 +18,35 @@ public:
 		FAILURE
 	};
 
-	int32_t getId() const
+	static int32_t getId()
 	{
 		return m_userId;
 	}
 
-	void init(const std::string& filename);
+	static void init(const std::string& filename);
 
-	Status auth(const std::string& login, const std::string& pass);
+	static Status auth(const std::string& login, const std::string& pass);
 
-	bool sendMatchStatsToServer(const MatchStats& stats);
+	static bool sendMatchStatsToServer(const MatchStats& stats);
 
-	const std::vector<Achievement>& getAchievementsFromServer() const
+	static const std::vector<Achievement>& getAchievementsFromServer()
 	{
 		return m_lastReceivedAchievements;
 	}
 
-	const cpr::Error& getLastError() const
+	static const cpr::Error& getLastError()
 	{
 		return m_lastError;
 	}
 
 private:
-	std::string m_authorizationURL;
+	static std::string m_authorizationURL;
 
-	std::string m_achievementURL;
+	static std::string m_achievementURL;
 
-	cpr::Error m_lastError;
+	static cpr::Error m_lastError;
 
-	int32_t m_userId;
+	static int32_t m_userId;
 
-	std::vector<Achievement> m_lastReceivedAchievements;
+	static std::vector<Achievement> m_lastReceivedAchievements;
 };
