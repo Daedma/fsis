@@ -12,6 +12,7 @@
 !src/engine/network/
 !src/engine/render/
 !src/fsis
+!src/fsis/states
 !resources/
 !resources/map
 !resources/sound

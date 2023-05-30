@@ -1,7 +1,7 @@
 #pragma once
 
 #include "NetworkClient.hpp"
-#include "core/World.hpp"
+#include "states/State.hpp"
 
 class ClientApplication
 {
@@ -10,15 +10,11 @@ public:
 
 	void run();
 
-	World* getWorld()
-	{
-		return &m_world;
-	}
-
 private:
 	class FSISHUD* m_hud;
 
+	State* m_curState = nullptr;
+
 	NetworkClient m_client;
 
-	World m_world;
 };
