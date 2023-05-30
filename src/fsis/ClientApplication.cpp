@@ -2,13 +2,14 @@
 #include "Engine.hpp"
 #include "FSISHUD.hpp"
 #include "core/InputEventListener.hpp"
+#include "NetworkClient.hpp"
 
 ClientApplication::ClientApplication()
 {
 	AssetManager::init("resources.ini");
 	AssetManager::initAnimGroups("animgroups.ini");
 
-	m_client.init("client.ini");
+	NetworkClient::init("client.ini");
 
 	Canvas::init("FSIS");
 	m_hud = Canvas::setHUD<FSISHUD>();

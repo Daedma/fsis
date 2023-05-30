@@ -22,12 +22,22 @@ public:
 
 	MatchStats getMatchStats()
 	{
-		return { m_score, m_wave + 1 };
+		return {};
 	}
 
 	class Sorcerer* getPlayer() const
 	{
 		return m_player;
+	}
+
+	size_t getCurrentWave() const
+	{
+		return m_wave;
+	}
+
+	size_t getScore() const
+	{
+		return m_score;
 	}
 
 	virtual void spawnPlayer() override;

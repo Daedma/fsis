@@ -10,6 +10,14 @@ public:
 	{
 		return m_nextState;
 	}
+
+protected:
+	void init()
+	{
+		m_nextState = this;
+	}
+
 protected:
 	State* m_nextState = this;
+
 };

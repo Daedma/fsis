@@ -19,6 +19,21 @@ public:
 
 	void toggleRun();
 
+	float getSpecialAttackCooldown() const
+	{
+		return eastl::clamp(m_specialAttack.timeSinceLastUse / m_specialAttack.cooldown, 0.f, 1.f);
+	}
+
+	float getSpecialModeCooldown() const
+	{
+		return eastl::clamp(m_specialMode.timeSinceLastUse / m_specialMode.cooldown, 0.f, 1.f);
+	}
+
+	float getSpecialAbilityCooldown() const
+	{
+		return eastl::clamp(m_beacon.timeSinceLastUse / m_beacon.cooldown, 0.f, 1.f);
+	}
+
 	virtual void setupController(Controller* controller) override;
 
 	virtual void attack() override;
