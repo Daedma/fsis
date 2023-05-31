@@ -84,7 +84,7 @@ void FSISGameMode::spawnPlayer()
 
 	FollowCamera* cam = Canvas::createCamera<FollowCamera>();
 	cam->setTarget(m_player);
-	cam->setScale(3000);
+	cam->setScale(5000);
 
 	PlayerController* controller = getWorld()->spawnController<PlayerController>();
 	controller->bindKeyAction(PlayerController::KeyCode::J, FSISActions::NEXT_TARGET);
