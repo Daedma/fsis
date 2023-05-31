@@ -205,13 +205,13 @@ void FSISGameMode::spawnMobOnSpawnPoint(int n)
 	{
 		mob->load("resources/creatures/glowstone.json");
 	}
-	else if (145 <= n && n <= 150)
+	else if (151 <= n && n <= 156)
 	{
 		mob->load("resources/creatures/glowstone.json");
 		mob->getMovementComponent()->deactivate();
 		mob->setAttackRange(mob->getAttackRange() * 5);
 	}
-	else if (151 <= n && n <= 156)
+	else if (145 <= n && n <= 150)
 	{
 		mob->load("resources/creatures/obsidian.json");
 		mob->getMovementComponent()->deactivate();
@@ -246,7 +246,7 @@ void FSISGameMode::tick(float deltaSeconds)
 	m_liveMobs = eastl::count_if(m_mobs.begin(), m_mobs.end(), [](Monster* mob) {
 		return mob->isAlive();
 		});
-	if (m_liveMobs == 0)
+	if (m_liveMobs == 0 && m_player->isAlive())
 	{
 		m_secondsSinceWaveEnd += deltaSeconds;
 		if (m_secondsSinceWaveEnd > 8)
