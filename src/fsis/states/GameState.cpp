@@ -9,6 +9,10 @@
 
 void GameState::init()
 {
+	AssetManager::stopMusic();
+
+	AssetManager::playMusic("fight_1.ogg");
+
 	m_nextState = this;
 
 	m_active = true;
@@ -138,6 +142,10 @@ void GameState::processInput(const sf::Event& event)
 
 			form
 				->get<tgui::Button>("Button_Leave")
+				->onClick.disconnectAll();
+
+			form
+				->get<tgui::Button>("Button_Leave")
 				->onClick(
 					[this]() {
 						m_paused = false;
@@ -145,6 +153,10 @@ void GameState::processInput(const sf::Event& event)
 						m_world->finish();
 					}
 			);
+
+			form
+				->get<tgui::Button>("Button_Continue")
+				->onClick.disconnectAll();
 
 			form
 				->get<tgui::Button>("Button_Continue")

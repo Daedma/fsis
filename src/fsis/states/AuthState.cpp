@@ -1,20 +1,27 @@
 #include "states/AuthState.hpp"
 #include "states/MenuState.hpp"
+#include "core/AssetManager.hpp"
 #include "NetworkClient.hpp"
 #include "render/Canvas.hpp"
 #include "gui/HUD.hpp"
 #include <TGUI/TGUI.hpp>
 #include <thread>
-#include <iostream>
 
 void AuthState::init()
 {
+	AssetManager::playMusic("menu_3.ogg");
 	m_nextState = this;
 
 	auto form = Canvas::getHUD()->pushMenuItem("authorization");
 
 	form->get<tgui::Button>("Button_LOGIN")
+		->onClick.disconnectAll();
+
+	form->get<tgui::Button>("Button_LOGIN")
 		->onClick(&AuthState::tryToLogin, this);
+
+	form->get<tgui::Button>("Button_Close_Window")
+		->onClick.disconnectAll();
 
 	form->get<tgui::Button>("Button_Close_Window")
 		->onClick(&sf::RenderWindow::close, Canvas::getWindow());

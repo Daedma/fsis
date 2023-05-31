@@ -3,12 +3,17 @@
 #include "NetworkClient.hpp"
 #include "render/Canvas.hpp"
 #include "gui/HUD.hpp"
+#include "core/AssetManager.hpp"
 #include <TGUI/AllWidgets.hpp>
 #include <thread>
 #include <iostream>
 
 void TotalState::init(const MatchStats& stats)
 {
+	AssetManager::stopMusic();
+
+	AssetManager::playMusic("menu_3.ogg");
+
 	m_nextState = this;
 
 	m_stats = stats;
@@ -34,6 +39,10 @@ void TotalState::init(const MatchStats& stats)
 	form
 		->get<tgui::Label>("Label_Number_Kills")
 		->setText(tgui::String::fromNumber(m_stats.kills));
+
+	form
+		->get<tgui::Button>("Button_Close")
+		->onClick.disconnectAll();
 
 	form
 		->get<tgui::Button>("Button_Close")
