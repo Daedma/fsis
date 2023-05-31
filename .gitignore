@@ -59,3 +59,5 @@
 
 # dynamic link libraries
 !**.dll
+
+CMakeLists.txt

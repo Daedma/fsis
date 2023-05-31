@@ -2,6 +2,16 @@
 #include <boost/json.hpp>
 #include <fstream>
 
+std::string NetworkClient::m_authorizationURL;
+
+std::string NetworkClient::m_achievementURL;
+
+cpr::Error NetworkClient::m_lastError;
+
+int32_t NetworkClient::m_userId;
+
+std::vector<Achievement> NetworkClient::m_lastReceivedAchievements;
+
 void NetworkClient::init(const std::string& filename)
 {
 	namespace json = boost::json;

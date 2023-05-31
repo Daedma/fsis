@@ -6,7 +6,6 @@
 #include "controllers/Controller.hpp"
 #include <fstream>
 #include <EASTL/algorithm.h>
-#include <log.hpp>
 
 FSISCharacter::FSISCharacter(World* world) : Character(world)
 {
