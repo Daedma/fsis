@@ -13,6 +13,8 @@ void GameState::init()
 
 	m_active = true;
 
+	m_paused = false;
+
 	auto form = Canvas::getHUD()->pushMenuItem("fight");
 
 	m_specialAttack_PB = form->get<tgui::ProgressBar>("ProgressBar_OA");
@@ -33,8 +35,8 @@ void GameState::init()
 
 	m_world.emplace();
 	m_mode = m_world->setGameMode<FSISGameMode>();
-	m_player = m_mode->getPlayer();
 	m_world->start();
+	m_player = m_mode->getPlayer();
 }
 
 void GameState::tick(float deltaSeconds)
@@ -50,6 +52,7 @@ void GameState::tick(float deltaSeconds)
 		Canvas::getWindow()->setMouseCursorVisible(true);
 		m_nextState = TotalState::getInstance();
 		TotalState::getInstance()->init(stats);
+		return;
 	}
 	else if (!m_paused)
 	{
@@ -118,6 +121,7 @@ void GameState::processInput(const sf::Event& event)
 	{
 		if (m_paused)
 		{
+			m_paused = false;
 			Canvas::getHUD()->popMenuItem();
 			Canvas::getWindow()->setMouseCursorVisible(false);
 			m_world->setPaused(false);
@@ -136,6 +140,7 @@ void GameState::processInput(const sf::Event& event)
 				->get<tgui::Button>("Button_Leave")
 				->onClick(
 					[this]() {
+						m_paused = false;
 						Canvas::getHUD()->popMenuItem();
 						m_world->finish();
 					}
@@ -145,6 +150,7 @@ void GameState::processInput(const sf::Event& event)
 				->get<tgui::Button>("Button_Continue")
 				->onClick(
 					[this]() {
+						m_paused = false;
 						Canvas::getHUD()->popMenuItem();
 						Canvas::getWindow()->setMouseCursorVisible(false);
 						m_world->setPaused(false);

@@ -18,11 +18,10 @@ void HUD::loadForms(const char* filename)
 
 	for (const auto& i : forms)
 	{
-		tgui::Group::Ptr last = m_menuSet[i.as_object().at("name").as_string().c_str()];
-		last = tgui::Group::create();
-		last->loadWidgetsFromFile(i.as_object().at("file").as_string().c_str());
-		add(last);
-		last->setVisible(false);
+		eastl::string name = i.as_object().at("name").as_string().c_str();
+		m_menuSet[name] = tgui::Group::create();
+		m_menuSet[name]->loadWidgetsFromFile(i.as_object().at("file").as_string().c_str());
+		m_menuSet[name]->setVisible(false);
+		add(m_menuSet[name]);
 	}
 }
-

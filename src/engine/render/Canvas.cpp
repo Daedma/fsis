@@ -44,8 +44,13 @@ void Canvas::registry(PrimitiveComponent* primitive)
 
 void Canvas::unregistry(PrimitiveComponent* primitive)
 {
+	int32_t layerNumber = primitive->getLayer();
 	auto& layer = m_layers[primitive->getLayer()];
 	layer.erase_first(primitive);
+	if (layer.empty())
+	{
+		m_layers.erase(layerNumber);
+	}
 }
 
 void Canvas::draw()
@@ -54,7 +59,7 @@ void Canvas::draw()
 	{
 		return;
 	}
-	m_window->clear(sf::Color::Cyan);
+	m_window->clear(sf::Color::Black);
 	if (m_camera && !m_layers.empty())
 	{
 		Transform cameraTransform = m_camera->getProjectionMatrix();

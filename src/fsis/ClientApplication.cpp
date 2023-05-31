@@ -3,6 +3,7 @@
 #include "core/AssetManager.hpp"
 #include "render/Canvas.hpp"
 #include "states/AuthState.hpp"
+#include "states/MenuState.hpp"
 #include "gui/HUD.hpp"
 #include "NetworkClient.hpp"
 #include <iostream>
@@ -10,19 +11,16 @@
 ClientApplication::ClientApplication()
 {
 	AssetManager::init("resources.ini");
-	std::cout << "Recources initialized\n";
 	AssetManager::initAnimGroups("animgroups.ini");
-	std::cout << "Animation groups initialized\n";
 
 	NetworkClient::init("services.ini");
-	std::cout << "Network client initialized\n";
 
 	Canvas::init("FSIS");
 	Canvas::setHUD<HUD>();
 	Canvas::getHUD()->loadForms("forms.ini");
-	std::cout << "Forms are loaded\n";
 
-	m_curState = AuthState::getInstance();
+	m_curState = MenuState::getInstance();
+	MenuState::getInstance()->init();
 }
 
 void ClientApplication::run()

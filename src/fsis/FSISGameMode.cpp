@@ -107,7 +107,7 @@ void FSISGameMode::onStartLevel()
 
 void FSISGameMode::onEndLevel()
 {
-
+	Canvas::resetCamera();
 }
 
 size_t FSISGameMode::getMobNumber() const

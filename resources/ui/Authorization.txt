@@ -37,36 +37,6 @@ Button.Button_Close_Window {
     }
 }
 
-Button.Button_Collapse {
-    Position = (89%, 0.15%);
-    Size = (4.427%, 3.9351%);
-    TextSize = 13;
-
-    Renderer {
-        BackgroundColor = None;
-        BackgroundColorDisabled = #E6E6E6;
-        BackgroundColorDown = #EBEBEB;
-        BackgroundColorHover = white;
-        BorderColor = #3C3C3C;
-        BorderColorDisabled = #7D7D7D;
-        BorderColorDown = black;
-        BorderColorFocused = #1E1EB4;
-        BorderColorHover = black;
-        Borders = (0, 0, 0, 0);
-        TextColor = #3C3C3C;
-        TextColorDisabled = #7D7D7D;
-        TextColorDown = black;
-        TextColorHover = black;
-        Texture = "textures/Collapse.png" NoSmooth;
-        TextureDisabled = None;
-        TextureDown = None;
-        TextureDownFocused = None;
-        TextureDownHover = None;
-        TextureFocused = None;
-        TextureHover = None;
-    }
-}
-
 Label.Label_FSIS_Launcher {
     Position = (0%, 0.3%);
     Size = (30.4687%, 6.25%);

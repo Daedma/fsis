@@ -5,6 +5,7 @@
 #include "gui/HUD.hpp"
 #include <TGUI/AllWidgets.hpp>
 #include <thread>
+#include <iostream>
 
 void TotalState::init(const MatchStats& stats)
 {
@@ -14,7 +15,9 @@ void TotalState::init(const MatchStats& stats)
 
 	m_dataReceived = false;
 
-	sendStats();
+	m_dataUpdated = false;
+
+	m_error = false;
 
 	auto form = Canvas::getHUD()->pushMenuItem("results");
 
@@ -42,6 +45,8 @@ void TotalState::init(const MatchStats& stats)
 				MenuState::getInstance()->init();
 			}
 	);
+
+	sendStats();
 }
 
 void TotalState::tick(float)

@@ -5,6 +5,7 @@
 #include "gui/HUD.hpp"
 #include <TGUI/TGUI.hpp>
 #include <thread>
+#include <iostream>
 
 void AuthState::init()
 {
@@ -20,6 +21,7 @@ void AuthState::init()
 
 	form->get<tgui::Label>("Label_Wrong_Input")
 		->setVisible(false);
+
 }
 
 void AuthState::tryToLogin()

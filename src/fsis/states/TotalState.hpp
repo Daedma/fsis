@@ -30,7 +30,7 @@ private:
 
 	bool m_dataUpdated = false;
 
-	bool m_error = false;
+	std::atomic_bool m_error = false;
 
 private:
 	void sendStats();

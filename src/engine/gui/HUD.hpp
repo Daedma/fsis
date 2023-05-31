@@ -20,7 +20,7 @@ public:
 		{
 			m_menuStack.top()->setVisible(false);
 		}
-		m_menuStack.emplace(m_menuSet.at(menu));
+		m_menuStack.push(m_menuSet.at(menu));
 		m_menuStack.top()->setVisible(true);
 		return m_menuStack.top();
 	}

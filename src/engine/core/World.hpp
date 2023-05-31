@@ -23,15 +23,15 @@ private:
 	eastl::vector_set<GameObject*> m_phys;
 	eastl::vector_set<GameObject*> m_postphys;
 
-	eastl::vector<eastl::unique_ptr<Controller>> m_controllers;
-
-	eastl::vector<eastl::unique_ptr<Actor>> m_actors;
+	eastl::unique_ptr<GameMode> m_mode;
 
 	eastl::unique_ptr<CollisionResolver> m_collision;
 
+	eastl::vector<eastl::unique_ptr<Controller>> m_controllers;
+
 	bool m_isFinished = false;
 
-	float m_globalAcceleration = -320.8f;
+	float m_globalAcceleration = -500.f;
 
 	struct ActorComponentPriorityCompare
 	{
@@ -44,7 +44,7 @@ private:
 
 	Map* m_map = nullptr;
 
-	eastl::unique_ptr<GameMode> m_mode;
+	eastl::vector<eastl::unique_ptr<Actor>> m_actors;
 
 	bool m_paused = false;
 public:
