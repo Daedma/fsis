@@ -304,7 +304,10 @@ sf::Music* AssetManager::playMusic(const eastl::string& filename)
 		m_music[filename].reset(new sf::Music());
 		m_music[filename]->openFromFile((m_musicPrefix + filename).c_str());
 	}
-	m_music[filename]->play();
+	if (m_music[filename]->getStatus() != sf::Music::Status::Playing)
+	{
+		m_music[filename]->play();
+	}
 	return m_music[filename].get();
 }
 
