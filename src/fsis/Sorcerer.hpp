@@ -1,11 +1,16 @@
 #pragma once
 
 #include "FSISCharacter.hpp"
+#include "components/AudioComponent.hpp"
 
 class Sorcerer : public FSISCharacter
 {
 public:
-	Sorcerer(World* world) : FSISCharacter(world) {}
+	Sorcerer(World* world) : FSISCharacter(world)
+	{
+		m_sound = new AudioComponent();
+		m_sound->attachToActor(this);
+	}
 
 	void moveForward(float value);
 
@@ -87,4 +92,6 @@ private:
 	} m_specialMode;
 
 	Entity m_curZone = Entity::INFERNAL;
+
+	AudioComponent* m_sound = nullptr;
 };

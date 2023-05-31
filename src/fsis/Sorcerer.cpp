@@ -54,6 +54,7 @@ void Sorcerer::specialMode()
 	{
 		m_specialMode.active = true;
 		m_specialMode.timeSinceLastUse = 0;
+		m_sound->playSound("skyfire_voice_1.wav");
 	}
 }
 
@@ -62,6 +63,7 @@ void Sorcerer::specialAbility()
 	if (m_beacon.ptr)
 	{
 		setPosition(m_beacon.ptr->getPosition());
+		m_sound->playSound("dwarf_minion_trap_1.wav");
 	}
 	else if (m_beacon.timeSinceLastUse >= m_beacon.cooldown)
 	{
@@ -137,6 +139,7 @@ void Sorcerer::onDeath(FSISCharacter* killer)
 	{
 		mode->notifyPlayerDeath();
 	}
+	m_sound->playSound("sor_death_2.wav");
 }
 
 void Sorcerer::tick(float deltaSeconds)
@@ -193,6 +196,10 @@ void Sorcerer::takeDamage(float value, FSISCharacter* instigator)
 	if (m_specialMode.active && d(gen) || !m_specialMode.active)
 	{
 		FSISCharacter::takeDamage(value, instigator);
+		if (getHP() < getMaxHP() * 0.3)
+		{
+			m_sound->playSound("wiz_death_2.wav");
+		}
 	}
 
 }

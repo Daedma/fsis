@@ -14,6 +14,9 @@ Monster::Monster(World* world) : FSISCharacter(world)
 	m_marker->setHeight(m_proxBox->getSize().z);
 	m_marker->hide();
 	m_marker->attachToActor(this);
+
+	m_sound = new AudioComponent();
+	m_sound->attachToActor(this);
 }
 
 void Monster::setupController(Controller* controller)
@@ -61,4 +64,16 @@ void Monster::onEndTargeted(FSISCharacter* hunter)
 void Monster::load_Internal(const boost::json::object& info)
 {
 	// TODO add aditional parameters
+}
+
+void Monster::takeDamage(float value, FSISCharacter* instigator)
+{
+	FSISCharacter::takeDamage(value, instigator);
+	m_sound->playSound("tank_death_5.wav");
+}
+
+void Monster::onDeath(FSISCharacter* killer)
+{
+	FSISCharacter::onDeath(killer);
+	m_sound->playSound("tank_death_2.wav");
 }

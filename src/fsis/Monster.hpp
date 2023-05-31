@@ -1,6 +1,7 @@
 #pragma once
 
 #include "FSISCharacter.hpp"
+#include "components/AudioComponent.hpp"
 
 class Monster : public FSISCharacter
 {
@@ -11,6 +12,8 @@ public:
 
 	virtual void attack() override;
 
+	virtual void takeDamage(float value, FSISCharacter* instigator) override;
+
 protected:
 	virtual void load_Internal(const boost::json::object& obj) override;
 
@@ -18,6 +21,10 @@ protected:
 
 	virtual void onEndTargeted(FSISCharacter* hunter) override;
 
+	virtual void onDeath(FSISCharacter* killer) override;
+
 private:
 	class SpriteComponent* m_marker = nullptr;
+
+	AudioComponent* m_sound = nullptr;
 };
