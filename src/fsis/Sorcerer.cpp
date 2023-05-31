@@ -28,6 +28,11 @@ void Sorcerer::specialAttack()
 		ball->setType(Entity::QUINTESSENCE);
 		ball->setOnHit([this](FSISCharacter* target, Entity) {
 			target->kill(this);
+			FSISGameMode* mode = dynamic_cast<FSISGameMode*>(getWorld()->getGameMode());
+			if (mode)
+			{
+				mode->notifySpecialAttackKill();
+			}
 			});
 		if (m_target)
 		{
@@ -120,7 +125,7 @@ void Sorcerer::onKill(FSISCharacter* victim)
 	FSISGameMode* mode = dynamic_cast<FSISGameMode*>(getWorld()->getGameMode());
 	if (mode)
 	{
-		mode->notifyMobKilledByPlayer();
+		mode->notifyMobKilledByPlayer(victim->getEntity());
 	}
 }
 
@@ -151,6 +156,11 @@ void Sorcerer::tick(float deltaSeconds)
 	m_specialAttack.timeSinceLastUse += deltaSeconds;
 	m_specialMode.timeSinceLastUse += deltaSeconds;
 	m_specialMode.active = m_specialMode.timeSinceLastUse < m_specialMode.duration;
+	FSISGameMode* mode = dynamic_cast<FSISGameMode*>(getWorld()->getGameMode());
+	if (mode)
+	{
+		mode->addSteps(mathter::Length(getLastMovement()));
+	}
 }
 
 void Sorcerer::load_Internal(const boost::json::object& obj)

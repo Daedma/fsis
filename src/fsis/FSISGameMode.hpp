@@ -2,6 +2,7 @@
 
 #include "core/GameMode.hpp"
 #include "MatchStats.hpp"
+#include "Entity.hpp"
 #include <EASTL/vector.h>
 
 class FSISGameMode : public GameMode
@@ -10,9 +11,19 @@ public:
 
 	FSISGameMode(World* world);
 
-	void notifyMobKilledByPlayer()
+	void notifyMobKilledByPlayer(Entity type = Entity::NONE)
 	{
-		m_score += 100 * m_wave + 10;
+		m_stats.score += 100 * m_wave + 10;
+		++m_stats.kills;
+		if (type == Entity::PURIFIED)
+		{
+			++m_stats.sculcks;
+		}
+	}
+
+	void notifySpecialAttackKill()
+	{
+		++m_stats.specialAttackKills;
 	}
 
 	void notifyMobKilledByMob()
@@ -20,9 +31,14 @@ public:
 
 	void notifyPlayerDeath();
 
+	void addSteps(float distance)
+	{
+		m_stats.steps += distance * 0.02f;
+	}
+
 	MatchStats getMatchStats()
 	{
-		return {};
+		return m_stats;
 	}
 
 	class Sorcerer* getPlayer() const
@@ -32,12 +48,12 @@ public:
 
 	size_t getCurrentWave() const
 	{
-		return m_wave;
+		return m_wave + 1;
 	}
 
 	size_t getScore() const
 	{
-		return m_score;
+		return m_stats.score;
 	}
 
 	virtual void spawnPlayer() override;
@@ -74,11 +90,11 @@ private:
 
 	class Sorcerer* m_player = nullptr;
 
-	size_t m_score = 0;
-
 	size_t m_liveMobs = 0;
 
 	float m_secondsSincePlayerDeath = 0.f;
 
 	float m_secondsSinceWaveEnd = 0.f;
+
+	MatchStats m_stats;
 };

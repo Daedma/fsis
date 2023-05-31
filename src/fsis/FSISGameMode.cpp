@@ -147,6 +147,7 @@ void FSISGameMode::nextWave()
 {
 	clearLevel();
 	++m_wave;
+	++m_stats.waves;
 	spawnMobs();
 }
 
@@ -243,6 +244,7 @@ void FSISGameMode::notifyPlayerDeath()
 
 void FSISGameMode::tick(float deltaSeconds)
 {
+	m_stats.duration += deltaSeconds * (m_player->isAlive());
 	m_liveMobs = eastl::count_if(m_mobs.begin(), m_mobs.end(), [](Monster* mob) {
 		return mob->isAlive();
 		});

@@ -53,7 +53,7 @@ bool NetworkClient::sendMatchStatsToServer(const MatchStats& stats)
 	body["steps"] = stats.steps;
 	body["sculcks"] = stats.sculcks;
 	body["waves"] = stats.waves;
-	body["duration"] = stats.duration;
+	body["duration"] = static_cast<int32_t>(stats.duration);
 	body["specialAttackKills"] = stats.specialAttackKills;
 
 	cpr::Response response = cpr::Post(cpr::Url{ m_achievementURL },
