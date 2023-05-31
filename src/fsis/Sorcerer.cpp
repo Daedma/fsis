@@ -82,6 +82,7 @@ void Sorcerer::setupController(Controller* controller)
 	controller->bindAction(FSISActions::SP_MODE, Controller::InputEvent::PRESSED, this, &Sorcerer::specialMode);
 	controller->bindAction(FSISActions::TOGGLE_RUN, Controller::InputEvent::PRESSED, this, &Sorcerer::toggleRun);
 	controller->bindAction(FSISActions::TOGGLE_RUN, Controller::InputEvent::RELEASED, this, &Sorcerer::toggleRun);
+	controller->bindAction(FSISActions::CHANGE_ENTITY, Controller::InputEvent::PRESSED, this, &Sorcerer::changeEntity);
 	controller->bindAxis(FSISActions::MOVE_FORWARD, this, &Sorcerer::moveForward);
 	controller->bindAxis(FSISActions::MOVE_RIGHT, this, &Sorcerer::moveRight);
 }

@@ -11,6 +11,7 @@ struct FSISActions
 		SP_MODE,
 		SP_ABILITY,
 		TOGGLE_RUN,
-		NEXT_TARGET
+		NEXT_TARGET,
+		CHANGE_ENTITY
 	};
 };

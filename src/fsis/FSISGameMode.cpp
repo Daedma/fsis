@@ -36,7 +36,7 @@ void FSISGameMode::spawnPlayer()
 		Sorcerer* hero = dynamic_cast<Sorcerer*>(comp->getOwner());
 		if (hero)
 		{
-			hero->setEntity(Entity::INFERNAL);
+			hero->setEntityZone(Entity::INFERNAL);
 		}
 		});
 
@@ -45,7 +45,7 @@ void FSISGameMode::spawnPlayer()
 		Sorcerer* hero = dynamic_cast<Sorcerer*>(comp->getOwner());
 		if (hero)
 		{
-			hero->setEntity(Entity::DISEASED);
+			hero->setEntityZone(Entity::DISEASED);
 		}
 		});
 
@@ -54,7 +54,7 @@ void FSISGameMode::spawnPlayer()
 		Sorcerer* hero = dynamic_cast<Sorcerer*>(comp->getOwner());
 		if (hero)
 		{
-			hero->setEntity(Entity::PURIFIED);
+			hero->setEntityZone(Entity::PURIFIED);
 		}
 		});
 
@@ -63,7 +63,7 @@ void FSISGameMode::spawnPlayer()
 		Sorcerer* hero = dynamic_cast<Sorcerer*>(comp->getOwner());
 		if (hero)
 		{
-			hero->setEntity(Entity::UNHOLY);
+			hero->setEntityZone(Entity::UNHOLY);
 		}
 		});
 
@@ -72,7 +72,7 @@ void FSISGameMode::spawnPlayer()
 		Sorcerer* hero = dynamic_cast<Sorcerer*>(comp->getOwner());
 		if (hero)
 		{
-			hero->setEntity(Entity::DIVINE);
+			hero->setEntityZone(Entity::DIVINE);
 		}
 		});
 
@@ -87,12 +87,13 @@ void FSISGameMode::spawnPlayer()
 	cam->setScale(3000);
 
 	PlayerController* controller = getWorld()->spawnController<PlayerController>();
-	controller->bindKeyAction(PlayerController::KeyCode::Q, FSISActions::NEXT_TARGET);
-	controller->bindKeyAction(PlayerController::KeyCode::Num1, FSISActions::SP_ABILITY);
-	controller->bindKeyAction(PlayerController::KeyCode::Num2, FSISActions::SP_ATTACK);
-	controller->bindKeyAction(PlayerController::KeyCode::Num3, FSISActions::SP_MODE);
-	controller->bindKeyAction(PlayerController::KeyCode::E, FSISActions::ATTACK);
+	controller->bindKeyAction(PlayerController::KeyCode::J, FSISActions::NEXT_TARGET);
+	controller->bindKeyAction(PlayerController::KeyCode::L, FSISActions::SP_ABILITY);
+	controller->bindKeyAction(PlayerController::KeyCode::E, FSISActions::SP_ATTACK);
+	controller->bindKeyAction(PlayerController::KeyCode::K, FSISActions::SP_MODE);
+	controller->bindKeyAction(PlayerController::KeyCode::I, FSISActions::ATTACK);
 	controller->bindKeyAction(PlayerController::KeyCode::LShift, FSISActions::TOGGLE_RUN);
+	controller->bindKeyAction(PlayerController::KeyCode::Space, FSISActions::CHANGE_ENTITY);
 	controller->bindKeyAxis(PlayerController::KeyCode::W, +1.f, FSISActions::MOVE_FORWARD);
 	controller->bindKeyAxis(PlayerController::KeyCode::S, -1.f, FSISActions::MOVE_FORWARD);
 	controller->bindKeyAxis(PlayerController::KeyCode::D, +1.f, FSISActions::MOVE_RIGHT);

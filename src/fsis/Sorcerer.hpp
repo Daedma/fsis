@@ -17,6 +17,16 @@ public:
 
 	void specialAbility();
 
+	void changeEntity()
+	{
+		setEntity(m_curZone);
+	}
+
+	void setEntityZone(Entity zone)
+	{
+		m_curZone = zone;
+	}
+
 	void toggleRun();
 
 	float getSpecialAttackCooldown() const
@@ -75,4 +85,6 @@ private:
 		bool active = false;
 		float timeSinceLastUse = 0;
 	} m_specialMode;
+
+	Entity m_curZone = Entity::INFERNAL;
 };
