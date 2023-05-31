@@ -22,6 +22,8 @@
 !resources/textures/creatures
 !resources/textures/map
 !resources/ui
+!resources/ui/textures
+!resources/ui/fonts
 !resources/creatures
 
 # md files  
@@ -53,9 +55,11 @@
 !**.ogg
 !**.wav
 
+# fonts
+!**.ttf
+
 # config files
 !**.ini
-
 
 # dynamic link libraries
 !**.dll
