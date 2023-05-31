@@ -14,6 +14,8 @@ class AssetManager
 
 	static eastl::hash_map<eastl::string, eastl::unique_ptr<sf::SoundBuffer>, eastl::hash<eastl::string>, eastl::equal_to<eastl::string>, eastl::allocator, true> m_sounds;
 
+	static eastl::hash_map<eastl::string, eastl::unique_ptr<sf::Music>, eastl::hash<eastl::string>, eastl::equal_to<eastl::string>, eastl::allocator, true> m_music;
+
 	static eastl::hash_map<eastl::string, uint32_t, eastl::hash<eastl::string>, eastl::equal_to<eastl::string>, eastl::allocator, true> m_animGroups;
 
 	static eastl::hash_map<eastl::string, eastl::unique_ptr<tgui::Texture>, eastl::hash<eastl::string>, eastl::equal_to<eastl::string>, eastl::allocator, true> m_tguiTextures;
@@ -48,11 +50,11 @@ public:
 
 	static sf::SoundBuffer* loadSound(const eastl::string& filename);
 
-	// static sf::Music* playMusic(const eastl::string& filename);
+	static sf::Music* playMusic(const eastl::string& filename);
 
-	// static sf::Music* stopMusic(const eastl::string& filename);
+	static sf::Music* stopMusic(const eastl::string& filename);
 
-	// static sf::Music* stopMusic();
+	static void stopMusic();
 
 	static class CharacterAnimComponent* loadCharacterAnimation(const eastl::string& filename);
 

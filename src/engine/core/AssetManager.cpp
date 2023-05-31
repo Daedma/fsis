@@ -13,6 +13,8 @@ eastl::hash_map<eastl::string, uint32_t, eastl::hash<eastl::string>, eastl::equa
 
 eastl::hash_map<eastl::string, eastl::unique_ptr<tgui::Texture>, eastl::hash<eastl::string>, eastl::equal_to<eastl::string>, eastl::allocator, true> AssetManager::m_tguiTextures;
 
+eastl::hash_map<eastl::string, eastl::unique_ptr<sf::Music>, eastl::hash<eastl::string>, eastl::equal_to<eastl::string>, eastl::allocator, true> AssetManager::m_music;
+
 eastl::string AssetManager::m_soundPrefix = "./";
 
 eastl::string AssetManager::m_musicPrefix = "./";
@@ -293,4 +295,33 @@ void AssetManager::init(const eastl::string& filename)
 
 	m_mapPrefix = resources.at("map").as_string().c_str();
 
+}
+
+sf::Music* AssetManager::playMusic(const eastl::string& filename)
+{
+	if (!m_music.count(filename))
+	{
+		m_music[filename].reset(new sf::Music());
+		m_music[filename]->openFromFile((m_musicPrefix + filename).c_str());
+	}
+	m_music[filename]->play();
+	return m_music[filename].get();
+}
+
+sf::Music* AssetManager::stopMusic(const eastl::string& filename)
+{
+	if (m_music.count(filename))
+	{
+		m_music[filename]->stop();
+		return m_music[filename].get();
+	}
+	return nullptr;
+}
+
+void AssetManager::stopMusic()
+{
+	for (auto& i : m_music)
+	{
+		i.second->stop();
+	}
 }
