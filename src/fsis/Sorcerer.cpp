@@ -97,7 +97,7 @@ void Sorcerer::attack()
 	if (canAttack())
 	{
 		Projectile* ball = getWorld()->spawnActor<Projectile>();
-		ball->setRadius(15);
+		ball->setRadius(25);
 		initProjectilePosition(ball);
 		ball->setType(getEntity());
 		ball->setOnHit([this](FSISCharacter* target, Entity entity) {

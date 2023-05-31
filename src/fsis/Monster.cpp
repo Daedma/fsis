@@ -9,9 +9,9 @@ Monster::Monster(World* world) : FSISCharacter(world)
 {
 	setAutoResetTarget(false);
 	m_marker = new SpriteComponent();
-	m_marker->loadTexture("Marker.png");
+	m_marker->loadTexture("target3.png");
 	m_marker->setLayer(2);
-	m_marker->setHeight(m_proxBox->getSize().z * INVSQRT_3);
+	m_marker->setHeight(m_proxBox->getSize().z);
 	m_marker->hide();
 	m_marker->attachToActor(this);
 }
@@ -26,7 +26,7 @@ void Monster::attack()
 	if (canAttack())
 	{
 		Projectile* ball = getWorld()->spawnActor<Projectile>();
-		ball->setRadius(15);
+		ball->setRadius(25);
 		initProjectilePosition(ball);
 		ball->setType(getEntity());
 		ball->setOnHit([this](FSISCharacter* target, Entity) {
