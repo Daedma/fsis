@@ -19,8 +19,8 @@ ClientApplication::ClientApplication()
 	Canvas::setHUD<HUD>();
 	Canvas::getHUD()->loadForms("forms.ini");
 
-	m_curState = MenuState::getInstance();
-	MenuState::getInstance()->init();
+	m_curState = AuthState::getInstance();
+	AuthState::getInstance()->init();
 }
 
 void ClientApplication::run()
