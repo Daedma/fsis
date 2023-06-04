@@ -68,7 +68,7 @@ bool NetworkClient::sendMatchStatsToServer(const MatchStats& stats)
 		for (const auto& i : achievements)
 		{
 			Achievement curAchievement;
-			curAchievement.achievementId = i.as_object().at("id").as_int64();
+			curAchievement.title = i.as_object().at("title").as_string();
 			curAchievement.description = i.as_object().at("description").as_string();
 			curAchievement.reward = i.as_object().at("reward").as_int64();
 			m_lastReceivedAchievements.push_back(curAchievement);

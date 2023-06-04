@@ -79,7 +79,7 @@ void TotalState::tick(float)
 			->get<tgui::TextArea>("TextArea_List_Achievents");
 		for (const auto& i : m_achievements)
 		{
-			achievemets_TA->addText(i.description);
+			achievemets_TA->addText(i.title);
 			achievemets_TA->addText(" +" + tgui::String::fromNumber(i.reward) + "\n");
 		}
 		m_dataUpdated = true;

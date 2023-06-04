@@ -4,7 +4,7 @@
 
 struct Achievement
 {
-	int32_t achievementId;
+	std::string title;
 	std::string description;
 	int32_t reward;
 };
