@@ -1,3 +1,13 @@
+/**
+ * @file GameState.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains the declaration of GameState class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 
 #include "State.hpp"
@@ -7,6 +17,10 @@
 #include <EASTL/optional.h>
 #include <TGUI/AllWidgets.hpp>
 
+/**
+ * @brief A class represents game session state of program.
+ * From this state program can switch only to total state.
+ */
 class GameState : public State, public InputEventListener
 {
 	GameState() = default;

@@ -1,3 +1,13 @@
+/**
+ * @file NetworkClient.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains the declaration of NetworkClient class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 
 #include <vector>
@@ -6,6 +16,9 @@
 #include "Achievement.hpp"
 #include <cpr/cpr.h>
 
+/**
+ * @brief Provide functionality for netwotk interaction on client
+ */
 class NetworkClient
 {
 public:

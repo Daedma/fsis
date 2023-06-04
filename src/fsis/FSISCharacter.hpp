@@ -1,3 +1,13 @@
+/**
+ * @file FSISCharacter.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains the declaration of FSISCharacter class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 
 #include "actors/Character.hpp"
@@ -6,6 +16,9 @@
 #include <EASTL/string.h>
 #include <EASTL/list.h>
 
+/**
+ * @brief A class represents all characters in FSIS.
+ */
 class FSISCharacter : public Character
 {
 protected:

@@ -1,8 +1,21 @@
+/**
+ * @file Projectile.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains the declaration of Projectile class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 
 #include "actors/Actor.hpp"
 #include "Entity.hpp"
 
+/**
+ * @brief A class represents projectile (balls)
+ */
 class Projectile : public Actor
 {
 public:
