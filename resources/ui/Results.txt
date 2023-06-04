@@ -11,8 +11,8 @@ Picture.Picture_Results_Back {
 Label.Label_Number_Wave {
     Position = (42.7083%, 36.6666%);
     ScrollbarPolicy = Never;
-    Size = (14.8438%, 2.40741%);
-    Text = "YOU SURVIVED 1 WAVES ";
+    Size = (15.3645%, 2.55752%);
+    Text = "YOU SURVIVED 0 WAVES";
     TextSize = 25;
 
     Renderer {
