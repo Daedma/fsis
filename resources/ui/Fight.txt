@@ -100,7 +100,6 @@ ProgressBar.ProgressBar_TP {
 }
 
 ProgressBar.ProgressBar_Health {
-    FillDirection = RightToLeft;
     Maximum = 100;
     Minimum = 0;
     Position = (41.5625%, 96%);
