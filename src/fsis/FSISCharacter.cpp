@@ -132,9 +132,10 @@ void FSISCharacter::nextTarget()
 	}
 	for (; m_targetPosition != m_nearestCharacters.end(); ++m_targetPosition)
 	{
-		if (mathter::Distance((*m_targetPosition)->getPosition(), getPosition()) <= m_attackRange)
+		FSISCharacter* cur = dynamic_cast<FSISCharacter*>(*m_targetPosition);
+		if (cur && cur->isAlive() && mathter::Distance(cur->getPosition(), getPosition()) <= m_attackRange)
 		{
-			setTarget(dynamic_cast<FSISCharacter*>(*m_targetPosition));
+			setTarget(cur);
 			return;
 		}
 	}

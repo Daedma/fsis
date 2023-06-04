@@ -175,13 +175,12 @@ void FSISGameMode::spawnMobs()
 37-50 — левый sterm
 51-64 — правый sterm
 65-80 — центральный sculk
-81-92— левый sculk
-93-104— правый sculk
-105-124 — obsidian
-125-144 — glowstone
-145-150 — башня glowstone
-151-156— башня obsidian
-
+81-82— левый sculk
+83-84— правый sculk
+85-104 — obsidian
+105-124 — glowstone
+125-126 — башня obsidian
+127-128— башня glowstone
 */
 void FSISGameMode::spawnMobOnSpawnPoint(int n)
 {
@@ -194,31 +193,31 @@ void FSISGameMode::spawnMobOnSpawnPoint(int n)
 	{
 		mob->load("resources/creatures/sterm.json");
 	}
-	else if (65 <= n && n <= 104)
+	else if (65 <= n && n <= 84)
 	{
 		mob->load("resources/creatures/sculk.json");
 	}
+	else if (85 <= n && n <= 104)
+	{
+		mob->load("resources/creatures/obsidian.json");
+	}
 	else if (105 <= n && n <= 124)
 	{
-		mob->load("resources/creatures/obsidian.json");
-	}
-	else if (125 <= n && n <= 144)
-	{
 		mob->load("resources/creatures/glowstone.json");
 	}
-	else if (151 <= n && n <= 156)
+	else if (125 <= n && n <= 126)
 	{
 		mob->load("resources/creatures/glowstone.json");
 		mob->getMovementComponent()->deactivate();
 		mob->setAttackRange(mob->getAttackRange() * 5);
 	}
-	else if (145 <= n && n <= 150)
+	else if (127 <= n && n <= 128)
 	{
 		mob->load("resources/creatures/obsidian.json");
 		mob->getMovementComponent()->deactivate();
 		mob->setAttackRange(mob->getAttackRange() * 5);
 	}
-	mob->setDamage(mob->getDamage() * getMobDamage() + 1);
+	mob->setDamage(mob->getDamage() * getMobDamage());
 	mob->setMaxHP(mob->getMaxHP() * getMobHP());
 	mob->setTarget(m_player);
 
@@ -264,7 +263,7 @@ void FSISGameMode::tick(float deltaSeconds)
 		if (m_secondsSincePlayerDeath > 3)
 		{
 			getWorld()->finish();
-			m_secondsSinceWaveEnd = 0;
+			m_secondsSincePlayerDeath = 0;
 		}
 	}
 }
