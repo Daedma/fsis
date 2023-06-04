@@ -39,6 +39,7 @@ void CollisionComponent::onAttached()
 	getWorld()->getCollisionResolver()->registry(this);
 }
 
+// https://solid.sourceforge.net/jgt98convex.pdf
 Vector3f CollisionComponent::getSupportPoint(const Vector3f& direction) const
 {
 	Transform t = getWorldTransform();

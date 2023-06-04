@@ -85,59 +85,47 @@ void CharacterAnimComponent::tick(float deltaSeconds)
 	Vector3f speed = m_character->getMovementComponent()->getCurrentSpeed();
 	bool isNoMovement = mathter::IsNullvector(Vector2f(speed.xy));
 	updateOrientation();
-	// Если активная группа не является группой движения
 	if (m_activeGroup != movementGroup)
 	{
-		// Если нужно остановить анимацию движения
 		if (b_movementStopAnimation)
 		{
-			// Если текущая скорость равна нулю и активная анимация уже запущена
 			if (isNoMovement && m_activeAnimation->isActive())
 			{
 				return;
 			}
-			// Если текущая скорость равна нулю и активная анимация не запущена
 			if (isNoMovement && !m_activeAnimation->isActive())
 			{
 				playAnimationGroup(movementGroup);
 			}
-			// Если текущая скорость не равна нулю
 			if (!isNoMovement)
 			{
 				playAnimationGroup(movementGroup);
 			}
 		}
-		// Если не нужно остановить анимацию движения
 		else
 		{
-			// Если активная анимация уже запущена
 			if (m_activeAnimation->isActive())
 			{
 				return;
 			}
-			// Если активная анимация не запущена
 			else if (!isNoMovement)
 			{
 				playAnimationGroup(movementGroup);
 			}
 		}
 	}
-	// Если активная группа является группой движения
 	else
 	{
-		// Если текущая скорость равна нулю, то остановить текущую анимацию
 		if (isNoMovement)
 		{
 			stopAnimation();
 		}
-		// Если текущая скорость не равна нулю
 		else
 		{
 			if (!m_activeAnimation->isActive())
 			{
 				m_activeAnimation->play();
 			}
-			// Установить флаг обратного направления анимации в зависимости от направления движения
 			bool isDifferentDirections = mathter::Dot(speed,
 				getOwner()->getForwardVector()) < 0;
 			m_activeAnimation->setReverse(isDifferentDirections);

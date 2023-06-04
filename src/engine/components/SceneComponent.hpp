@@ -1,3 +1,13 @@
+/**
+ * @file SceneComponent.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains the declaration of SceneComponent class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 
 #include "components/ActorComponent.hpp"
@@ -14,7 +24,7 @@
  * Owner of SceneComponent - is other SceneComponent.
  * Each actor must have only one SceneCompoenent (rootComponent),
  * that is parent for any other SceneComponent and defines all actor tranforms.
- * Actor must use soft link to access to SceneComponents.
+ * Actor must use soft links to access to SceneComponents.
  */
 class SceneComponent : public ActorComponent
 {
@@ -178,7 +188,6 @@ public:
 	 * @brief Orient this component by vector
 	 *
 	 * @param direction normalized vector of direction
-	 * @note DONT USE IF YOU DONT WANT GRAPHIC BUGS
 	 */
 	void orientByDirection(const Vector3f& direction);
 

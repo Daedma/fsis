@@ -1,7 +1,15 @@
+/**
+ * @file ActorComponent.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains declaration of ActorComponent class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once 
 #include "core/GameObject.hpp"
-
-// TODO think about components creation interface  
 
 class Actor;
 
@@ -16,6 +24,11 @@ protected:
 	Actor* m_owner = nullptr;
 
 public:
+	/**
+	 * @brief Construct a new Actor Component object.
+	 * @param owner
+	 * @note Doesn't attach component to actor
+	 */
 	ActorComponent(Actor* owner);
 
 	ActorComponent() = default;
@@ -24,21 +37,18 @@ public:
 
 	/**
 	 * @brief Get the Owner object
-	 *
 	 * @return Actor, which component attached to
 	 */
 	Actor* getOwner() const { return m_owner; }
 
 	/**
 	 * @brief Attach this component to actor
-	 *
 	 * @param newOwner
 	 */
 	virtual void attachToActor(Actor* newOwner);
 
 	/**
 	 * @brief Called every frame
-	 *
 	 * @param deltaSeconds Time in seconds since last frame
 	 */
 	virtual void tick(float deltaSeconds) override;
@@ -46,7 +56,6 @@ public:
 	/**
 	 * @brief Force to remove this actor from owner world
 	 * on the next tick
-	 *
 	 */
 	virtual void destroy() override;
 
@@ -58,7 +67,6 @@ public:
 
 	/**
 	 * @brief Get the Depth of the object
-	 *
 	 * @return depth of this component in hierarchy
 	 * @note Root component and actor components always return 0
 	 */
@@ -67,7 +75,6 @@ public:
 protected:
 	/**
 	 * @brief Called after attach
-	 *
 	 */
 	virtual void onAttached();
 };

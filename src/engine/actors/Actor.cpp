@@ -34,7 +34,7 @@ void Actor::move(const Vector3f& direction)
 
 void Actor::rotate(const Rotator& rotation)
 {
-	setRotation(rotation * getRotation());
+	setRotation(rotation * getRotation() * mathter::Conjugate(rotation));
 }
 
 Vector3f Actor::getForwardVector() const

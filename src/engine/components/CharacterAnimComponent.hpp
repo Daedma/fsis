@@ -1,3 +1,13 @@
+/**
+ * @file CharacterAnimComponent.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains declaration of the CharacterAnimComponent
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 
 #include "components/PrimitiveComponent.hpp"
@@ -10,6 +20,11 @@
 #include <EASTL/unique_ptr.h>
 #include <EASTL/string.h>
 
+/**
+ * @brief Provide complex animation system for character.
+ * Provide support for undirected animations (independ from character look and movement direction)
+ * and oriented animations (depend from character look and movement direction)
+ */
 class CharacterAnimComponent : public PrimitiveComponent
 {
 public:

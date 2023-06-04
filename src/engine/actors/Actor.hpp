@@ -1,5 +1,15 @@
+/**
+ * @file Actor.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains class Actor declaration
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
-// #include "components/SceneComponent.hpp"
+
 #include "core/GameObject.hpp"
 #include "core/TransformTypes.hpp"
 #include "actors/ActorGroups.hpp"
@@ -16,7 +26,7 @@ class ActorComponent;
  * Root component has no parent, so root component must have only
  * world (absolute) transform (no relative).
  * World is owner of all actors.
- *
+ * For actor construction always use World::spawnActor template method.
  */
 class Actor : public GameObject
 {
@@ -157,14 +167,35 @@ public:
 	 */
 	const Vector3f& getLastMovement() const { return m_lastMovement; }
 
+	/**
+	 * @brief Get the Group of this object
+	 *
+	 * @return ActorsGroups
+	 */
 	ActorsGroups getGroup() const { return m_group; }
 
+	/**
+	 * @brief Set the On Floor
+	 *
+	 * @param onFloor
+	 */
 	void setOnFloor(bool onFloor) { b_onFloor = onFloor; }
 
+	/**
+	 * @brief Is actor on floor?
+	 *
+	 * @return true if actor on floor
+	 * @return false of actor in the air
+	 */
 	bool isOnFloor() const { return b_onFloor; }
 
 protected:
 
+	/**
+	 * @brief Set the Group
+	 *
+	 * @param group
+	 */
 	void setGroup(ActorsGroups group) { m_group = group; }
 
 private:
@@ -180,6 +211,10 @@ private:
 	 */
 	eastl::vector<eastl::unique_ptr<ActorComponent>> m_components;
 
+	/**
+	 * @brief Group of this actor
+	 *
+	 */
 	ActorsGroups m_group = ActorsGroups::ACTORS;
 
 	bool b_onFloor = false;

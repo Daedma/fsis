@@ -1,3 +1,13 @@
+/**
+ * @file Animation.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains declaration of Animation class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 
 #include <SFML/Graphics/Drawable.hpp>
@@ -12,10 +22,17 @@
 #include "core/GameObject.hpp"
 #include "core/TransformTypes.hpp"
 
+/**
+ * @brief Animation is rolling frame set.
+ * For single animation one texture is used. Frames are located in single line.
+ * Animations provide notify system for bind handler to specified frame change.
+ * Animation is simple primitive to construct more complex animations.
+ * @sa CharacterAnimComponent
+ */
 class Animation : public sf::Drawable, public GameObject
 {
 public:
-	using NotifyEventHandlerSignature = eastl::function<void(float)>;
+	using NotifyEventHandlerSignature = eastl::function<void(float duration)>;
 
 	struct Notify
 	{
@@ -24,11 +41,22 @@ public:
 		NotifyEventHandlerSignature handler = nullptr;
 	};
 
+	/**
+	 * @brief Construct a new Animation object
+	 * @param world
+	 */
 	Animation(World* world) : GameObject(world), m_sprite(new sf::Sprite())
 	{}
 
+	/**
+	 * @brief Construct a new Animation object
+	 */
 	Animation() : m_sprite(new sf::Sprite()) {}
 
+	/**
+	 * @brief Set the Texture
+	 * @param texture
+	 */
 	void setTexture(sf::Texture* texture)
 	{
 		m_texture = texture;
@@ -40,18 +68,47 @@ public:
 		PLAYING, PAUSED, STOPPED
 	};
 
+	/**
+	 * @brief Play animation
+	 * @param bContinue Continue from current frame?
+	 */
 	void play(bool bContinue = true);
 
+	/**
+	 * @brief Stop animation.
+	 * Set current frame to 0.
+	 */
 	void stop();
 
+	/**
+	 * @brief Pause animation.
+	 * Doesn't change current frame.
+	 */
 	void pause();
 
+	/**
+	 * @brief Set the Reverse.
+	 * @param bReverse Play animation vise versa or not?
+	 */
 	void setReverse(bool bReverse) { b_reverse = bReverse; }
 
+	/**
+	 * @brief Get the Status of this object
+	 * @return Status
+	 */
 	Status getStatus() const { return m_status; }
 
+	/**
+	 * @brief Is animation playing?
+	 * @return true animation is playing
+	 * @return false animation is paused or stopped
+	 */
 	bool isActive() const { return m_status == Status::PLAYING; }
 
+	/**
+	 * @brief Set the Height
+	 * @param height in world
+	 */
 	void setHeight(float height)
 	{
 		EASTL_ASSERT(height != 0 && m_texture);
@@ -59,38 +116,75 @@ public:
 		m_sprite->setScale(ratio, ratio);
 	}
 
+	/**
+	 * @brief Set the Init Frame
+	 * @param frame
+	 */
 	void setInitFrame(sf::IntRect frame)
 	{
 		m_initFrame = frame;
 	}
 
+	/**
+	 * @brief Set the Frames Count
+	 * @param framesCount
+	 */
 	void setFramesCount(uint8_t framesCount)
 	{
 		m_framesCount = framesCount;
 	}
 
+	/**
+	 * @brief Set the Frequency
+	 * @param freq
+	 */
 	void setFrequency(float freq)
 	{
 		m_period = 1.f / freq;
 	}
 
+	/**
+	 * @brief Get the Duration of this object
+	 * @return float
+	 */
 	float getDuration()
 	{
 		return m_period * m_framesCount;
 	}
 
+	/**
+	 * @brief Set the Loop
+	 * @param loop
+	 */
 	void setLoop(bool loop) { b_loop = loop; }
 
+	/**
+	 * @brief Set the Frame
+	 * @param frame
+	 */
 	void setFrame(uint8_t frame)
 	{
 		m_curFrame = eastl::max<uint8_t>(frame, m_framesCount - 1);
 		nextFrame();
 	}
 
+	/**
+	 * @brief Get the Current Frame of this object
+	 * @return uint8_t
+	 */
 	uint8_t	getCurrentFrame() const { return m_curFrame; }
 
+	/**
+	 * @brief Add notify object to animation
+	 * @param notify
+	 */
 	void addNotify(const Notify& notify);
 
+	/**
+	 * @brief Set the handler of notify by name
+	 * @param notify
+	 * @param handler
+	 */
 	void setNotifyHandler(const eastl::string& notify, NotifyEventHandlerSignature handler);
 
 	// remove notify on request

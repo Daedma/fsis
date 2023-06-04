@@ -1,5 +1,7 @@
 #include "components/RampComponent.hpp"
 
+// https://solid.sourceforge.net/jgt98convex.pdf
+// (polytope case)
 Vector3f RampComponent::supportMapping(const Vector3f& direction) const
 {
 	uint32_t maxIndex = 0;

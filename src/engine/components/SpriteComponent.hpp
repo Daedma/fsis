@@ -1,3 +1,13 @@
+/**
+ * @file SpriteComponent.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains declaration of SpriteComponent class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 
 #include "components/PrimitiveComponent.hpp"
@@ -11,6 +21,9 @@ namespace sf
 }
 class Actor;
 
+/**
+ * @brief Provide sprite support for actors.
+ */
 class SpriteComponent : public PrimitiveComponent
 {
 	eastl::unique_ptr<sf::Sprite> m_sprite;
@@ -30,8 +43,6 @@ public:
 	void setTexture(sf::Texture* texture);
 
 	void loadTexture(const eastl::string& filename);
-
-	//TODO make more fit texture usage interface
 
 	sf::Sprite* getSprite() const { return m_sprite.get(); }
 

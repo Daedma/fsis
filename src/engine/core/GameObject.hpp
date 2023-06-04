@@ -1,3 +1,13 @@
+/**
+ * @file GameObject.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains the declaration of GameObject class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 #include "CoreTypes.hpp"
 
@@ -5,7 +15,7 @@ class World;
 
 /**
  * @brief
- * Base class for all objects, that contains in the game `world
+ * Base class for all objects, that contains in the game world
  */
 class GameObject
 {

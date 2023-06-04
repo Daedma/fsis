@@ -1,3 +1,13 @@
+/**
+ * @file HUD.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains the declaration of HUD class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 
 #include <TGUI/Backends/SFML.hpp>
@@ -7,6 +17,9 @@
 #include <EASTL/hash_map.h>
 #include <core/InputEventListener.hpp>
 
+/**
+ * @brief A class represents GUI in program
+ */
 class HUD : public tgui::GuiSFML, public InputEventListener
 {
 public:

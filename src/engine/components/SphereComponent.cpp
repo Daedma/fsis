@@ -4,6 +4,7 @@ SphereComponent::SphereComponent(Actor* owner) :CollisionComponent(owner) {}
 
 SphereComponent::SphereComponent(SceneComponent* parent) :CollisionComponent(parent) {}
 
+// https://solid.sourceforge.net/jgt98convex.pdf
 Vector3f SphereComponent::supportMapping(const Vector3f& direction) const
 {
 	float lenght = mathter::Length(direction);

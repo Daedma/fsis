@@ -1,3 +1,13 @@
+/**
+ * @file Controller.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains the declaration of Controller class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 #include <EASTL/functional.h>
 #include <EASTL/hash_map.h>
@@ -8,7 +18,7 @@ struct ActionBinding;
 
 /**
  * @brief Base class for all controllers.
- *
+ * The controller controls the character.
  */
 class Controller
 {

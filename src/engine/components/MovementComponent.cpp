@@ -10,7 +10,6 @@ MovementComponent::MovementComponent(Actor* owner) : ActorComponent(owner)
 	setTickGroup(TickGroups::PREPHYSIC);
 }
 
-
 void MovementComponent::enableGravity()
 {
 	m_acceleration = { 0.f, 0.f, getWorld()->getGravity() };

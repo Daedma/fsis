@@ -1,3 +1,13 @@
+/**
+ * @file AssetManager.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains the declaration of AssetManager class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 
 #include <EASTL/string.h>
@@ -8,6 +18,9 @@
 #include <TGUI/Texture.hpp>
 #include <SFML/Audio/Music.hpp>
 
+/**
+ * @brief Provide a interface to access to outer resources.
+ */
 class AssetManager
 {
 	static eastl::hash_map<eastl::string, eastl::unique_ptr<sf::Texture>, eastl::hash<eastl::string>, eastl::equal_to<eastl::string>, eastl::allocator, true> m_textures;

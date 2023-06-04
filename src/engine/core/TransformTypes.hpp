@@ -1,3 +1,13 @@
+/**
+ * @file TransformTypes.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains declarations of transform types, constants and TSR namespace
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 #include "Mathter/Matrix.hpp"
 #include "Mathter/Vector.hpp"

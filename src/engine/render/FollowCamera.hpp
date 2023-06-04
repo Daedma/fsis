@@ -1,10 +1,23 @@
+/**
+ * @file FollowCamera.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains the declaration of FollowCamera class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 
 #include "render/Camera.hpp"
 
 class Actor;
 
-class FollowCamera: public Camera
+/**
+ * @brief A class represents camera, that follow to player
+ */
+class FollowCamera : public Camera
 {
 	Actor* m_target = nullptr;
 

@@ -1,8 +1,23 @@
+/**
+ * @file RampComponent.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains the declaration of RampComponent class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 
 #include "components/CollisionComponent.hpp"
 #include <EASTL/array.h>
 
+/**
+ * @brief Provides ramp (inclined surface) collision.
+ * Origin (center of inclined edge) located in (0, 0, 0).
+ * The slope is directed towards the positive direction of the Ox axis.
+ */
 class RampComponent : public CollisionComponent
 {
 	eastl::array<Vector3f, 6> m_vertices;

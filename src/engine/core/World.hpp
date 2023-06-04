@@ -1,3 +1,13 @@
+/**
+ * @file World.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains the declaration of World class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 #include "EASTL/vector_set.h"
 #include "EASTL/queue.h"
@@ -15,6 +25,10 @@ class Controller;
 class Map;
 class GameMode;
 
+/**
+ * @brief Container for all actors.
+ * Provide game session service.
+ */
 class World
 {
 private:
@@ -140,8 +154,6 @@ public:
 	 */
 	float getGravity() const { return m_globalAcceleration; }
 
-	// eastl::vector<Character*> getNearestCharacters(const Character* character);
-
 private:
 	void execDestroy();
 
@@ -150,7 +162,7 @@ private:
 	 *
 	 * @param actor actor to spawned
 	 *
-	 * @note Not recommendet, use template version instead
+	 * @note Not recommended, use template version instead
 	 */
 	void spawnActor(Actor* actor, const Vector3f& pos = ZERO_VECTOR);
 

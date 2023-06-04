@@ -1,3 +1,13 @@
+/**
+ * @file PlayerController.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains the declaration of PlayerController class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 
 #include "controllers/Controller.hpp"
@@ -9,6 +19,9 @@
 
 class Character;
 
+/**
+ * @brief A class represents physical player controller (keyboard)
+ */
 class PlayerController : public Controller, public InputEventListener
 {
 public:
@@ -40,6 +53,6 @@ private:
 
 	eastl::fixed_list<KeyCode, KeyCode::KeyCount> m_pressedAxisKeys;
 
-	// Note: for more universality need to add a mouse's strutures,
+	// Note: for more universality need to add a mouse's structures,
 	// but now we don't need it
 };

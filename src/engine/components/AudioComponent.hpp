@@ -1,3 +1,13 @@
+/**
+ * @file AudioComponent.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains declaration of AudioComponent class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 #include "components/ActorComponent.hpp"
 #include <EASTL/unique_ptr.h>
@@ -6,10 +16,14 @@
 #include <EASTL/hash_map.h>
 #include <SFML/Audio/Sound.hpp>
 
+/**
+ * @brief Provides sounds support for actor.
+ * Can manipulate with multiple sounds.
+ */
 class AudioComponent : public ActorComponent
 {
 public:
-	using OnPlayingFinishedSignature = eastl::function<void(float)>;
+	using OnPlayingFinishedSignature = eastl::function<void(float duration)>;
 
 	AudioComponent() = default;
 

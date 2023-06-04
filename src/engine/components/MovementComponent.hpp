@@ -1,3 +1,13 @@
+/**
+ * @file MovementComponent.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains the declaration of MovementComponent
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 
 #include "components/ActorComponent.hpp"
@@ -158,6 +168,9 @@ public:
 		b_launch = true;
 	}
 
+	/**
+	 * @brief Stop launched actor
+	 */
 	void stop()
 	{
 		m_launchSpeed = { 0, 0, 0 };

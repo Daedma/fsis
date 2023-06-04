@@ -15,7 +15,10 @@ void ActorComponent::destroy()
 
 void ActorComponent::forceDestroy()
 {
-	m_owner->destroyComponent(this);
+	if (m_owner)
+	{
+		m_owner->destroyComponent(this);
+	}
 }
 
 size_t ActorComponent::getDepth() const

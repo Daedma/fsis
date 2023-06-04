@@ -1,7 +1,20 @@
+/**
+ * @file Camera.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains the declaration of Camera class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 
 #include "core/TransformTypes.hpp"
 
+/**
+ * @brief Base class for all isometric camera.
+ */
 class Camera
 {
 	Vector2f m_position = { 0.f, 0.f };

@@ -1,3 +1,13 @@
+/**
+ * @file CollisionResolver.hpp
+ * @author Damir Khismatov (hdamir163@gmail.com)
+ * @brief Contains the declaration of CollisionResolver class
+ * @version 1.0
+ * @date 2023-06-04
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
 #pragma once
 
 #include <EASTL/vector.h>
@@ -13,6 +23,9 @@
 class CollisionComponent;
 class Actor;
 
+/**
+ * @brief Provides functionality for detecting and resolving collisions.
+ */
 class CollisionResolver
 {
 	eastl::vector<CollisionComponent*> m_collisions;
