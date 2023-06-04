@@ -3,13 +3,13 @@ Picture.Picture1 {
     Size = (16.302%, 29.537%);
 
     Renderer {
-        Texture = "textures/Control.png" Smooth;
+        Texture = "textures/Control1.png" Smooth;
         TransparentTexture = false;
     }
 }
 
 Button.Button_Close {
-    Position = (57.0312%, 35.6481%);
+    Position = (57.0312%, 35.5481%);
     Size = (0.9375%, 1.66666%);
     TextSize = 13;
 

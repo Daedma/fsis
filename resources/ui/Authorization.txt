@@ -1,5 +1,6 @@
 Picture.Picture_Background {
-    Size = (100%, 100%);
+    Position = (768, 324);
+    Size = (384, 432);
 
     Renderer {
         Texture = "textures/Autorization_background.png" NoSmooth;
@@ -8,8 +9,8 @@ Picture.Picture_Background {
 }
 
 Button.Button_Close_Window {
-    Position = (94.5%, 0.5%);
-    Size = (4.427%, 3.9351%);
+    Position = (58.9583%, 30.185%);
+    Size = (0.885416%, 1.57407%);
     TextSize = 13;
 
     Renderer {
@@ -38,8 +39,9 @@ Button.Button_Close_Window {
 }
 
 Label.Label_FSIS_Launcher {
-    Position = (0%, 0.3%);
-    Size = (30.4687%, 6.25%);
+    Position = (40%, 30.0925%);
+    ScrollbarPolicy = Never;
+    Size = (6.093%, 1.57407%);
     Text = "FSIS launcher";
     TextSize = 14;
 
@@ -73,8 +75,8 @@ Label.Label_FSIS_Launcher {
 }
 
 Label.Label_Copyright {
-    Position = (28.05%, 97.2222%);
-    Size = (43.907%, 3.2408%);
+    Position = (45.625%, 68.8%);
+    Size = (8.8%, 1.297%);
     Text = "© BANANA SHRIK ENTERTAINMENT";
     TextSize = 10;
 
@@ -107,8 +109,8 @@ Label.Label_Copyright {
 }
 
 Button.Button_LOGIN {
-    Position = (41.6%, 76%);
-    Size = (16.9271%, 6.25%);
+    Position = (48.2553%, 60.37%);
+    Size = (3.48958%, 2.5%);
     Text = LOGIN;
     TextSize = 15;
 
@@ -139,9 +141,9 @@ Button.Button_LOGIN {
 }
 
 Label.Label_Username {
-    Position = (41.2761%, 27.7777%);
+    Position = (48.2553%, 41.1%);
     ScrollbarPolicy = Never;
-    Size = (17.4479%, 3.93518%);
+    Size = (3.48958%, 1.57407%);
     Text = USERNAME;
     TextSize = 12;
 
@@ -174,9 +176,9 @@ Label.Label_Username {
 }
 
 Label.Label_Password {
-    Position = (41.2761%, 48.5%);
+    Position = (48.2553%, 49.4%);
     ScrollbarPolicy = Never;
-    Size = (17.4479%, 3.93518%);
+    Size = (3.48958%, 1.57407%);
     Text = PASSWORD;
     TextSize = 12;
 
@@ -208,9 +210,9 @@ Label.Label_Password {
 }
 
 Label.Label_Wrong_Input {
-    Position = (26.0417%, 60.1851%);
+    Position = (45.2083%, 54.074%);
     ScrollbarPolicy = Never;
-    Size = (48.6979%, 3.93518%);
+    Size = (9.73958%, 1.57407%);
     Text = "WRONG LOGIN OR PASSWORD";
     TextSize = 12;
 
@@ -242,9 +244,8 @@ Label.Label_Wrong_Input {
 }
 
 EditBox.EditBox_Username {
-    Position = (26.5625%, 32.1%);
-    Size = (46.875%, 5.78703%);
-    Text = jayozeray;
+    Position = (45.3125%, 42.7%);
+    Size = (9.375%, 2.3148%);
     TextSize = 14;
 
     Renderer {
@@ -272,8 +273,8 @@ EditBox.EditBox_Username {
 }
 
 EditBox.EditBox_Password {
-    Position = (26.5625%, 52.823%);
-    Size = (46.875%, 5.78703%);
+    Position = (45.3125%, 51.1%);
+    Size = (9.375%, 2.3148%);
     TextSize = 13;
 
     Renderer {
@@ -301,9 +302,9 @@ EditBox.EditBox_Password {
 }
 
 Label.Label_Authorization {
-    Position = (23.9583%, 9.5%);
+    Position = (44.7916%, 33.7962%);
     ScrollbarPolicy = Never;
-    Size = (52.0833%, 5.78703%);
+    Size = (10.416%, 2.3148%);
     Text = AUTHORIZATION;
     TextSize = 25;
 
