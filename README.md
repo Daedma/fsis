@@ -12,6 +12,7 @@ In order to destroy monsters of different materials, you need to constantly move
 I almost forgot, you have a couple of trump cards up your sleeve for this battle - a special ability and a special mode that work great together. The special ability allows you to link to a beacon where you can teleport, and the special mode gives you a high chance of evading enemy attacks. This combination gives you greater mobility when transporting by car and changing visible material.
 
 ## Mentions
+### Sprites
 This project used characters generated using [Universal LPC Spritesheet Generator](https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/#?body=Body_color_light&head=Human_male_light):
 
 Authors: bluecarrot16, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (ElizaWy), TheraHedwig, MuffinElZangano, Durrani, Johannes Sjolund (wulax), Stephen Challener (Redshrike)
@@ -28,3 +29,7 @@ Authors: bluecarrot16, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (Eliz
       - https://opengameart.org/content/lpc-character-bases
 
 [Fireball sprite](https://www.reddit.com/r/AnimatedPixelArt/comments/zpwz9y/i_made_a_fireball_thing_idk_why/)
+### Libraries
+- [SFML](https://www.sfml-dev.org/) 
+- [C++ Requests](https://github.com/libcpr/cpr) 
+- [Boost](https://boost.org)
