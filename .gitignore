@@ -46,12 +46,12 @@
 !**.json
 
 # textures
-# !**.png
-# !**.jpeg
-# !**.jpg
-# !**.bmp
+!**.png
+!**.jpeg
+!**.jpg
+!**.bmp
 
-# sounds
+# sounds (all of this is under copyright)
 # !**.ogg
 # !**.wav
 
@@ -64,4 +64,9 @@
 # dynamic link libraries
 # !**.dll
 
+# CMake files
 CMakeLists.txt
+
+# Textures under copyright
+resources/textures/map/
+
