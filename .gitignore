@@ -26,6 +26,9 @@
 !resources/ui/fonts
 !resources/creatures
 
+# CMake files
+!**CMakeLists.txt
+
 # md files  
 !**.md
 
@@ -63,9 +66,6 @@
 
 # dynamic link libraries
 # !**.dll
-
-# CMake files
-CMakeLists.txt
 
 # Textures under copyright
 resources/textures/map/
