@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 4.1)
-project(fsis-engine LANGUAGES CXX)
+project(fsis-engine LANGUAGES CXX VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
 
 option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
 
@@ -27,13 +28,22 @@ FetchContent_Declare(
 	GIT_TAG        v0.9.5
 	FIND_PACKAGE_ARGS NAMES TGUI VERSION 0.9.5
 )
+set(TGUI_BUILD_GUI_BUILDER OFF)
 FetchContent_MakeAvailable(TGUI)
+# fix clang compilation issues on Windows
+if(TARGET tgui)
+    get_target_property(tgui_options tgui COMPILE_OPTIONS)
+    if(tgui_options)
+        list(REMOVE_ITEM tgui_options "/W4")
+        set_target_properties(tgui PROPERTIES COMPILE_OPTIONS "${tgui_options}")
+    endif()
+endif()
 		
 # EASTL
 FetchContent_Declare(
 	EASTL
 	GIT_REPOSITORY https://github.com/electronicarts/EASTL.git
-	GIT_TAG        4.0.2
+	GIT_TAG        3.21.23
 	FIND_PACKAGE_ARGS NAMES EASTL
 )
 FetchContent_MakeAvailable(EASTL)
@@ -109,6 +119,10 @@ set(ENGINE_SOURCES
 	${RENDER_SOURCES}
 )
 
+set(EXTLIBS_DIR
+	"${CMAKE_CURRENT_SOURCE_DIR}/external"
+)
+
 add_library(fsis-engine
     ${ENGINE_SOURCES}
 )
@@ -116,6 +130,7 @@ add_library(fsis-engine
 target_include_directories(fsis-engine
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
+        ${EXTLIBS_DIR}/Mathter/include
 )
 
 target_link_libraries(fsis-engine
@@ -125,7 +140,10 @@ target_link_libraries(fsis-engine
         sfml-graphics
         sfml-window
         sfml-system
+		sfml-audio
         tgui
 )
 
 add_library(fsis::engine ALIAS fsis-engine)
+
+target_compile_features(fsis-engine PRIVATE cxx_std_17)

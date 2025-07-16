@@ -13,6 +13,7 @@
 !src/engine/render/
 !src/fsis
 !src/fsis/states
+!src/fsis/patches
 !resources/
 !resources/map
 !resources/sound
@@ -66,6 +67,9 @@
 
 # dynamic link libraries
 # !**.dll
+
+# patches
+!**.patch
 
 # Textures under copyright
 resources/textures/map/
