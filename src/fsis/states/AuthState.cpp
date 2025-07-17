@@ -9,7 +9,7 @@
 
 void AuthState::init()
 {
-	AssetManager::playMusic("menu_3.ogg");
+	AssetManager::playMusic("menu_3.ogg")->setLoop(true);
 	m_nextState = this;
 
 	auto form = Canvas::getHUD()->pushMenuItem("authorization");

@@ -11,7 +11,7 @@ void GameState::init()
 {
 	AssetManager::stopMusic();
 
-	AssetManager::playMusic("fight_1.ogg");
+	AssetManager::playMusic("fight_1.ogg")->setLoop(true);
 
 	m_nextState = this;
 

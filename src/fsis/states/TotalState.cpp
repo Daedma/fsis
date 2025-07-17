@@ -12,7 +12,7 @@ void TotalState::init(const MatchStats& stats)
 {
 	AssetManager::stopMusic();
 
-	AssetManager::playMusic("menu_3.ogg");
+	AssetManager::playMusic("menu_3.ogg")->setLoop(true);
 
 	m_nextState = this;
 
