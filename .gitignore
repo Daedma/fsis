@@ -71,7 +71,4 @@
 # patches
 !**.patch
 
-# Textures under copyright
-resources/textures/map/
-
 CMakeUserPresets.json
