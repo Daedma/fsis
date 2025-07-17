@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
 
-option(BUILD_SHARED_LIBS "Build using shared libraries" OFF)
+set(BUILD_SHARED_LIBS OFF)
 
 include(FetchContent)
 
@@ -94,7 +94,6 @@ set(CORE_SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/core/GameMode.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/core/GameObject.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/core/InputEventListener.cpp"
-	"${CMAKE_CURRENT_SOURCE_DIR}/core/JSON.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/core/World.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/core/New.cpp"
 )
@@ -123,7 +122,7 @@ set(EXTLIBS_DIR
 	"${CMAKE_CURRENT_SOURCE_DIR}/external"
 )
 
-add_library(fsis-engine
+add_library(fsis-engine STATIC
     ${ENGINE_SOURCES}
 )
 
@@ -136,7 +135,7 @@ target_include_directories(fsis-engine
 target_link_libraries(fsis-engine
     PUBLIC
         EASTL
-        Boost::json
+		Boost::json
         sfml-graphics
         sfml-window
         sfml-system

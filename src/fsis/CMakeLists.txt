@@ -10,14 +10,6 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(cpr)
 
-if(WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND TARGET cpr)
-    get_target_property(cpr_link_libs cpr LINK_LIBRARIES)
-    if(cpr_link_libs)
-        list(REMOVE_ITEM cpr_link_libs "stdc++fs")
-        set_target_properties(cpr PROPERTIES LINK_LIBRARIES "${cpr_link_libs}")
-    endif()
-endif()
-
 set(FSIS_SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/ClientApplication.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/FSISCharacter.cpp"
@@ -31,7 +23,7 @@ set(FSIS_SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/states/GameState.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/states/MenuState.cpp"
 	"${CMAKE_CURRENT_SOURCE_DIR}/states/TotalState.cpp"
-	)
+)
 
 add_executable(fsis-game ${FSIS_SOURCES})
 
@@ -45,5 +37,15 @@ target_include_directories(fsis-game
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
+
+# For GCC/Clang
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
+endif()
+
+# For MSVC
+if (MSVC)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4996")
+endif()
 
 target_compile_features(fsis-game PRIVATE cxx_std_17)

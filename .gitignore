@@ -74,3 +74,4 @@
 # Textures under copyright
 resources/textures/map/
 
+CMakeUserPresets.json
