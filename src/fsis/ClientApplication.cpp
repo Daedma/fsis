@@ -19,8 +19,13 @@ ClientApplication::ClientApplication()
 	Canvas::setHUD<HUD>();
 	Canvas::getHUD()->loadForms("forms.ini");
 
+#ifdef FSIS_NO_AUTH	
+	m_curState = MenuState::getInstance();
+	MenuState::getInstance()->init();
+#else
 	m_curState = AuthState::getInstance();
 	AuthState::getInstance()->init();
+#endif
 }
 
 void ClientApplication::run()

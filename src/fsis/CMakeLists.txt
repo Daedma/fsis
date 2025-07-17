@@ -25,18 +25,27 @@ set(FSIS_SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/states/TotalState.cpp"
 )
 
-add_executable(fsis-game ${FSIS_SOURCES})
+macro(create_target target_name)
+	add_executable(${target_name} ${FSIS_SOURCES})
 
-target_link_libraries(fsis-game
-    PRIVATE
-        fsis::engine
-		cpr::cpr
-)
+	target_link_libraries(${target_name}
+		PRIVATE
+			fsis::engine
+			cpr::cpr
+	)
 
-target_include_directories(fsis-game
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}
-)
+	target_include_directories(${target_name}
+		PRIVATE
+			${CMAKE_CURRENT_SOURCE_DIR}
+	)
+
+	target_compile_features(${target_name} PRIVATE cxx_std_17)
+endmacro()
+
+create_target(fsis)
+
+create_target(fsis-offline)
+target_compile_definitions(fsis-offline PRIVATE FSIS_NO_AUTH)
 
 # For GCC/Clang
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
@@ -47,5 +56,3 @@ endif()
 if (MSVC)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4996")
 endif()
-
-target_compile_features(fsis-game PRIVATE cxx_std_17)
