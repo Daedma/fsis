@@ -8,6 +8,11 @@
 !src/engine/components/
 !src/engine/controllers/
 !src/engine/core/
+!src/engine/external/
+!src/engine/external/Mathter
+!src/engine/external/Mathter/include
+!src/engine/external/Mathter/include/Mathter
+!src/engine/external/Mathter/include/Mathter/*
 !src/engine/gui/
 !src/engine/network/
 !src/engine/render/
