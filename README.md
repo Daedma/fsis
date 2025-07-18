@@ -1,5 +1,5 @@
 # FSIS
-The repository contains source files and some non-copyrighted resources for FSIS game.
+The repository contains source files and resources for FSIS game.
 ## Game description
 FSIS is a PVE game in which you become a dark magician capable of controlling any matter.
 ### Prepare for danger!
@@ -10,7 +10,39 @@ Your task is to hold out in this hellish place for as long as possible! You have
 In order to destroy monsters of different materials, you need to constantly move around the map and select the material that suits you from the corresponding surface, because these monsters are only vulnerable to the materials from which they themselves created. But the secret is that your dark magician does not just take into account matter, he creates a ball from it, inside of which a charge of energy is placed, which causes damage, and the shell is needed so that the monster does not reject the charge, but absorbs it due to the impossibility of reflecting it . native matter.
 ### Test your abilities!
 I almost forgot, you have a couple of trump cards up your sleeve for this battle - a special ability and a special mode that work great together. The special ability allows you to link to a beacon where you can teleport, and the special mode gives you a high chance of evading enemy attacks. This combination gives you greater mobility when transporting by car and changing visible material.
-
+## Build
+The project uses CMake and a C++17 compiler. All dependencies are downloaded automatically.
+### Prerequisites
+- [CMake](https://cmake.org/) version 3.30 or newer
+- C++ compiler with C++17 support (MSVC, GCC, or Clang)
+- [Git](https://git-scm.com/)
+### Build steps
+1. **Clone the repository:**
+```sh
+git clone https://github.com/Daedma/fsis.git
+cd fsis
+```
+2. **Create a build directory and enter it:**
+```sh
+mkdir build
+cd build
+```
+3. **Generate the project files**
+```sh
+cmake ..
+```
+4. **Build the project:**
+```sh
+cmake --build . --config Release
+```
+All third-party libraries (SFML, TGUI, Boost, EASTL, cpr) are automatically downloaded and built by CMake.
+#### Using CMake presets
+You can also use [CMake presets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) for easier configuration and building. For example:
+```sh
+cmake --preset=default
+cmake --build --preset=Release
+```
+You can modify compilator and generator in `CMakePresets.json` used by CMake on that you prefer.
 ## Mentions
 ### Sprites
 This project used characters generated using [Universal LPC Spritesheet Generator](https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/#?body=Body_color_light&head=Human_male_light):
@@ -33,3 +65,4 @@ Authors: bluecarrot16, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (Eliz
 - [SFML](https://www.sfml-dev.org/) 
 - [C++ Requests](https://github.com/libcpr/cpr) 
 - [Boost](https://boost.org)
+- [Mathter](https://github.com/petiaccja/Mathter)
